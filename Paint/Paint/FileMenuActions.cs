@@ -74,7 +74,7 @@ namespace Paint
                     this.history = history;
                     historyData = new HistoryData();
                     this.historyData = historyData;
-                    panelResizer.Update(historyData, history); // чтобы не терялась ссылка
+                    panelResizer.Update(historyData, history);
                     historyData.Bitmaps.Push(myBitmap.Bitmap);
                     historyData.PanelSizes.Push(new PanelSize(size));
                     SetFileNames(openFileDialog);

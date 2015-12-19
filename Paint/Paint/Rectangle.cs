@@ -25,7 +25,7 @@ namespace Paint
         public int TopX { get; set; }
         
         /// <summary>
-        /// Возвращает или задает координату по оси Y левого верхнего угла
+        /// Возвращает или задает координату по оси Y левого верхнего угла эллипса
         /// </summary>
         public int TopY { get; set; }
         

@@ -15,7 +15,7 @@ namespace Paint
         private string commandName;
 
         /// <summary>
-        /// Создает команду вида: линия и что с ней сделали (добавили/удалили)
+        /// Создает команду вида: фигура и что с ней сделали (добавили/удалили)
         /// </summary>
         public CommandShape(Shape shape, string commandName)
         {
