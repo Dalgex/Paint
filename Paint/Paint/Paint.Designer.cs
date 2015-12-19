@@ -711,7 +711,7 @@
             this.buttonForShapeFilling});
             this.toolStrip4.Location = new System.Drawing.Point(381, 55);
             this.toolStrip4.Name = "toolStrip4";
-            this.toolStrip4.Size = new System.Drawing.Size(100, 26);
+            this.toolStrip4.Size = new System.Drawing.Size(131, 26);
             this.toolStrip4.TabIndex = 20;
             this.toolStrip4.Text = "toolStrip4";
             // 
@@ -735,7 +735,7 @@
             this.itemWithoutFilling.Name = "itemWithoutFilling";
             this.itemWithoutFilling.Size = new System.Drawing.Size(166, 26);
             this.itemWithoutFilling.Text = "Без заливки";
-            this.itemWithoutFilling.Click += new System.EventHandler(this.ToolStripMenuItem7Click);
+            this.itemWithoutFilling.Click += new System.EventHandler(this.OnItemForShapeFillingClick);
             // 
             // itemSolidColorFilling
             // 
@@ -744,7 +744,7 @@
             this.itemSolidColorFilling.Name = "itemSolidColorFilling";
             this.itemSolidColorFilling.Size = new System.Drawing.Size(166, 26);
             this.itemSolidColorFilling.Text = "Сплошной цвет";
-            this.itemSolidColorFilling.Click += new System.EventHandler(this.ToolStripMenuItem7Click);
+            this.itemSolidColorFilling.Click += new System.EventHandler(this.OnItemForShapeFillingClick);
             // 
             // toolStrip3
             // 
@@ -778,7 +778,7 @@
             this.itemWithoutContour.Name = "itemWithoutContour";
             this.itemWithoutContour.Size = new System.Drawing.Size(166, 26);
             this.itemWithoutContour.Text = "Без контура";
-            this.itemWithoutContour.Click += new System.EventHandler(this.ToolStripMenuItem6Click);
+            this.itemWithoutContour.Click += new System.EventHandler(this.OnItemForOutLineClick);
             // 
             // itemSolidColorContour
             // 
@@ -787,7 +787,7 @@
             this.itemSolidColorContour.Name = "itemSolidColorContour";
             this.itemSolidColorContour.Size = new System.Drawing.Size(166, 26);
             this.itemSolidColorContour.Text = "Сплошной цвет";
-            this.itemSolidColorContour.Click += new System.EventHandler(this.ToolStripMenuItem6Click);
+            this.itemSolidColorContour.Click += new System.EventHandler(this.OnItemForOutLineClick);
             // 
             // panelForPictureBox
             // 

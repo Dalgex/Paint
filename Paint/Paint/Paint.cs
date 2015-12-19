@@ -18,14 +18,14 @@ namespace Paint
     public partial class Paint : Form
     {
         private History history = new History();
-        private PanelResizer panelResizer;
         private HistoryData historyData = new HistoryData();
+        private PanelResizer panelResizer;
         private MyBitmap myBitmap;
-        private KeyboardShortcut keyboardShortcut;
         private FileMenuActions fileMenuActions;
         private FileMenu fileMenu;
         private ClipboardCommandsManager clipboardCommandsManager;
         private PaintingInAction paintingInAction;
+        private KeyboardShortcut keyboardShortcut;
 
         private int toolWidth = 10;
         private Color mainColor = Color.Black;
@@ -181,13 +181,13 @@ namespace Paint
             }
         }
 
-        private void ToolStripMenuItem6Click(object sender, EventArgs e)
+        private void OnItemForOutLineClick(object sender, EventArgs e)
         {
             var toolStripMenuItem = (ToolStripMenuItem)sender;
             withContour = (toolStripMenuItem.Text == "Без контура") ? false : true;
         }
 
-        private void ToolStripMenuItem7Click(object sender, EventArgs e)
+        private void OnItemForShapeFillingClick(object sender, EventArgs e)
         {
             var toolStripMenuItem = (ToolStripMenuItem)sender;
             withFilling = (toolStripMenuItem.Text == "Без заливки") ? false : true;
