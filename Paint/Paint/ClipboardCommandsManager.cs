@@ -29,7 +29,7 @@ namespace Paint
         /// <summary>
         /// Определяет, на какую кнопку нажали и затем выполняет соответствующее действие
         /// </summary>
-        public void DefindClipboardCommandClick(object sender, History history, HistoryData historyData, PictureBox pictureBox)
+        public void DefineClipboardCommandClick(object sender, History history, HistoryData historyData, PictureBox pictureBox)
         {
             clipboardCommands.Update(history, historyData);
 

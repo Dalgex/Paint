@@ -76,7 +76,7 @@ namespace Paint
         private void OnFileMenuClick(object sender, EventArgs e)
         {
             string text = string.Empty;
-            fileMenu.DefindMenuItemClick(ref history, ref historyData, sender, ref text, mainPictureBox);
+            fileMenu.DefineMenuItemClick(ref history, ref historyData, sender, ref text, mainPictureBox);
             
             if (text != string.Empty)
             {
@@ -226,7 +226,7 @@ namespace Paint
 
         private void OnClipboardCommandClick(object sender, EventArgs e)
         {
-            clipboardCommandsManager.DefindClipboardCommandClick(sender, history, historyData, mainPictureBox);
+            clipboardCommandsManager.DefineClipboardCommandClick(sender, history, historyData, mainPictureBox);
             mainPictureBox.Invalidate();
         }
 

@@ -15,12 +15,12 @@ namespace Paint
         public override Pen Pen { get; set; }
 
         /// <summary>
-        /// Представляет координаты первой точки
+        /// Получает или задает координаты начальной точки линии
         /// </summary>
         public Point FirstPoint { get; set; }
 
         /// <summary>
-        /// Представляет координаты второй точки
+        /// Получает или задает координаты конечной точки линии
         /// </summary>
         public Point SecondPoint { get; set; }
 

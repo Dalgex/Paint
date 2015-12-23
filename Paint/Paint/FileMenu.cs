@@ -31,7 +31,7 @@ namespace Paint
         /// <summary>
         /// Определяет, какой пункт выбрали в меню и затем выполняет соответствующее действие
         /// </summary>
-        public void DefindMenuItemClick(ref History history, ref HistoryData historyData,
+        public void DefineMenuItemClick(ref History history, ref HistoryData historyData,
             object sender, ref string text, System.Windows.Forms.PictureBox pictureBox)
         {
             var toolStripMenuItem = (System.Windows.Forms.ToolStripMenuItem)sender;
