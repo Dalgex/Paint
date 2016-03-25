@@ -25,6 +25,7 @@ namespace Paint
         private Button buttonForColorFilling;
         private Button buttonForEllipse;
         private Button buttonForRectangle;
+        private Button buttonForSelection;
         private Button activeButton;
         
         private History history;
@@ -36,9 +37,10 @@ namespace Paint
         private bool isShapeDrawn;
         private bool isPressed;
         private bool wasMouseMove;
+        private bool isSelection;
 
         public PaintingInAction(Button buttonForLine, Button buttonForBrush, Button buttonForEraser, Button buttonForPipette,
-            Button buttonForColorFilling, Button buttonForEllipse, Button buttonForRectangle, Button activeButton, 
+            Button buttonForColorFilling, Button buttonForEllipse, Button buttonForRectangle, Button buttonForSelection, Button activeButton, 
             History history, HistoryData historyData, MyBitmap myBitmap)
         {
             this.buttonForLine = buttonForLine;
@@ -48,6 +50,7 @@ namespace Paint
             this.buttonForColorFilling = buttonForColorFilling;
             this.buttonForEllipse = buttonForEllipse;
             this.buttonForRectangle = buttonForRectangle;
+            this.buttonForSelection = buttonForSelection;
             this.activeButton = activeButton;
             this.history = history;
             this.historyData = historyData;
@@ -149,6 +152,11 @@ namespace Paint
                     isShapeDrawn = true;
                     mainPictureBox.Invalidate();
                 }
+                else if (!buttonForSelection.Enabled)
+                {
+                    isSelection = true;
+                    mainPictureBox.Invalidate();
+                }
             }
 
             wasMouseMove = true;
@@ -221,6 +229,10 @@ namespace Paint
                     points = new List<Point>();
                     history.AddHistory(new CommandShape(historyData.Shapes[historyData.Shapes.Count - 1], "Добавление"), true);
                 }
+                else if (!buttonForSelection.Enabled)
+                {
+                    return;
+                }
 
                 mainPictureBox.Invalidate();
             }
@@ -255,6 +267,11 @@ namespace Paint
                 {
                     shapeBuilder.BuildRectangle(startPoint, currentPoint, e);
                 }
+            }
+            else if (isSelection)
+            {
+                isSelection = false;
+                Selection.DrawRegion(startPoint, currentPoint, e);
             }
         }
     }

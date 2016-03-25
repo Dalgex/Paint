@@ -50,7 +50,7 @@ namespace Paint
             
             activeButton = buttonForBrush;
             paintingInAction = new PaintingInAction(buttonForLine, buttonForBrush, buttonForEraser, buttonForPipette, buttonForColorFilling,
-                buttonForEllipse, buttonForRectangle, activeButton, history, historyData, myBitmap);
+                buttonForEllipse, buttonForRectangle, buttonForSelection, activeButton, history, historyData, myBitmap);
             keyboardShortcut = new KeyboardShortcut(itemToCreate, itemToOpen, itemToSave, buttonForUndo, buttonForRedo, buttonToPaste);
             InitializeColor();
         }
@@ -237,7 +237,7 @@ namespace Paint
 
         private void PaintFormClosing(object sender, FormClosingEventArgs e)
         {
-            fileMenuActions.OfferToSaveImage(mainPictureBox, e);
+            //fileMenuActions.OfferToSaveImage(mainPictureBox, e);
         }
     }
 }
