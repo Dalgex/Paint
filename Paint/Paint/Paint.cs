@@ -91,7 +91,7 @@ namespace Paint
         private void MainPictureBoxMouseDown(object sender, MouseEventArgs e)
         {
             paintingInAction.Update(history, historyData);
-            paintingInAction.PrepareSelectedShapeForBuilding(e, ref mainColor, ref backgroundColor, mainPictureBox, pictureBoxForMainColor,
+            paintingInAction.DefineAction(e, ref mainColor, ref backgroundColor, mainPictureBox, pictureBoxForMainColor,
                 pictureBoxForBackgroundColor, toolWidth, withContour, withFilling);
         }
 
@@ -99,13 +99,13 @@ namespace Paint
         {
             paintingInAction.Update(history, historyData);
             MouseCursor.ShowCursorLocation(labelForCursorLocation, e);
-            paintingInAction.CallSelectedShapeBuilding(e, mainColor, backgroundColor, mainPictureBox);
+            paintingInAction.PerformAction(e, mainColor, backgroundColor, mainPictureBox, Cursor);
         }
 
         private void MainPictureBoxMouseUp(object sender, MouseEventArgs e)
         {
             paintingInAction.Update(history, historyData);
-            paintingInAction.AddSelectedShapeInHistory(e, mainColor, backgroundColor, toolWidth, withContour, withFilling, mainPictureBox);
+            paintingInAction.CompleteAction(e, mainColor, backgroundColor, toolWidth, withContour, withFilling, mainPictureBox);
         }
 
         private void MainPictureBoxPaint(object sender, PaintEventArgs e)

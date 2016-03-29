@@ -37,7 +37,7 @@ namespace Paint
         private bool isShapeDrawn;
         private bool isPressed;
         private bool wasMouseMove;
-        private bool isSelection;
+        private bool isSelectionDrawn;
 
         public PaintingInAction(Button buttonForLine, Button buttonForBrush, Button buttonForEraser, Button buttonForPipette,
             Button buttonForColorFilling, Button buttonForEllipse, Button buttonForRectangle, Button buttonForSelection, Button activeButton, 
@@ -76,9 +76,9 @@ namespace Paint
         }
 
         /// <summary>
-        /// Определяет, какая кнопка была нажата и подготавливает фигуру, соответствующую данной кнопке, к построению
+        /// Определяет, какая кнопка была нажата и подготавливает/выполняет соответствующую операцию
         /// </summary>
-        public void PrepareSelectedShapeForBuilding(MouseEventArgs e, ref Color mainColor, ref Color backgroundColor,
+        public void DefineAction(MouseEventArgs e, ref Color mainColor, ref Color backgroundColor,
             PictureBox mainPictureBox, PictureBox pictureBoxForMainColor, PictureBox pictureBoxForBackgroundColor,
             int toolWidth, bool withContour, bool withFilling)
         {
@@ -99,63 +99,61 @@ namespace Paint
                 currentPoint = e.Location;
                 wasMouseMove = false;
 
-                if (!buttonForColorFilling.Enabled)
+                if (Selection.DoesRegionExist)
                 {
-                    FloodFill.FillRegion(myBitmap, history, historyData, mainPictureBox, e.Location, mainColor);
+                    MovingRectangle.SetDifferenceBetweenCoordinates(e);
                 }
-                else if (!buttonForBrush.Enabled || !buttonForEraser.Enabled)
+                else
                 {
-                    points.Add(new Point(e.Location.X, e.Location.Y));
-                    shapeBuilder = new ShapeBuilder(toolWidth);
-                }
-                else if (!buttonForLine.Enabled)
-                {
-                    shapeBuilder = new ShapeBuilder(mainColor, toolWidth);
-                }
-                else if (!buttonForEllipse.Enabled || !buttonForRectangle.Enabled)
-                {
-                    shapeBuilder = new ShapeBuilder(mainColor, backgroundColor, toolWidth, withContour, withFilling);
+                    PrepareSelectedShapeForBuilding(e, ref mainColor, ref backgroundColor, mainPictureBox, toolWidth, withContour, withFilling);
                 }
             }
         }
 
         /// <summary>
-        /// Определяет, какая фигура строится и вызывает соответствующие методы построения
+        /// Определяет, какая кнопка была нажата и подготавливает фигуру, соответствующую данной кнопке, к построению
         /// </summary>
-        public void CallSelectedShapeBuilding(MouseEventArgs e, Color mainColor, Color backgroundColor, PictureBox mainPictureBox)
+        private void PrepareSelectedShapeForBuilding(MouseEventArgs e, ref Color mainColor, ref Color backgroundColor,
+            PictureBox mainPictureBox, int toolWidth, bool withContour, bool withFilling)
+        {
+            if (!buttonForColorFilling.Enabled)
+            {
+                FloodFill.FillRegion(myBitmap, history, historyData, mainPictureBox, e.Location, mainColor);
+            }
+            else if (!buttonForBrush.Enabled || !buttonForEraser.Enabled)
+            {
+                points.Add(new Point(e.Location.X, e.Location.Y));
+                shapeBuilder = new ShapeBuilder(toolWidth);
+            }
+            else if (!buttonForLine.Enabled)
+            {
+                shapeBuilder = new ShapeBuilder(mainColor, toolWidth);
+            }
+            else if (!buttonForEllipse.Enabled || !buttonForRectangle.Enabled)
+            {
+                shapeBuilder = new ShapeBuilder(mainColor, backgroundColor, toolWidth, withContour, withFilling);
+            }
+        }
+
+        /// <summary>
+        /// Выполняет соответствующее действие при перемещении указателя мыши по элементу управления
+        /// </summary>
+        public void PerformAction(MouseEventArgs e, Color mainColor, Color backgroundColor, PictureBox mainPictureBox, Cursor cursor)
         {
             if (isPressed)
             {
                 previousPoint = currentPoint;
                 currentPoint = e.Location;
 
-                if (!buttonForBrush.Enabled || !buttonForEraser.Enabled)
+                if (!buttonForSelection.Enabled)
                 {
-                    points.Add(new Point(e.Location.X, e.Location.Y));
-
-                    if (!buttonForEraser.Enabled)
-                    {
-                        shapeBuilder.BuildCurve(previousPoint, currentPoint, backgroundColor, mainPictureBox);
-                    }
-                    else
-                    {
-                        shapeBuilder.BuildCurve(previousPoint, currentPoint, mainColor, mainPictureBox);
-                    }
-                }
-                else if (!buttonForLine.Enabled)
-                {
-                    isLineDrawn = true;
+                    MovingRectangle.ChangeRectangleCoordinates(e);
+                    isSelectionDrawn = true;
                     mainPictureBox.Invalidate();
                 }
-                else if (!buttonForEllipse.Enabled || !buttonForRectangle.Enabled)
+                else
                 {
-                    isShapeDrawn = true;
-                    mainPictureBox.Invalidate();
-                }
-                else if (!buttonForSelection.Enabled)
-                {
-                    isSelection = true;
-                    mainPictureBox.Invalidate();
+                    CallSelectedShapeBuilding(e, mainColor, backgroundColor, mainPictureBox);
                 }
             }
 
@@ -163,79 +161,133 @@ namespace Paint
         }
 
         /// <summary>
-        /// Добавляет фигуру, которая до опускания кнопки мыши рисовалась, в историю
+        /// Определяет, какая фигура строится и вызывает соответствующие методы построения
         /// </summary>
-        public void AddSelectedShapeInHistory(MouseEventArgs e, Color mainColor, Color backgroundColor, int toolWidth,
+        private void CallSelectedShapeBuilding(MouseEventArgs e, Color mainColor, Color backgroundColor, PictureBox mainPictureBox)
+        {
+            if (!buttonForBrush.Enabled || !buttonForEraser.Enabled)
+            {
+                points.Add(new Point(e.Location.X, e.Location.Y));
+
+                if (!buttonForEraser.Enabled)
+                {
+                    shapeBuilder.BuildCurve(previousPoint, currentPoint, backgroundColor, mainPictureBox);
+                }
+                else
+                {
+                    shapeBuilder.BuildCurve(previousPoint, currentPoint, mainColor, mainPictureBox);
+                }
+            }
+            else if (!buttonForLine.Enabled)
+            {
+                isLineDrawn = true;
+                mainPictureBox.Invalidate();
+            }
+            else if (!buttonForEllipse.Enabled || !buttonForRectangle.Enabled)
+            {
+                isShapeDrawn = true;
+                mainPictureBox.Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Завершает действие при отпускании кнопки мыши
+        /// </summary>
+        public void CompleteAction(MouseEventArgs e, Color mainColor, Color backgroundColor, int toolWidth,
             bool withContour, bool withFilling, PictureBox mainPictureBox)
         {
             if (isPressed)
             {
                 isPressed = false;
-
-                if (wasMouseMove && (!buttonForBrush.Enabled || !buttonForEraser.Enabled))
+                
+                if (!buttonForSelection.Enabled)
                 {
-                    if (!buttonForBrush.Enabled)
+                    if (!wasMouseMove)
                     {
-                        var curve = new Curve(points, new Pen(mainColor, toolWidth));
-                        historyData.Shapes.Add(curve);
+                        Selection.DeleteRegion();
+                        mainPictureBox.Invalidate();
                     }
                     else
                     {
-                        var curve = new Curve(points, new Pen(backgroundColor, toolWidth));
-                        historyData.Shapes.Add(curve);
+                        Selection.DrawFrameForRegion();
                     }
-
-                    points = new List<Point>();
-                    history.AddHistory(new CommandShape(historyData.Shapes[historyData.Shapes.Count - 1], "Добавление"), true);
                 }
-                else if (!buttonForLine.Enabled)
+                else
                 {
-                    var line = new Line(startPoint, currentPoint, new Pen(mainColor, toolWidth));
-                    historyData.Shapes.Add(line);
-                    history.AddHistory(new CommandShape(historyData.Shapes[historyData.Shapes.Count - 1], "Добавление"), true);
+                    AddSelectedShapeInHistory(e, mainColor, backgroundColor, toolWidth, withContour, withFilling, mainPictureBox);
                 }
-                else if (!buttonForEllipse.Enabled || !buttonForRectangle.Enabled)
-                {
-                    if (!buttonForEllipse.Enabled)
-                    {
-                        var ellipse = new Ellipse(shapeBuilder.Pen, new SolidBrush(backgroundColor), shapeBuilder.TopX,
-                            shapeBuilder.TopY, shapeBuilder.Width, shapeBuilder.Height, withContour, withFilling);
-                        historyData.Shapes.Add(ellipse);
-                    }
-                    else
-                    {
-                        var rectangle = new Rectangle(new Pen(mainColor, toolWidth), new SolidBrush(backgroundColor),
-                            shapeBuilder.TopX, shapeBuilder.TopY, shapeBuilder.Width, shapeBuilder.Height, withContour, withFilling);
-                        historyData.Shapes.Add(rectangle);
-                    }
-
-                    history.AddHistory(new CommandShape(historyData.Shapes[historyData.Shapes.Count - 1], "Добавление"), true);
-                }
-                else if (!wasMouseMove && buttonForColorFilling.Enabled)
-                {
-                    points.Add(currentPoint);
-
-                    if (!buttonForEraser.Enabled)
-                    {
-                        var curve = new Curve(points, new Pen(backgroundColor, toolWidth));
-                        historyData.Shapes.Add(curve);
-                    }
-                    else
-                    {
-                        var curve = new Curve(points, new Pen(mainColor, toolWidth));
-                        historyData.Shapes.Add(curve);
-                    }
-
-                    points = new List<Point>();
-                    history.AddHistory(new CommandShape(historyData.Shapes[historyData.Shapes.Count - 1], "Добавление"), true);
-                }
-                else if (!buttonForSelection.Enabled)
-                {
-                    return;
-                }
-
-                mainPictureBox.Invalidate();
             }
+        }
+
+        /// <summary>
+        /// Добавляет фигуру, которая до опускания кнопки мыши рисовалась, в историю
+        /// </summary>
+        private void AddSelectedShapeInHistory(MouseEventArgs e, Color mainColor, Color backgroundColor, int toolWidth,
+            bool withContour, bool withFilling, PictureBox mainPictureBox)
+        {
+            if (wasMouseMove && (!buttonForBrush.Enabled || !buttonForEraser.Enabled))
+            {
+                if (!buttonForBrush.Enabled)
+                {
+                    var curve = new Curve(points, new Pen(mainColor, toolWidth));
+                    historyData.Shapes.Add(curve);
+                }
+                else
+                {
+                    var curve = new Curve(points, new Pen(backgroundColor, toolWidth));
+                    historyData.Shapes.Add(curve);
+                }
+
+                points = new List<Point>();
+                history.AddHistory(new CommandShape(historyData.Shapes[historyData.Shapes.Count - 1], "Добавление"), true);
+            }
+            else if (!buttonForLine.Enabled)
+            {
+                var line = new Line(startPoint, currentPoint, new Pen(mainColor, toolWidth));
+                historyData.Shapes.Add(line);
+                history.AddHistory(new CommandShape(historyData.Shapes[historyData.Shapes.Count - 1], "Добавление"), true);
+            }
+            else if (!buttonForEllipse.Enabled || !buttonForRectangle.Enabled)
+            {
+                if (!buttonForEllipse.Enabled)
+                {
+                    var ellipse = new Ellipse(shapeBuilder.Pen, new SolidBrush(backgroundColor), shapeBuilder.TopX,
+                        shapeBuilder.TopY, shapeBuilder.Width, shapeBuilder.Height, withContour, withFilling);
+                    historyData.Shapes.Add(ellipse);
+                }
+                else
+                {
+                    var rectangle = new Rectangle(new Pen(mainColor, toolWidth), new SolidBrush(backgroundColor),
+                        shapeBuilder.TopX, shapeBuilder.TopY, shapeBuilder.Width, shapeBuilder.Height, withContour, withFilling);
+                    historyData.Shapes.Add(rectangle);
+                }
+
+                history.AddHistory(new CommandShape(historyData.Shapes[historyData.Shapes.Count - 1], "Добавление"), true);
+            }
+            else if (!wasMouseMove && buttonForColorFilling.Enabled)
+            {
+                points.Add(currentPoint);
+
+                if (!buttonForEraser.Enabled)
+                {
+                    var curve = new Curve(points, new Pen(backgroundColor, toolWidth));
+                    historyData.Shapes.Add(curve);
+                }
+                else
+                {
+                    var curve = new Curve(points, new Pen(mainColor, toolWidth));
+                    historyData.Shapes.Add(curve);
+                }
+
+                points = new List<Point>();
+                history.AddHistory(new CommandShape(historyData.Shapes[historyData.Shapes.Count - 1], "Добавление"), true);
+            }
+            else if (!wasMouseMove && isSelectionDrawn)
+            {
+
+            }
+
+            mainPictureBox.Invalidate();
         }
 
         /// <summary>
@@ -268,10 +320,18 @@ namespace Paint
                     shapeBuilder.BuildRectangle(startPoint, currentPoint, e);
                 }
             }
-            else if (isSelection)
+            else if (isSelectionDrawn)
             {
-                isSelection = false;
-                Selection.DrawRegion(startPoint, currentPoint, e);
+                isSelectionDrawn = false;
+
+                if (MovingRectangle.IsRectangleMoving)
+                {
+                    Selection.DrawMovingRegion(e);
+                }
+                else
+                {
+                    Selection.DrawRegion(startPoint, currentPoint, e);
+                }
             }
         }
     }

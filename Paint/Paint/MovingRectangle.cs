@@ -7,38 +7,51 @@ using System.Windows.Forms;
 
 namespace Paint
 {
+    /// <summary>
+    /// Предоставляет перемещение прямоугольника
+    /// </summary>
     public static class MovingRectangle
     {
-        private static bool isPressed;
         private static int deltaX;
         private static int deltaY;
-        private static System.Drawing.Rectangle rectangle;
+        private static Rectangle rectangle;
 
-        public static void MouseDown(MouseEventArgs e)
+        /// <summary>
+        /// Определяет, перемещается ли прямоугольник
+        /// </summary>
+        public static bool IsRectangleMoving { get; private set; }
+
+        /// <summary>
+        /// Если указатель мыши находится внутри прямоугольника, то задает разницу 
+        /// между координатами верхнего левого угла прямоугольника и текущим положением курсора
+        /// </summary>
+        public static void SetDifferenceBetweenCoordinates(MouseEventArgs e)
         {
-            if ((e.X < rectangle.X + rectangle.Width) && (e.X > rectangle.X))
+            rectangle = Selection.Region;
+
+            if (rectangle.Contains(e.Location))
             {
-                if ((e.Y < rectangle.Y + rectangle.Height) && (e.Y > rectangle.Y))
-                {
-                    isPressed = true;
-                    deltaX = e.X - rectangle.X;
-                    deltaY = e.Y - rectangle.Y;
-                }
+                IsRectangleMoving = true;
+                deltaX = e.X - rectangle.TopX;
+                deltaY = e.Y - rectangle.TopY;
+            }
+            else
+            {
+                IsRectangleMoving = false;
             }
         }
 
-        public static void MouseMove(MouseEventArgs e)
+        /// <summary>
+        /// Если прямоугольник сейчас двигается, то изменяет координаты его левого верхнего угла 
+        /// в соответствии с перемещением курсора
+        /// </summary>
+        public static void ChangeRectangleCoordinates(MouseEventArgs e)
         {
-            if (isPressed)
+            if (IsRectangleMoving)
             {
-                rectangle.X = e.X - deltaX;
-                rectangle.Y = e.Y - deltaY;
+                rectangle.TopX = e.X - deltaX;
+                rectangle.TopY = e.Y - deltaY;
             }
-        }
-
-        public static void MouseUp()
-        {
-            isPressed = false;
         }
     }
 }

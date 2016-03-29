@@ -61,6 +61,16 @@ namespace Paint
             this.WithFilling = withFill;
         }
 
+        public Rectangle(Pen pen, int topX, int topY, int width, int height)
+            : base(pen)
+        {
+            TopX = topX;
+            TopY = topY;
+            Width = width;
+            Height = height;
+            WithContour = true;
+        }
+
         public override void Draw(System.Windows.Forms.PaintEventArgs e)
         {
             if (WithContour || WithFilling)
@@ -79,6 +89,22 @@ namespace Paint
                     e.Graphics.FillRectangle(Fill, TopX, TopY, Width, Height);
                 }
             }
+        }
+
+        /// <summary>
+        /// Определяет, включает ли прямоугольник указанную точку
+        /// </summary>
+        public bool Contains(Point point)
+        {
+            if ((point.X < TopX + Width) && (point.X > TopX))
+            {
+                if ((point.Y < TopY + Height) && (point.Y > TopY))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

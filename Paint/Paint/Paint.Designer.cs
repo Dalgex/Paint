@@ -70,12 +70,12 @@
             this.buttonForRedo = new System.Windows.Forms.Button();
             this.panelForWidth = new System.Windows.Forms.Panel();
             this.labelForWidth = new System.Windows.Forms.Label();
+            this.buttonForSelection = new System.Windows.Forms.Button();
             this.panelForForm = new System.Windows.Forms.Panel();
             this.panelForStatusBar = new System.Windows.Forms.TableLayoutPanel();
             this.labelForPictureBoxSize = new System.Windows.Forms.Label();
             this.labelForCursorLocation = new System.Windows.Forms.Label();
             this.panelForTools = new System.Windows.Forms.Panel();
-            this.buttonForSelection = new System.Windows.Forms.Button();
             this.panelForInserting = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.buttonToPasteFrom = new System.Windows.Forms.ToolStripSplitButton();
@@ -566,6 +566,17 @@
             this.labelForWidth.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTip1.SetToolTip(this.labelForWidth, "Толщина\r\nВыбор ширины для заданного\r\nинструмента");
             // 
+            // buttonForSelection
+            // 
+            this.buttonForSelection.Image = global::Paint.Properties.Resources._56;
+            this.buttonForSelection.Location = new System.Drawing.Point(773, 25);
+            this.buttonForSelection.Name = "buttonForSelection";
+            this.buttonForSelection.Size = new System.Drawing.Size(43, 40);
+            this.buttonForSelection.TabIndex = 24;
+            this.toolTip1.SetToolTip(this.buttonForSelection, "Выделение\r\nВыделение фрагмента изображения");
+            this.buttonForSelection.UseVisualStyleBackColor = false;
+            this.buttonForSelection.Click += new System.EventHandler(this.OnToolClick);
+            // 
             // panelForForm
             // 
             this.panelForForm.AutoScroll = true;
@@ -644,17 +655,6 @@
             this.panelForTools.Name = "panelForTools";
             this.panelForTools.Size = new System.Drawing.Size(903, 105);
             this.panelForTools.TabIndex = 23;
-            // 
-            // buttonForSelection
-            // 
-            this.buttonForSelection.Image = global::Paint.Properties.Resources._56;
-            this.buttonForSelection.Location = new System.Drawing.Point(773, 25);
-            this.buttonForSelection.Name = "buttonForSelection";
-            this.buttonForSelection.Size = new System.Drawing.Size(43, 40);
-            this.buttonForSelection.TabIndex = 24;
-            this.toolTip1.SetToolTip(this.buttonForSelection, "Выделение\r\nВыделение фрагмента изображения");
-            this.buttonForSelection.UseVisualStyleBackColor = false;
-            this.buttonForSelection.Click += new System.EventHandler(this.OnToolClick);
             // 
             // panelForInserting
             // 

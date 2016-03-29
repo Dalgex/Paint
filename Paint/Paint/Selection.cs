@@ -12,12 +12,15 @@ namespace Paint
     /// </summary>
     public static class Selection
     {
-        private static Pen Pen;
-
         /// <summary>
         /// Возвращает координату по оси X левого верхнего угла области
         /// </summary>
         public static int TopX { get; private set; }
+
+        /// <summary>
+        /// Существует ли область
+        /// </summary>
+        public static bool DoesRegionExist { get; private set; }
         
         /// <summary>
         /// Возвращает координату по оси Y левого верхнего угла области
@@ -37,16 +40,18 @@ namespace Paint
         /// <summary>
         /// Возвращает прямоугольную область выделения
         /// </summary>
-        public static System.Drawing.Rectangle Region { get; private set; }
+        public static Rectangle Region { get; private set; }
+
+        private static Pen pen;
 
         static Selection()
         {
             float[] dashValues = { 4, 4 };
-            Pen = new Pen(Color.Black, 1);
-            Pen.DashPattern = dashValues;
+            pen = new Pen(Color.Black, 1);
+            pen.DashPattern = dashValues;
         }
 
-        private static void DetermineRegionSize(System.Drawing.Point startPoint, System.Drawing.Point currentPoint)
+        private static void DetermineRegionSize(Point startPoint, Point currentPoint)
         {
             TopX = (startPoint.X > currentPoint.X) ? currentPoint.X : startPoint.X;
             TopY = (startPoint.Y > currentPoint.Y) ? currentPoint.Y : startPoint.Y;
@@ -57,12 +62,36 @@ namespace Paint
         /// <summary>
         /// Рисует выделение области
         /// </summary>
-        public static void DrawRegion(System.Drawing.Point startPoint, System.Drawing.Point currentPoint,
-            System.Windows.Forms.PaintEventArgs e)
+        public static void DrawRegion(Point startPoint, Point currentPoint, System.Windows.Forms.PaintEventArgs e)
         {
             DetermineRegionSize(startPoint, currentPoint);
-            Region = new System.Drawing.Rectangle(TopX, TopY, Width, Height);
-            e.Graphics.DrawRectangle(Pen, Region);
+            Region = new Rectangle(pen, TopX, TopY, Width, Height);
+            Region.Draw(e);
+            DoesRegionExist = true;
+        }
+
+        /// <summary>
+        /// Рисует область при перемещении
+        /// </summary>
+        public static void DrawMovingRegion(System.Windows.Forms.PaintEventArgs e)
+        {
+            TopX = Region.TopX;
+            TopY = Region.TopY;
+            Region.Draw(e);
+        }
+
+        /// <summary>
+        /// Удаляет область выделения
+        /// </summary>
+        public static void DeleteRegion()
+        {
+            Region = new Rectangle(pen, 0, 0, 0, 0);
+            DoesRegionExist = false;
+        }
+
+        public static void DrawFrameForRegion()
+        {
+
         }
     }
 }
