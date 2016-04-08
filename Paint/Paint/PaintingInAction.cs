@@ -99,9 +99,12 @@ namespace Paint
                 currentPoint = e.Location;
                 wasMouseMove = false;
 
-                if (Selection.DoesRegionExist)
+                if (!buttonForSelection.Enabled)
                 {
-                    MovingRectangle.SetDifferenceBetweenCoordinates(e);
+                    if (Selection.DoesRegionExist)
+                    {
+                        MovingRectangle.SetDifferenceBetweenCoordinates(e);
+                    }
                 }
                 else
                 {
@@ -209,7 +212,7 @@ namespace Paint
                     }
                     else
                     {
-                        Selection.DrawFrameForRegion();
+                        Selection.DrawFrameForRegion(mainPictureBox);
                     }
                 }
                 else
@@ -282,10 +285,6 @@ namespace Paint
                 points = new List<Point>();
                 history.AddHistory(new CommandShape(historyData.Shapes[historyData.Shapes.Count - 1], "Добавление"), true);
             }
-            else if (!wasMouseMove && isSelectionDrawn)
-            {
-
-            }
 
             mainPictureBox.Invalidate();
         }
@@ -326,6 +325,7 @@ namespace Paint
 
                 if (MovingRectangle.IsRectangleMoving)
                 {
+                    Selection.DeleteFrame();
                     Selection.DrawMovingRegion(e);
                 }
                 else

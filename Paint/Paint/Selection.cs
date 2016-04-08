@@ -43,6 +43,7 @@ namespace Paint
         public static Rectangle Region { get; private set; }
 
         private static Pen pen;
+        private static FrameRectangle frame;
 
         static Selection()
         {
@@ -87,11 +88,23 @@ namespace Paint
         {
             Region = new Rectangle(pen, 0, 0, 0, 0);
             DoesRegionExist = false;
+            frame.DeleteFrame();
         }
 
-        public static void DrawFrameForRegion()
+        /// <summary>
+        /// Удаляет рамку
+        /// </summary>
+        public static void DeleteFrame()
         {
+            frame.DeleteFrame();
+        }
 
+        /// <summary>
+        /// Рисует рамку для выделенной области
+        /// </summary>
+        public static void DrawFrameForRegion(System.Windows.Forms.PictureBox pictureBox)
+        {
+            frame = new FrameRectangle(Region, pictureBox);
         }
     }
 }

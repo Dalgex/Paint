@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionsWithShapes.cs" />
+    <Compile Include="FrameRectangle.cs" />
     <Compile Include="MovingRectangle.cs" />
     <Compile Include="PaintingInAction.cs" />
     <Compile Include="ClipboardCommandsManager.cs" />

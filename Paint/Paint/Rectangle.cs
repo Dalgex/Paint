@@ -13,11 +13,45 @@ namespace Paint
     public class Rectangle : Shape
     {
         public override Pen Pen { get; set; }
-        
+
         /// <summary>
-        /// Возвращает или задает свойство Brush, которое определяет, как окрашена внутренняя область прямоугольника
+        /// Возвращает или задаёт высоту элемента
         /// </summary>
-        public Brush Fill { get; set; }
+        public int Height { get; set; }
+
+        /// <summary>
+        /// Возвращает или задает координаты левого верхнего угла прямоугольника
+        /// </summary>
+        public Point Location
+        {
+            get
+            {
+                return new Point(TopX, TopY);
+            }
+
+            set
+            {
+                TopX = value.X;
+                TopY = value.Y;
+            }
+        }
+
+        /// <summary>
+        /// Возвращает или задает размер элемента
+        /// </summary>
+        public Size Size
+        {
+            get
+            {
+                return new Size(Width, Height);
+            }
+
+            set
+            {
+                Width = value.Width;
+                Height = value.Height;
+            }
+        }
         
         /// <summary>
         /// Возвращает или задает координату по оси X левого верхнего угла прямоугольника
@@ -25,19 +59,19 @@ namespace Paint
         public int TopX { get; set; }
         
         /// <summary>
-        /// Возвращает или задает координату по оси Y левого верхнего угла эллипса
+        /// Возвращает или задает координату по оси Y левого верхнего угла прямоугольника
         /// </summary>
         public int TopY { get; set; }
-        
+
         /// <summary>
         /// Возвращает или задает ширину элемента
         /// </summary>
         public int Width { get; set; }
-        
+
         /// <summary>
-        /// Возвращает или задаёт высоту элемента
+        /// Возвращает или задает свойство Brush, которое определяет, как окрашена внутренняя область прямоугольника
         /// </summary>
-        public int Height { get; set; }
+        public Brush Fill { get; set; }
 
         /// <summary>
         /// Возвращает или задает логический параметр, который показывает, имеет ли прямоугольник контур
@@ -53,22 +87,31 @@ namespace Paint
             : base(pen)
         {
             Fill = brush;
-            TopX = topX;
-            TopY = topY;
-            Width = width;
-            Height = height;
-            this.WithContour = withContour;
-            this.WithFilling = withFill;
+            InitializeProperties(topX, topY, width, height);
+            WithContour = withContour;
+            WithFilling = withFill;
         }
 
         public Rectangle(Pen pen, int topX, int topY, int width, int height)
             : base(pen)
         {
+            InitializeProperties(topX, topY, width, height);
+            WithContour = true;
+        }
+
+        public Rectangle(Pen pen, Point location, Size size)
+            : base(pen)
+        {
+            InitializeProperties(location.X, location.Y, size.Width, size.Height);
+            WithContour = true;
+        }
+
+        private void InitializeProperties(int topX, int topY, int width, int height)
+        {
             TopX = topX;
             TopY = topY;
             Width = width;
             Height = height;
-            WithContour = true;
         }
 
         public override void Draw(System.Windows.Forms.PaintEventArgs e)
@@ -96,15 +139,16 @@ namespace Paint
         /// </summary>
         public bool Contains(Point point)
         {
-            if ((point.X < TopX + Width) && (point.X > TopX))
-            {
-                if ((point.Y < TopY + Height) && (point.Y > TopY))
-                {
-                    return true;
-                }
-            }
+            return (TopX <= point.X) && (point.X < TopX + Width) && (TopY <= point.Y) && (point.Y < (TopY + Height));
+        }
 
-            return false;
+        /// <summary>
+        /// Изменяет положение прямоугольника на указанную величину
+        /// </summary>
+        public void Offset(int offsetX, int offsetY)
+        {
+            TopX += offsetX;
+            TopY += offsetY;
         }
     }
 }

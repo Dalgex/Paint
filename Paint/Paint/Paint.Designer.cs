@@ -568,7 +568,7 @@
             // 
             // buttonForSelection
             // 
-            this.buttonForSelection.Image = global::Paint.Properties.Resources._56;
+            this.buttonForSelection.Image = ((System.Drawing.Image)(resources.GetObject("buttonForSelection.Image")));
             this.buttonForSelection.Location = new System.Drawing.Point(773, 25);
             this.buttonForSelection.Name = "buttonForSelection";
             this.buttonForSelection.Size = new System.Drawing.Size(43, 40);
