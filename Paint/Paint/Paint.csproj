@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="ActionsWithShapes.cs" />
     <Compile Include="FrameRectangle.cs" />
+    <Compile Include="ImageCapture.cs" />
     <Compile Include="MovingRectangle.cs" />
     <Compile Include="PaintingInAction.cs" />
     <Compile Include="ClipboardCommandsManager.cs" />
@@ -111,7 +112,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\56.png" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

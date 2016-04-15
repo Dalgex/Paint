@@ -21,6 +21,11 @@ namespace Paint
         /// Существует ли область
         /// </summary>
         public static bool DoesRegionExist { get; private set; }
+
+        /// <summary>
+        /// Показывает, было ли выделение раньше
+        /// </summary>
+        public static bool WasSelectionBefore { get; private set; }
         
         /// <summary>
         /// Возвращает координату по оси Y левого верхнего угла области
@@ -42,14 +47,20 @@ namespace Paint
         /// </summary>
         public static Rectangle Region { get; private set; }
 
+        public static bool IsFrameChanged
+        {
+            get { return frame.IsFrameChanged; }
+        }
+
         private static Pen pen;
-        private static FrameRectangle frame;
+        private static FrameRectangle frame = new FrameRectangle();
 
         static Selection()
         {
             float[] dashValues = { 4, 4 };
             pen = new Pen(Color.Black, 1);
             pen.DashPattern = dashValues;
+            Region = new Rectangle(pen, new Point(0, 0), new Size(0, 0));
         }
 
         private static void DetermineRegionSize(Point startPoint, Point currentPoint)
@@ -88,6 +99,7 @@ namespace Paint
         {
             Region = new Rectangle(pen, 0, 0, 0, 0);
             DoesRegionExist = false;
+            WasSelectionBefore = false;
             frame.DeleteFrame();
         }
 
@@ -100,10 +112,11 @@ namespace Paint
         }
 
         /// <summary>
-        /// Рисует рамку для выделенной области
+        /// Рисует рамку для выделенного фрагмента
         /// </summary>
         public static void DrawFrameForRegion(System.Windows.Forms.PictureBox pictureBox)
         {
+            WasSelectionBefore = true;
             frame = new FrameRectangle(Region, pictureBox);
         }
     }

@@ -61,17 +61,9 @@ namespace Paint
         {
             Size size = historyData.PanelSizes.Peek().Size;
             historyData.PanelSizes.Push(new PanelSize(panel.Size));
-            
-            if (size.Width > panel.Size.Width || size.Height > panel.Size.Height)
-            {
-                history.AddHistory(new CommandPanelSize(historyData.PanelSizes.Peek().Size, this), false);
-                System.Windows.Forms.PictureBox pictureBox = (System.Windows.Forms.PictureBox)panel.Controls[0];
-                myBitmap.ChangeBitmap(history, historyData, pictureBox);
-            }
-            else
-            {
-                history.AddHistory(new CommandPanelSize(historyData.PanelSizes.Peek().Size, this), true);
-            }
+            history.AddHistory(new CommandPanelSize(historyData.PanelSizes.Peek().Size, this), false);
+            System.Windows.Forms.PictureBox pictureBox = (System.Windows.Forms.PictureBox)panel.Controls[0];
+            myBitmap.ChangeBitmap(history, historyData, pictureBox);
         }
 
         private void ShowPictureBoxSize()

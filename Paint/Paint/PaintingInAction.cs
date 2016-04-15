@@ -103,7 +103,18 @@ namespace Paint
                 {
                     if (Selection.DoesRegionExist)
                     {
-                        MovingRectangle.SetDifferenceBetweenCoordinates(e);
+                        MovingRectangle.DetermineIsRectangleMoving(e);
+
+                        if (!Selection.Region.Contains(e.Location))
+                        {
+                            ImageCapture.AddBitmapForRegionToMainBitmap(myBitmap, Selection.Region);
+                            Selection.DeleteRegion();
+                            mainPictureBox.Invalidate();
+                        }
+                        else
+                        {
+                            MovingRectangle.SetDifferenceBetweenCoordinates(e);
+                        }
                     }
                 }
                 else
@@ -147,6 +158,11 @@ namespace Paint
             {
                 previousPoint = currentPoint;
                 currentPoint = e.Location;
+
+                if (previousPoint == currentPoint)
+                {
+                    return;
+                }
 
                 if (!buttonForSelection.Enabled)
                 {
@@ -205,13 +221,14 @@ namespace Paint
                 
                 if (!buttonForSelection.Enabled)
                 {
-                    if (!wasMouseMove)
+                    if (Selection.DoesRegionExist)
                     {
-                        Selection.DeleteRegion();
-                        mainPictureBox.Invalidate();
-                    }
-                    else
-                    {
+                        if (!Selection.WasSelectionBefore)
+                        {
+                            ImageCapture.GetImageFromSelectedRegion(myBitmap, Selection.Region);
+                            ImageCapture.CleanRegion(myBitmap, Selection.Region, backgroundColor);
+                        }
+
                         Selection.DrawFrameForRegion(mainPictureBox);
                     }
                 }
@@ -295,6 +312,7 @@ namespace Paint
         public void RepaintAll(PaintEventArgs e)
         {
             e.Graphics.DrawImage(myBitmap.Bitmap, 0, 0);
+            e.Graphics.DrawImage(ImageCapture.BitmapForRegion, Selection.Region.Location);
 
             foreach (var shape in historyData.Shapes)
             {
@@ -325,13 +343,18 @@ namespace Paint
 
                 if (MovingRectangle.IsRectangleMoving)
                 {
-                    Selection.DeleteFrame();
                     Selection.DrawMovingRegion(e);
                 }
                 else
                 {
                     Selection.DrawRegion(startPoint, currentPoint, e);
                 }
+
+                Selection.DeleteFrame();
+            }
+            else if (Selection.IsFrameChanged)
+            {
+                Selection.Region.Draw(e);
             }
         }
     }

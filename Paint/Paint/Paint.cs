@@ -126,17 +126,16 @@ namespace Paint
         {
             var tool = (Button)sender;
             tool.Enabled = false;
+            activeButton.Enabled = true;
+
+            if (activeButton == buttonForSelection)
+            {
+                Selection.DeleteRegion();
+                mainPictureBox.Invalidate();
+            }
+
             activeButton = tool;
             paintingInAction.Update(activeButton);
-            
-            foreach (var control in panelForTools.Controls)
-            {
-                if (control is Button && control != tool)
-                {
-                    Button button = (Button)control;
-                    button.Enabled = true;
-                }
-            }
         }
 
         private void NumericUpDownValueChanged(object sender, EventArgs e)

@@ -17,28 +17,27 @@ namespace Paint
         private static Rectangle rectangle;
 
         /// <summary>
-        /// Определяет, перемещается ли прямоугольник
+        /// Показывает, перемещается ли прямоугольник
         /// </summary>
         public static bool IsRectangleMoving { get; private set; }
 
         /// <summary>
-        /// Если указатель мыши находится внутри прямоугольника, то задает разницу 
-        /// между координатами верхнего левого угла прямоугольника и текущим положением курсора
+        /// Задает разницу между координатами верхнего левого угла прямоугольника и текущим положением курсора
         /// </summary>
         public static void SetDifferenceBetweenCoordinates(MouseEventArgs e)
         {
-            rectangle = Selection.Region;
+            IsRectangleMoving = true;
+            deltaX = e.X - rectangle.TopX;
+            deltaY = e.Y - rectangle.TopY;
+        }
 
-            if (rectangle.Contains(e.Location))
-            {
-                IsRectangleMoving = true;
-                deltaX = e.X - rectangle.TopX;
-                deltaY = e.Y - rectangle.TopY;
-            }
-            else
-            {
-                IsRectangleMoving = false;
-            }
+        /// <summary>
+        /// Определяет, перемещается ли прямоугольник
+        /// </summary>
+        public static void DetermineIsRectangleMoving(MouseEventArgs e)
+        {
+            rectangle = Selection.Region;
+            IsRectangleMoving = rectangle.Contains(e.Location);
         }
 
         /// <summary>

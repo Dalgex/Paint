@@ -19,9 +19,16 @@ namespace Paint
         private Size size;
         private bool doesFrameExist;
 
+        /// <summary>
+        /// Показывает, изменяется ли сейчас рамка (растягивается/сжимается)
+        /// </summary>
+        public bool IsFrameChanged { get; private set; }
+
         private PictureBox mainPictureBox;
         private PictureBox[] pictureBox = new PictureBox[8];
-        
+
+        public FrameRectangle() { }
+
         public FrameRectangle(Rectangle rectangle, PictureBox pictureBox)
         {
             rect = rectangle;
@@ -107,12 +114,12 @@ namespace Paint
 
         private void CallEventFrameMouseUp(object sender, MouseEventArgs e)
         {
+            IsFrameChanged = false;
+
             if (size != rect.Size)
             {
-                //if (FrameMouseUp != null)
-                {
-                    //FrameMouseUp();
-                }
+                ImageCapture.ScaleImage(rect);
+                mainPictureBox.Invalidate();
             }
         }
 
@@ -120,6 +127,7 @@ namespace Paint
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
+                IsFrameChanged = true;
                 var pictureBox = (PictureBox)sender;
 
                 if ((pictureBox.Name == "pictureBoxOnRightBorder") || (pictureBox.Name == "pictureBoxOnLeftBorder"))
@@ -174,11 +182,10 @@ namespace Paint
                     }
                 }
 
-                ChangeFrameLocation();
-
-                //if (FrameMouseMove != null)
+                if (rect.Width > 0 && rect.Height > 0)
                 {
-                    //FrameMouseMove();
+                    ChangeFrameLocation();
+                    mainPictureBox.Invalidate();
                 }
             }
         }

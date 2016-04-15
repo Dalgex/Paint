@@ -806,7 +806,7 @@
             // 
             this.panelForPictureBox.Controls.Add(this.mainPictureBox);
             this.panelForPictureBox.Location = new System.Drawing.Point(2, 106);
-            this.panelForPictureBox.MinimumSize = new System.Drawing.Size(10, 10);
+            this.panelForPictureBox.MinimumSize = new System.Drawing.Size(11, 11);
             this.panelForPictureBox.Name = "panelForPictureBox";
             this.panelForPictureBox.Padding = new System.Windows.Forms.Padding(5);
             this.panelForPictureBox.Size = new System.Drawing.Size(380, 123);
