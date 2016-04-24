@@ -517,7 +517,7 @@
             this.buttonForPipette.TabIndex = 21;
             this.toolTip1.SetToolTip(this.buttonForPipette, "Пипетка\r\nЛевой кнопкой берёт основной\r\nцвет, правой - фоновый");
             this.buttonForPipette.UseVisualStyleBackColor = false;
-            this.buttonForPipette.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PipetteMouseDown);
+            this.buttonForPipette.Click += new System.EventHandler(this.OnButtonClick);
             // 
             // buttonForUndo
             // 

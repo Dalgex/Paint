@@ -47,9 +47,28 @@ namespace Paint
         /// </summary>
         public static Rectangle Region { get; private set; }
 
+        /// <summary>
+        /// Показывает, изменяется ли сейчас рамка (растягивается/сжимается)
+        /// </summary>
         public static bool IsFrameChanged
         {
             get { return frame.IsFrameChanged; }
+        }
+
+        /// <summary>
+        /// Показывает, было ли завершено изменение размеров области
+        /// </summary>
+        public static bool WasFinishedChange
+        {
+            get { return frame.WasFinishedChange; }
+        }
+
+        /// <summary>
+        /// Возвращает начальное положение области выделения
+        /// </summary>
+        public static Point StartingPositionRegion
+        {
+            get { return frame.StartingPositionRegion; }
         }
 
         private static Pen pen;

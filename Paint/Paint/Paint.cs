@@ -195,20 +195,6 @@ namespace Paint
             mainPictureBox.Invalidate();
         }
 
-        private void PipetteMouseDown(object sender, MouseEventArgs e)
-        {
-            buttonForPipette.Enabled = false;
-
-            foreach (var control in panelForTools.Controls)
-            {
-                if (control is Button && control != buttonForPipette)
-                {
-                    Button button = (Button)control;
-                    button.Enabled = true;
-                }
-            }
-        }
-
         private void MainPictureBoxMouseLeave(object sender, EventArgs e)
         {
             labelForCursorLocation.Text = string.Empty;

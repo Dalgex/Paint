@@ -88,10 +88,10 @@ namespace Paint
 
                 if (!buttonForSelection.Enabled)
                 {
+                    MovingRectangle.DetermineIsRectangleMoving(e);
+
                     if (Selection.DoesRegionExist)
                     {
-                        MovingRectangle.DetermineIsRectangleMoving(e);
-
                         if (!Selection.Region.Contains(e.Location))
                         {
                             ImageCapture.AddBitmapForRegionToMainBitmap(myBitmap, Selection.Region);
@@ -218,6 +218,7 @@ namespace Paint
                         {
                             ImageCapture.GetImageFromSelectedRegion(myBitmap, Selection.Region);
                             ImageCapture.CleanRegion(myBitmap, Selection.Region, backgroundColor);
+                            ActionsWithShapes.ClearShapes(history, historyData);
                         }
 
                         Selection.DrawFrameForRegion(mainPictureBox);
@@ -327,29 +328,31 @@ namespace Paint
                     shapeBuilder.BuildRectangle(startPoint, currentPoint, e);
                 }
             }
-            else if (isSelectionDrawn || Selection.IsFrameChanged)
+            else if (isSelectionDrawn)
             {
                 e.Graphics.DrawImage(ImageCapture.BitmapForRegion, Selection.Region.Location);
+                isSelectionDrawn = false;
 
-                if (isSelectionDrawn)
+                if (MovingRectangle.IsRectangleMoving)
                 {
-                    isSelectionDrawn = false;
-
-                    if (MovingRectangle.IsRectangleMoving)
-                    {
-                        Selection.DrawMovingRegion(e);
-                    }
-                    else
-                    {
-                        Selection.DrawRegion(startPoint, currentPoint, e);
-                    }
-
-                    Selection.DeleteFrame();
+                    Selection.DrawMovingRegion(e);
                 }
                 else
                 {
-                    Selection.Region.Draw(e);
+                    Selection.DrawRegion(startPoint, currentPoint, e);
                 }
+
+                Selection.DeleteFrame();
+            }
+            else if (Selection.IsFrameChanged)
+            {
+                e.Graphics.DrawImage(ImageCapture.BitmapForRegion, Selection.StartingPositionRegion);
+                Selection.Region.Draw(e);
+            }
+            else if (Selection.WasFinishedChange)
+            {
+                e.Graphics.DrawImage(ImageCapture.BitmapForRegion, Selection.Region.Location);
+                Selection.Region.Draw(e);
             }
         }
     }

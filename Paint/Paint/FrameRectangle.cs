@@ -20,6 +20,16 @@ namespace Paint
         private bool doesFrameExist;
 
         /// <summary>
+        /// Показывает начальное положение области выделения
+        /// </summary>
+        public Point StartingPositionRegion { get; private set; }
+
+        /// <summary>
+        /// Показывает, было ли завершено изменение размеров области
+        /// </summary>
+        public bool WasFinishedChange { get; private set; }
+
+        /// <summary>
         /// Показывает, изменяется ли сейчас рамка (растягивается/сжимается)
         /// </summary>
         public bool IsFrameChanged { get; private set; }
@@ -50,6 +60,7 @@ namespace Paint
                 pictureBox[i].BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
                 pictureBox[i].Size = new System.Drawing.Size(length, length);
                 pictureBox[i].TabStop = false;
+                pictureBox[i].MouseDown += new System.Windows.Forms.MouseEventHandler(this.CallEventFrameMouseDown);
                 pictureBox[i].MouseMove += new System.Windows.Forms.MouseEventHandler(this.ChangeRegionSize);
                 pictureBox[i].MouseUp += new System.Windows.Forms.MouseEventHandler(this.CallEventFrameMouseUp);
 
@@ -112,15 +123,23 @@ namespace Paint
             }
         }
 
+        private void CallEventFrameMouseDown(object sender, MouseEventArgs e)
+        {
+            StartingPositionRegion = rect.Location;
+        }
+
         private void CallEventFrameMouseUp(object sender, MouseEventArgs e)
         {
+            WasFinishedChange = true;
+            IsFrameChanged = false;
+
             if (size != rect.Size)
             {
                 ImageCapture.ScaleImage(rect);
                 mainPictureBox.Refresh();
             }
 
-            IsFrameChanged = false; // - из-за этого не рисует
+            WasFinishedChange = false;
         }
 
         private void ChangeRegionSize(object sender, MouseEventArgs e)
