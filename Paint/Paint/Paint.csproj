@@ -85,6 +85,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShapeBuilder.cs" />
     <Compile Include="KeyboardShortcut.cs" />
+    <Compile Include="DefinitionEnabledControl.cs" />
     <EmbeddedResource Include="Paint.resx">
       <DependentUpon>Paint.cs</DependentUpon>
     </EmbeddedResource>

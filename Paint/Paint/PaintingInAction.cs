@@ -26,12 +26,12 @@ namespace Paint
         private Button buttonForEllipse;
         private Button buttonForRectangle;
         private Button buttonForSelection;
-        private Button activeButton;
         
         private History history;
         private HistoryData historyData;
         private MyBitmap myBitmap;
         private ShapeBuilder shapeBuilder;
+        private DefinitionEnabledControl tools;
 
         private bool isLineDrawn;
         private bool isShapeDrawn;
@@ -40,8 +40,8 @@ namespace Paint
         private bool isSelectionDrawn;
 
         public PaintingInAction(Button buttonForLine, Button buttonForBrush, Button buttonForEraser, Button buttonForPipette,
-            Button buttonForColorFilling, Button buttonForEllipse, Button buttonForRectangle, Button buttonForSelection, Button activeButton, 
-            History history, HistoryData historyData, MyBitmap myBitmap)
+            Button buttonForColorFilling, Button buttonForEllipse, Button buttonForRectangle, Button buttonForSelection, 
+            History history, HistoryData historyData, MyBitmap myBitmap, DefinitionEnabledControl tools)
         {
             this.buttonForLine = buttonForLine;
             this.buttonForBrush = buttonForBrush;
@@ -51,19 +51,10 @@ namespace Paint
             this.buttonForEllipse = buttonForEllipse;
             this.buttonForRectangle = buttonForRectangle;
             this.buttonForSelection = buttonForSelection;
-            this.activeButton = activeButton;
             this.history = history;
             this.historyData = historyData;
             this.myBitmap = myBitmap;
-        }
-
-        /// <summary>
-        /// Обновляет ссылку на activeButton, чтобы не потерять связь между полями activeButton 
-        /// класса PaintingInAction и activeButton класса Paint
-        /// </summary>
-        public void Update(Button activeButton)
-        {
-            this.activeButton = activeButton;
+            this.tools = tools;
         }
 
         /// <summary>
@@ -86,11 +77,7 @@ namespace Paint
             {
                 Pipette.SetColor(e, ref mainColor, ref backgroundColor, mainPictureBox, pictureBoxForMainColor, pictureBoxForBackgroundColor);
                 buttonForPipette.Enabled = true;
-
-                if (activeButton != null)
-                {
-                    activeButton.Enabled = false;
-                }
+                tools.DisableControl();
             }
             else if (e.Button == MouseButtons.Left)
             {
@@ -115,6 +102,10 @@ namespace Paint
                         {
                             MovingRectangle.SetDifferenceBetweenCoordinates(e);
                         }
+                    }
+                    else
+                    {
+
                     }
                 }
                 else
@@ -312,7 +303,6 @@ namespace Paint
         public void RepaintAll(PaintEventArgs e)
         {
             e.Graphics.DrawImage(myBitmap.Bitmap, 0, 0);
-            e.Graphics.DrawImage(ImageCapture.BitmapForRegion, Selection.Region.Location);
 
             foreach (var shape in historyData.Shapes)
             {
@@ -337,24 +327,29 @@ namespace Paint
                     shapeBuilder.BuildRectangle(startPoint, currentPoint, e);
                 }
             }
-            else if (isSelectionDrawn)
+            else if (isSelectionDrawn || Selection.IsFrameChanged)
             {
-                isSelectionDrawn = false;
+                e.Graphics.DrawImage(ImageCapture.BitmapForRegion, Selection.Region.Location);
 
-                if (MovingRectangle.IsRectangleMoving)
+                if (isSelectionDrawn)
                 {
-                    Selection.DrawMovingRegion(e);
+                    isSelectionDrawn = false;
+
+                    if (MovingRectangle.IsRectangleMoving)
+                    {
+                        Selection.DrawMovingRegion(e);
+                    }
+                    else
+                    {
+                        Selection.DrawRegion(startPoint, currentPoint, e);
+                    }
+
+                    Selection.DeleteFrame();
                 }
                 else
                 {
-                    Selection.DrawRegion(startPoint, currentPoint, e);
+                    Selection.Region.Draw(e);
                 }
-
-                Selection.DeleteFrame();
-            }
-            else if (Selection.IsFrameChanged)
-            {
-                Selection.Region.Draw(e);
             }
         }
     }

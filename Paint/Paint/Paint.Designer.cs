@@ -120,7 +120,7 @@
             this.buttonForBrush.TabIndex = 1;
             this.toolTip1.SetToolTip(this.buttonForBrush, "Кисть\r\nРисование с использованием кисти");
             this.buttonForBrush.UseVisualStyleBackColor = false;
-            this.buttonForBrush.Click += new System.EventHandler(this.OnToolClick);
+            this.buttonForBrush.Click += new System.EventHandler(this.OnButtonClick);
             // 
             // mainPictureBox
             // 
@@ -256,7 +256,7 @@
             this.toolTip1.SetToolTip(this.buttonForEraser, "Ластик\r\nСтирает изображение, заменяя его белым \r\nцветом или другим цветом, которы" +
         "й выбран \r\nвместо фонового");
             this.buttonForEraser.UseVisualStyleBackColor = false;
-            this.buttonForEraser.Click += new System.EventHandler(this.OnToolClick);
+            this.buttonForEraser.Click += new System.EventHandler(this.OnButtonClick);
             // 
             // buttonToPaste
             // 
@@ -360,7 +360,7 @@
             this.buttonForEllipse.TabIndex = 11;
             this.toolTip1.SetToolTip(this.buttonForEllipse, "Овал");
             this.buttonForEllipse.UseVisualStyleBackColor = false;
-            this.buttonForEllipse.Click += new System.EventHandler(this.OnToolClick);
+            this.buttonForEllipse.Click += new System.EventHandler(this.OnButtonClick);
             // 
             // buttonForRectangle
             // 
@@ -372,7 +372,7 @@
             this.buttonForRectangle.TabIndex = 12;
             this.toolTip1.SetToolTip(this.buttonForRectangle, "Прямоугольник");
             this.buttonForRectangle.UseVisualStyleBackColor = false;
-            this.buttonForRectangle.Click += new System.EventHandler(this.OnToolClick);
+            this.buttonForRectangle.Click += new System.EventHandler(this.OnButtonClick);
             // 
             // buttonForLine
             // 
@@ -384,7 +384,7 @@
             this.buttonForLine.TabIndex = 13;
             this.toolTip1.SetToolTip(this.buttonForLine, "Линия");
             this.buttonForLine.UseVisualStyleBackColor = false;
-            this.buttonForLine.Click += new System.EventHandler(this.OnToolClick);
+            this.buttonForLine.Click += new System.EventHandler(this.OnButtonClick);
             // 
             // buttonForColorFilling
             // 
@@ -397,7 +397,7 @@
             this.buttonForColorFilling.TabIndex = 14;
             this.toolTip1.SetToolTip(this.buttonForColorFilling, "Заливка области\r\nЩелкните область холста, чтобы\r\nзаполнить ее основным цветом");
             this.buttonForColorFilling.UseVisualStyleBackColor = false;
-            this.buttonForColorFilling.Click += new System.EventHandler(this.OnToolClick);
+            this.buttonForColorFilling.Click += new System.EventHandler(this.OnButtonClick);
             // 
             // panelForBackgroundColor
             // 
@@ -575,7 +575,7 @@
             this.buttonForSelection.TabIndex = 24;
             this.toolTip1.SetToolTip(this.buttonForSelection, "Выделение\r\nВыделение фрагмента изображения");
             this.buttonForSelection.UseVisualStyleBackColor = false;
-            this.buttonForSelection.Click += new System.EventHandler(this.OnToolClick);
+            this.buttonForSelection.Click += new System.EventHandler(this.OnButtonClick);
             // 
             // panelForForm
             // 

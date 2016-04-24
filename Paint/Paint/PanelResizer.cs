@@ -15,7 +15,7 @@ namespace Paint
         private System.Windows.Forms.Control panel;
         private History history;
         private HistoryData historyData;
-        private FrameWidget frameWidget;
+        public FrameWidget FrameWidget { get; private set; }
         private MyBitmap myBitmap;
         private System.Windows.Forms.Label label;
         private int distance = DistanceBetweenBordersPictureBoxAndPanel.Value;
@@ -24,9 +24,9 @@ namespace Paint
             MyBitmap myBitmap, System.Windows.Forms.Label label)
         {
             this.panel = panel;
-            frameWidget = new FrameWidget(panel);
-            frameWidget.FrameMouseUp += AddInHistoryNewPanelSize;
-            frameWidget.FrameMouseMove += ShowPictureBoxSize;
+            FrameWidget = new FrameWidget(panel);
+            FrameWidget.FrameMouseUp += AddInHistoryNewPanelSize;
+            FrameWidget.FrameMouseMove += ShowPictureBoxSize;
             this.historyData = historyData;
             this.history = history;
             this.label = label;
@@ -51,7 +51,7 @@ namespace Paint
             int temp = panel.Width;
             panel.Width = panel.Height;
             panel.Height = temp;
-            frameWidget.ChangeFrameLocation();
+            FrameWidget.ChangeFrameLocation();
             historyData.PanelSizes.Push(new PanelSize(panel.Size));
             history.AddHistory(new CommandPanelSize(historyData.PanelSizes.Peek().Size, this), false);
             ShowPictureBoxSize();
@@ -77,7 +77,7 @@ namespace Paint
         public void SetPanelSize(System.Drawing.Size size)
         {
             panel.Size = size;
-            frameWidget.ChangeFrameLocation();
+            FrameWidget.ChangeFrameLocation();
             ShowPictureBoxSize();
         }
     }

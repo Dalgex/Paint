@@ -116,6 +116,27 @@ namespace Paint
             this.pictureBoxInCorner.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CallEventFrameMouseUp);
         }
 
+        /// <summary>
+        /// Добавляет рамку для графического окна
+        /// </summary>
+        public void AddFrameWidget()
+        {
+            control.Controls.Add(pictureBoxOnRightBorder);
+            control.Controls.Add(pictureBoxOnBottomBorder);
+            control.Controls.Add(pictureBoxInCorner);
+            ChangeFrameLocation();
+        }
+
+        /// <summary>
+        /// Удаляет рамку графического окна
+        /// </summary>
+        public void RemoveFrameWidget()
+        {
+            control.Controls.Remove(pictureBoxOnRightBorder);
+            control.Controls.Remove(pictureBoxOnBottomBorder);
+            control.Controls.Remove(pictureBoxInCorner);
+        }
+
         private void CallEventFrameMouseUp(object sender, MouseEventArgs e)
         {
             if (size != control.Size)

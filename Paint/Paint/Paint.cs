@@ -26,13 +26,13 @@ namespace Paint
         private ClipboardCommandsManager clipboardCommandsManager;
         private PaintingInAction paintingInAction;
         private KeyboardShortcut keyboardShortcut;
+        private DefinitionEnabledControl tools;
 
         private int toolWidth = 10;
         private Color mainColor = Color.Black;
         private Color backgroundColor = Color.White;       
         private bool withContour = true;
         private bool withFilling;
-        private Button activeButton;
 
         public Paint()
         {
@@ -41,16 +41,17 @@ namespace Paint
             historyData.PanelSizes.Push(new PanelSize(panelForPictureBox.Size));
             myBitmap = new MyBitmap(new Bitmap(mainPictureBox.Width, mainPictureBox.Height));
             panelResizer = new PanelResizer(panelForPictureBox, history, historyData, myBitmap, labelForPictureBoxSize);
-            historyData.Bitmaps.Push(myBitmap.Bitmap);            
+            historyData.Bitmaps.Push(myBitmap.Bitmap);
+            tools = new DefinitionEnabledControl(buttonForBrush, buttonForSelection, panelResizer, myBitmap);
             
             fileMenuActions = new FileMenuActions(history, historyData, panelResizer, myBitmap);
             fileMenu = new FileMenu(fileMenuActions, itemToCreate, itemToOpen, itemToSave, itemToSaveAs);           
             clipboardCommandsManager = new ClipboardCommandsManager(history, historyData, panelResizer, myBitmap, 
                 buttonToPaste, itemToPaste, itemToPasteFrom);
             
-            activeButton = buttonForBrush;
+
             paintingInAction = new PaintingInAction(buttonForLine, buttonForBrush, buttonForEraser, buttonForPipette, buttonForColorFilling,
-                buttonForEllipse, buttonForRectangle, buttonForSelection, activeButton, history, historyData, myBitmap);
+                buttonForEllipse, buttonForRectangle, buttonForSelection, history, historyData, myBitmap, tools);
             keyboardShortcut = new KeyboardShortcut(itemToCreate, itemToOpen, itemToSave, buttonForUndo, buttonForRedo, buttonToPaste);
             InitializeColor();
         }
@@ -122,20 +123,10 @@ namespace Paint
             mainPictureBox.Invalidate();
         }
 
-        private void OnToolClick(object sender, EventArgs e)
+        private void OnButtonClick(object sender, EventArgs e)
         {
-            var tool = (Button)sender;
-            tool.Enabled = false;
-            activeButton.Enabled = true;
-
-            if (activeButton == buttonForSelection)
-            {
-                Selection.DeleteRegion();
-                mainPictureBox.Invalidate();
-            }
-
-            activeButton = tool;
-            paintingInAction.Update(activeButton);
+            tools.EnableControl(sender);
+            mainPictureBox.Invalidate();
         }
 
         private void NumericUpDownValueChanged(object sender, EventArgs e)

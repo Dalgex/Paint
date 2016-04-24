@@ -114,13 +114,13 @@ namespace Paint
 
         private void CallEventFrameMouseUp(object sender, MouseEventArgs e)
         {
-            IsFrameChanged = false;
-
             if (size != rect.Size)
             {
                 ImageCapture.ScaleImage(rect);
-                mainPictureBox.Invalidate();
+                mainPictureBox.Refresh();
             }
+
+            IsFrameChanged = false; // - из-за этого не рисует
         }
 
         private void ChangeRegionSize(object sender, MouseEventArgs e)
