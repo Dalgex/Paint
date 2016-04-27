@@ -15,7 +15,7 @@ namespace Paint
     {
         private static Color DeterminePixelColor(PictureBox mainPictureBox, MouseEventArgs e)
         {
-            Bitmap bitmap = new Bitmap(mainPictureBox.Width, mainPictureBox.Height);
+            var bitmap = new Bitmap(mainPictureBox.Width, mainPictureBox.Height);
             mainPictureBox.DrawToBitmap(bitmap, mainPictureBox.ClientRectangle);
             return bitmap.GetPixel(e.Location.X, e.Location.Y);
         }

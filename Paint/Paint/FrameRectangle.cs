@@ -18,24 +18,23 @@ namespace Paint
         private int length = 5;
         private Size size;
         private bool doesFrameExist;
+        private PictureBox mainPictureBox;
+        private PictureBox[] pictureBox = new PictureBox[8];
 
         /// <summary>
         /// Показывает начальное положение области выделения
         /// </summary>
-        public Point StartingPositionRegion { get; private set; }
+        public Point StartingRegionPosition { get; private set; }
 
         /// <summary>
         /// Показывает, было ли завершено изменение размеров области
         /// </summary>
-        public bool WasFinishedChange { get; private set; }
+        public bool WasChangeFinished { get; private set; }
 
         /// <summary>
         /// Показывает, изменяется ли сейчас рамка (растягивается/сжимается)
         /// </summary>
         public bool IsFrameChanged { get; private set; }
-
-        private PictureBox mainPictureBox;
-        private PictureBox[] pictureBox = new PictureBox[8];
 
         public FrameRectangle() { }
 
@@ -125,12 +124,12 @@ namespace Paint
 
         private void CallEventFrameMouseDown(object sender, MouseEventArgs e)
         {
-            StartingPositionRegion = rect.Location;
+            StartingRegionPosition = rect.Location;
         }
 
         private void CallEventFrameMouseUp(object sender, MouseEventArgs e)
         {
-            WasFinishedChange = true;
+            WasChangeFinished = true;
             IsFrameChanged = false;
 
             if (size != rect.Size)
@@ -139,7 +138,7 @@ namespace Paint
                 mainPictureBox.Refresh();
             }
 
-            WasFinishedChange = false;
+            WasChangeFinished = false;
         }
 
         private void ChangeRegionSize(object sender, MouseEventArgs e)

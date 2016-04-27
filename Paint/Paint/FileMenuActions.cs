@@ -34,7 +34,7 @@ namespace Paint
         /// </summary>
         public void CreateNewImage(ref History history, ref HistoryData historyData, PictureBox pictureBox)
         {
-            bool wasCancel = false;
+            var wasCancel = false;
             OfferToSaveImage(pictureBox, ref wasCancel);
             
             if (!wasCancel)
@@ -46,6 +46,7 @@ namespace Paint
                 this.historyData = historyData;
                 panelResizer.Update(historyData, history);
                 historyData.Bitmaps.Push(myBitmap.Bitmap);
+                historyData.RegionBitmaps.Push(new MyBitmap(new Bitmap(1, 1), new Point(1, 1)));
                 historyData.PanelSizes.Push(new PanelSize(pictureBox.Size));
                 existFileName = string.Empty;
             }
@@ -61,14 +62,14 @@ namespace Paint
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                bool wasCancel = false;
+                var wasCancel = false;
                 OfferToSaveImage(pictureBox, ref wasCancel);
 
                 if (!wasCancel)
                 {
                     myBitmap.Bitmap = new Bitmap(openFileDialog.FileName);
-                    int distance = DistanceBetweenBordersPictureBoxAndPanel.Value;
-                    Size size = new Size(myBitmap.Bitmap.Width + distance, myBitmap.Bitmap.Height + distance);
+                    var distance = DistanceBetweenBordersPictureBoxAndPanel.Value;
+                    var size = new Size(myBitmap.Bitmap.Width + distance, myBitmap.Bitmap.Height + distance);
                     panelResizer.SetPanelSize(size);
                     history = new History();
                     this.history = history;
@@ -76,6 +77,7 @@ namespace Paint
                     this.historyData = historyData;
                     panelResizer.Update(historyData, history);
                     historyData.Bitmaps.Push(myBitmap.Bitmap);
+                    historyData.RegionBitmaps.Push(new MyBitmap(new Bitmap(1, 1), new Point(1, 1)));
                     historyData.PanelSizes.Push(new PanelSize(size));
                     SetFileNames(openFileDialog);
                 }
@@ -162,7 +164,7 @@ namespace Paint
         public string SaveAs(object sender, PictureBox pictureBox)
         {
             var toolStripMenuItem = (ToolStripMenuItem)sender;
-            string[] temp = toolStripMenuItem.Text.Split(' ');
+            var temp = toolStripMenuItem.Text.Split(' ');
             var saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "PNG|*.png|JPEG|*.jpg;*.jpeg;*.jpe;*.jfif|BMP|*.bmp|GIF|*.gif";
             saveFileDialog.FileName = "Безымянный";
@@ -211,7 +213,7 @@ namespace Paint
         /// </summary>
         public void OfferToSaveImage(PictureBox pictureBox, FormClosingEventArgs e)
         {
-            bool wasCancel = false;
+            var wasCancel = false;
             OfferToSaveImage(pictureBox, ref wasCancel);
 
             if (wasCancel)
@@ -264,7 +266,7 @@ namespace Paint
 
         private void SaveBitmapImage(PictureBox pictureBox, SaveFileDialog saveFileDialog)
         {
-            Bitmap bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
+            var bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
             pictureBox.DrawToBitmap(bitmap, pictureBox.ClientRectangle);
             bitmap.Save(saveFileDialog.FileName);
         }

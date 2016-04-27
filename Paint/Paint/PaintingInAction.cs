@@ -360,7 +360,7 @@ namespace Paint
                 e.Graphics.DrawImage(ImageCapture.RegionBitmap.Bitmap, Selection.StartingPositionRegion);
                 Selection.Region.Draw(e);
             }
-            else if (Selection.WasFinishedChange)
+            else if (Selection.WasChangeFinished)
             {
                 e.Graphics.DrawImage(ImageCapture.RegionBitmap.Bitmap, Selection.Region.Location);
                 Selection.Region.Draw(e);

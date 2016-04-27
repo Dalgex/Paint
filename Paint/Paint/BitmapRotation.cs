@@ -47,7 +47,7 @@ namespace Paint
         public static void RotateBitmap(MyBitmap myBitmap, History history, HistoryData historyData, 
             System.Windows.Forms.PictureBox pictureBox, PanelResizer panelResizer, string temp)
         {
-            Bitmap bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
+            var bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
             pictureBox.DrawToBitmap(bitmap, pictureBox.ClientRectangle);
             Rotate(bitmap, temp, panelResizer);
             ActionsWithShapes.ClearShapes(history, historyData);

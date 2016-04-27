@@ -48,7 +48,7 @@ namespace Paint
         /// </summary>
         public void ReversePanel()
         {
-            int temp = panel.Width;
+            var temp = panel.Width;
             panel.Width = panel.Height;
             panel.Height = temp;
             FrameWidget.ChangeFrameLocation();
@@ -59,7 +59,7 @@ namespace Paint
 
         private void AddInHistoryNewPanelSize()
         {
-            Size size = historyData.PanelSizes.Peek().Size;
+            var size = historyData.PanelSizes.Peek().Size;
             historyData.PanelSizes.Push(new PanelSize(panel.Size));
             history.AddHistory(new CommandPanelSize(historyData.PanelSizes.Peek().Size, this), false);
             System.Windows.Forms.PictureBox pictureBox = (System.Windows.Forms.PictureBox)panel.Controls[0];

@@ -12,6 +12,10 @@ namespace Paint
     /// </summary>
     public static class Selection
     {
+        private static Pen pen;
+        private static System.Windows.Forms.PictureBox mainPictureBox;
+        private static FrameRectangle frame = new FrameRectangle();
+
         /// <summary>
         /// Возвращает координату по оси X левого верхнего угла области
         /// </summary>
@@ -58,9 +62,9 @@ namespace Paint
         /// <summary>
         /// Показывает, было ли завершено изменение размеров области
         /// </summary>
-        public static bool WasFinishedChange
+        public static bool WasChangeFinished
         {
-            get { return frame.WasFinishedChange; }
+            get { return frame.WasChangeFinished; }
         }
 
         /// <summary>
@@ -68,12 +72,8 @@ namespace Paint
         /// </summary>
         public static Point StartingPositionRegion
         {
-            get { return frame.StartingPositionRegion; }
+            get { return frame.StartingRegionPosition; }
         }
-
-        private static Pen pen;
-        private static System.Windows.Forms.PictureBox mainPictureBox;
-        private static FrameRectangle frame = new FrameRectangle();
 
         static Selection()
         {

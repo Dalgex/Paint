@@ -23,14 +23,14 @@ namespace Paint
 
         public override void Draw(PaintEventArgs e)
         {
-            Size size = new Size();
+            var size = new Size();
             size.Width = (int)Pen.Width;
             size.Height = (int)Pen.Width;
-            Brush fillBrush = new SolidBrush(Pen.Color);
+            var fillBrush = new SolidBrush(Pen.Color);
 
             for (int i = 0; i < points.Count - 1; i++)
             {
-                RectangleF rectangle = new RectangleF(new PointF((float)(points[i].X) - (float)(size.Width) / 2, (float)(points[i].Y) - (float)(size.Height) / 2), size);
+                var rectangle = new RectangleF(new PointF((float)(points[i].X) - (float)(size.Width) / 2, (float)(points[i].Y) - (float)(size.Height) / 2), size);
                 e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                 e.Graphics.FillEllipse(fillBrush, rectangle);
                 e.Graphics.DrawLine(Pen, points[i], points[i + 1]);

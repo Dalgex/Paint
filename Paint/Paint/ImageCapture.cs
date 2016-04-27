@@ -52,7 +52,6 @@ namespace Paint
             var g = Graphics.FromImage(RegionBitmap.Bitmap);
             myBitmap.ChangeBitmap(pictureBox);
             g.DrawImage(myBitmap.Bitmap, 0, 0, rect, GraphicsUnit.Pixel);
-            CreateRegionBitmap();
         }
 
         /// <summary>
@@ -73,11 +72,10 @@ namespace Paint
         /// </summary>
         public static void ScaleImage(Rectangle region)
         {
-            var rect = new System.Drawing.Rectangle(region.Location, region.Size);
-            var bitmap = new Bitmap(rect.Width, rect.Height);
+            var bitmap = new Bitmap(region.Width, region.Height);
             var g = Graphics.FromImage(bitmap);
-            g.DrawImage(RegionBitmap.Bitmap, 0, 0, rect.Width, rect.Height);
-            RegionBitmap = new MyBitmap(bitmap, rect.Location);
+            g.DrawImage(RegionBitmap.Bitmap, 0, 0, region.Width, region.Height);
+            RegionBitmap = new MyBitmap(bitmap, region.Location);
             Scale();
         }
 
@@ -91,6 +89,7 @@ namespace Paint
             var g = Graphics.FromImage(bitmap);
             g.FillRectangle(new SolidBrush(backgroundColor), rect);
             myBitmap.Bitmap = bitmap;
+            CreateRegionBitmap();
         }
     }
 }

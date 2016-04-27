@@ -43,7 +43,7 @@ namespace Paint
         {
             if (Clipboard.ContainsImage())
             {
-                Bitmap bitmap = new Bitmap(Clipboard.GetImage());
+                var bitmap = new Bitmap(Clipboard.GetImage());
                 PasteImage(pictureBox, bitmap);
             }
         }
@@ -59,19 +59,19 @@ namespace Paint
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                Bitmap bitmap = new Bitmap(openFileDialog.FileName);
+                var bitmap = new Bitmap(openFileDialog.FileName);
                 PasteImage(pictureBox, bitmap);
             }
         }
 
         private void PasteImage(PictureBox pictureBox, Bitmap bitmap)
         {
-            Size size = new Size(bitmap.Width + distance, bitmap.Height + distance);
+            var size = new Size(bitmap.Width + distance, bitmap.Height + distance);
             SetClientSize(ref size);
-            Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height);
+            var bmp = new Bitmap(pictureBox.Width, pictureBox.Height);
             pictureBox.DrawToBitmap(bmp, pictureBox.ClientRectangle);
 
-            Graphics graphics = Graphics.FromImage(bmp);
+            var graphics = Graphics.FromImage(bmp);
             graphics.DrawImage(bitmap, 0, 0);
 
             ActionsWithShapes.ClearShapes(history, historyData);

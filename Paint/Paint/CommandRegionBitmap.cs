@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Paint
 {
+    /// <summary>
+    /// Выполняет действия, связанные с объектом Bitmap, который находится внутри области выделения
+    /// </summary>
     public class CommandRegionBitmap : Command
     {
         private MyBitmap bitmap;
