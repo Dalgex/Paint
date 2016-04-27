@@ -13,35 +13,59 @@ namespace Paint
     public static class ImageCapture
     {
         /// <summary>
+        /// Представляет метод, который будет обрабатывать событие, не имеющее данных
+        /// </summary>
+        public delegate void EventHandler();
+
+        /// <summary>
+        /// Происходит после выбора прямоугольной области
+        /// </summary>
+        public static event EventHandler CreateRegionBitmap;
+        
+        /// <summary>
+        /// Происходит при отмене выделения
+        /// </summary>
+        public static event EventHandler AddBitmap;
+
+        /// <summary>
+        /// Происходит при масштабировании области выделения
+        /// </summary>
+        public static event EventHandler Scale;
+
+        /// <summary>
         /// Предоставляет точечный рисунок выделенной области
         /// </summary>
-        public static Bitmap BitmapForRegion { get; private set; }
+        public static MyBitmap RegionBitmap { get; set; }
 
         static ImageCapture()
         {
-            BitmapForRegion = new Bitmap(1, 1);
+            RegionBitmap = new MyBitmap(new Bitmap(1, 1), new Point(1, 1));
         }
 
         /// <summary>
-        /// Получает изображения из выделенной области
+        /// Получает изображение из выделенной области
         /// </summary>
-        public static void GetImageFromSelectedRegion(MyBitmap bitmap, Rectangle region)
+        public static void GetImageFromSelectedRegion(MyBitmap myBitmap, Rectangle region, System.Windows.Forms.PictureBox pictureBox)
         {
-            System.Drawing.Rectangle rect = new System.Drawing.Rectangle(region.Location, region.Size);
-            BitmapForRegion = new Bitmap(rect.Width, rect.Height);
-            var g = Graphics.FromImage(BitmapForRegion);
-            g.DrawImage(bitmap.Bitmap, 0, 0, rect, GraphicsUnit.Pixel);
+            var rect = new System.Drawing.Rectangle(region.Location, region.Size);
+            RegionBitmap = new MyBitmap(new Bitmap(rect.Width, rect.Height), rect.Location);
+            var g = Graphics.FromImage(RegionBitmap.Bitmap);
+            myBitmap.ChangeBitmap(pictureBox);
+            g.DrawImage(myBitmap.Bitmap, 0, 0, rect, GraphicsUnit.Pixel);
+            CreateRegionBitmap();
         }
 
         /// <summary>
         /// Делает частью основного изображения выделенную область
         /// </summary>
-        public static void AddBitmapForRegionToMainBitmap(MyBitmap bitmap, Rectangle region)
-        {
-            System.Drawing.Rectangle rect = new System.Drawing.Rectangle(region.Location, region.Size);
-            var g = Graphics.FromImage(bitmap.Bitmap);
-            g.DrawImage(BitmapForRegion, rect.X, rect.Y);           
-            BitmapForRegion = new Bitmap(1, 1);
+        public static void AddBitmapForRegionToMainBitmap(MyBitmap myBitmap, Rectangle region)
+        {     
+            var bitmap = new Bitmap(myBitmap.Bitmap);
+            var g = Graphics.FromImage(bitmap);
+            g.DrawImage(RegionBitmap.Bitmap, region.TopX, region.TopY);
+            myBitmap.Bitmap = bitmap;
+            RegionBitmap = new MyBitmap(new Bitmap(1, 1), new Point(1, 1));
+            AddBitmap();
         }
 
         /// <summary>
@@ -49,21 +73,24 @@ namespace Paint
         /// </summary>
         public static void ScaleImage(Rectangle region)
         {
-            System.Drawing.Rectangle rect = new System.Drawing.Rectangle(region.Location, region.Size);
+            var rect = new System.Drawing.Rectangle(region.Location, region.Size);
             var bitmap = new Bitmap(rect.Width, rect.Height);
             var g = Graphics.FromImage(bitmap);
-            g.DrawImage(BitmapForRegion, 0, 0, rect.Width, rect.Height);
-            BitmapForRegion = bitmap;
+            g.DrawImage(RegionBitmap.Bitmap, 0, 0, rect.Width, rect.Height);
+            RegionBitmap = new MyBitmap(bitmap, rect.Location);
+            Scale();
         }
 
         /// <summary>
         /// Очищает выделенный фрагмент изображения (закрашивает его цветом фона)
         /// </summary>
-        public static void CleanRegion(MyBitmap bitmap, Rectangle region, Color backgroundColor)
+        public static void CleanRegion(MyBitmap myBitmap, Rectangle region, Color backgroundColor)
         {
-            System.Drawing.Rectangle rect = new System.Drawing.Rectangle(region.Location, region.Size);
-            var g = Graphics.FromImage(bitmap.Bitmap);
+            var rect = new System.Drawing.Rectangle(region.Location, region.Size);
+            var bitmap = new Bitmap(myBitmap.Bitmap);
+            var g = Graphics.FromImage(bitmap);
             g.FillRectangle(new SolidBrush(backgroundColor), rect);
+            myBitmap.Bitmap = bitmap;
         }
     }
 }

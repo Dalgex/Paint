@@ -26,9 +26,11 @@ namespace Paint
         private Button buttonForEllipse;
         private Button buttonForRectangle;
         private Button buttonForSelection;
+        private PictureBox mainPictureBox;
         
         private History history;
         private HistoryData historyData;
+        private HistoryMemento historyMemento;
         private MyBitmap myBitmap;
         private ShapeBuilder shapeBuilder;
         private DefinitionEnabledControl tools;
@@ -40,7 +42,7 @@ namespace Paint
         private bool isSelectionDrawn;
 
         public PaintingInAction(Button buttonForLine, Button buttonForBrush, Button buttonForEraser, Button buttonForPipette,
-            Button buttonForColorFilling, Button buttonForEllipse, Button buttonForRectangle, Button buttonForSelection, 
+            Button buttonForColorFilling, Button buttonForEllipse, Button buttonForRectangle, Button buttonForSelection, PictureBox mainPictureBox,
             History history, HistoryData historyData, MyBitmap myBitmap, DefinitionEnabledControl tools)
         {
             this.buttonForLine = buttonForLine;
@@ -54,6 +56,9 @@ namespace Paint
             this.history = history;
             this.historyData = historyData;
             this.myBitmap = myBitmap;
+            this.mainPictureBox = mainPictureBox;
+            Selection.InitializeField(mainPictureBox);
+            historyMemento = new HistoryMemento(history, historyData, myBitmap);
             this.tools = tools;
         }
 
@@ -64,13 +69,14 @@ namespace Paint
         {
             this.history = history;
             this.historyData = historyData;
+            historyMemento.Update(history, historyData);
         }
 
         /// <summary>
         /// Определяет, какая кнопка была нажата и подготавливает/выполняет соответствующую операцию
         /// </summary>
         public void DefineAction(MouseEventArgs e, ref Color mainColor, ref Color backgroundColor,
-            PictureBox mainPictureBox, PictureBox pictureBoxForMainColor, PictureBox pictureBoxForBackgroundColor,
+            PictureBox pictureBoxForMainColor, PictureBox pictureBoxForBackgroundColor,
             int toolWidth, bool withContour, bool withFilling)
         {
             if (!buttonForPipette.Enabled)
@@ -110,7 +116,7 @@ namespace Paint
                 }
                 else
                 {
-                    PrepareSelectedShapeForBuilding(e, ref mainColor, ref backgroundColor, mainPictureBox, toolWidth, withContour, withFilling);
+                    PrepareSelectedShapeForBuilding(e, ref mainColor, ref backgroundColor, toolWidth, withContour, withFilling);
                 }
             }
         }
@@ -119,7 +125,7 @@ namespace Paint
         /// Определяет, какая кнопка была нажата и подготавливает фигуру, соответствующую данной кнопке, к построению
         /// </summary>
         private void PrepareSelectedShapeForBuilding(MouseEventArgs e, ref Color mainColor, ref Color backgroundColor,
-            PictureBox mainPictureBox, int toolWidth, bool withContour, bool withFilling)
+            int toolWidth, bool withContour, bool withFilling)
         {
             if (!buttonForColorFilling.Enabled)
             {
@@ -143,7 +149,7 @@ namespace Paint
         /// <summary>
         /// Выполняет соответствующее действие при перемещении указателя мыши по элементу управления
         /// </summary>
-        public void PerformAction(MouseEventArgs e, Color mainColor, Color backgroundColor, PictureBox mainPictureBox, Cursor cursor)
+        public void PerformAction(MouseEventArgs e, Color mainColor, Color backgroundColor, Cursor cursor)
         {
             if (isPressed)
             {
@@ -163,7 +169,7 @@ namespace Paint
                 }
                 else
                 {
-                    CallSelectedShapeBuilding(e, mainColor, backgroundColor, mainPictureBox);
+                    CallSelectedShapeBuilding(e, mainColor, backgroundColor);
                 }
             }
 
@@ -173,7 +179,7 @@ namespace Paint
         /// <summary>
         /// Определяет, какая фигура строится и вызывает соответствующие методы построения
         /// </summary>
-        private void CallSelectedShapeBuilding(MouseEventArgs e, Color mainColor, Color backgroundColor, PictureBox mainPictureBox)
+        private void CallSelectedShapeBuilding(MouseEventArgs e, Color mainColor, Color backgroundColor)
         {
             if (!buttonForBrush.Enabled || !buttonForEraser.Enabled)
             {
@@ -204,7 +210,7 @@ namespace Paint
         /// Завершает действие при отпускании кнопки мыши
         /// </summary>
         public void CompleteAction(MouseEventArgs e, Color mainColor, Color backgroundColor, int toolWidth,
-            bool withContour, bool withFilling, PictureBox mainPictureBox)
+            bool withContour, bool withFilling)
         {
             if (isPressed)
             {
@@ -214,19 +220,24 @@ namespace Paint
                 {
                     if (Selection.DoesRegionExist)
                     {
-                        if (!Selection.WasSelectionBefore)
+                        if (!wasMouseMove)
                         {
-                            ImageCapture.GetImageFromSelectedRegion(myBitmap, Selection.Region);
-                            ImageCapture.CleanRegion(myBitmap, Selection.Region, backgroundColor);
-                            ActionsWithShapes.ClearShapes(history, historyData);
+                            return;
                         }
 
-                        Selection.DrawFrameForRegion(mainPictureBox);
+                        if (!Selection.WasSelectionBefore)
+                        {
+                            ImageCapture.GetImageFromSelectedRegion(myBitmap, Selection.Region, mainPictureBox);
+                            ImageCapture.CleanRegion(myBitmap, Selection.Region, backgroundColor);
+                        }
+
+                        Selection.DrawFrameForRegion();
+                        MovingRectangle.CallEventMouseUp();
                     }
                 }
                 else
                 {
-                    AddSelectedShapeInHistory(e, mainColor, backgroundColor, toolWidth, withContour, withFilling, mainPictureBox);
+                    AddSelectedShapeInHistory(e, mainColor, backgroundColor, toolWidth, withContour, withFilling);
                 }
             }
         }
@@ -235,7 +246,7 @@ namespace Paint
         /// Добавляет фигуру, которая до опускания кнопки мыши рисовалась, в историю
         /// </summary>
         private void AddSelectedShapeInHistory(MouseEventArgs e, Color mainColor, Color backgroundColor, int toolWidth,
-            bool withContour, bool withFilling, PictureBox mainPictureBox)
+            bool withContour, bool withFilling)
         {
             if (wasMouseMove && (!buttonForBrush.Enabled || !buttonForEraser.Enabled))
             {
@@ -330,7 +341,7 @@ namespace Paint
             }
             else if (isSelectionDrawn)
             {
-                e.Graphics.DrawImage(ImageCapture.BitmapForRegion, Selection.Region.Location);
+                e.Graphics.DrawImage(ImageCapture.RegionBitmap.Bitmap, Selection.Region.Location);
                 isSelectionDrawn = false;
 
                 if (MovingRectangle.IsRectangleMoving)
@@ -346,13 +357,19 @@ namespace Paint
             }
             else if (Selection.IsFrameChanged)
             {
-                e.Graphics.DrawImage(ImageCapture.BitmapForRegion, Selection.StartingPositionRegion);
+                e.Graphics.DrawImage(ImageCapture.RegionBitmap.Bitmap, Selection.StartingPositionRegion);
                 Selection.Region.Draw(e);
             }
             else if (Selection.WasFinishedChange)
             {
-                e.Graphics.DrawImage(ImageCapture.BitmapForRegion, Selection.Region.Location);
+                e.Graphics.DrawImage(ImageCapture.RegionBitmap.Bitmap, Selection.Region.Location);
                 Selection.Region.Draw(e);
+            }
+            else if (history.WasHistoryAction)
+            {
+                e.Graphics.DrawImage(ImageCapture.RegionBitmap.Bitmap, ImageCapture.RegionBitmap.Location);
+                Selection.Region.Draw(e);
+                history.WasHistoryAction = false;
             }
         }
     }

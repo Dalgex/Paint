@@ -20,9 +20,9 @@ namespace Paint
         {
             var bitmap = new Bitmap(myBitmap.Bitmap, pictureBox.Size);
             pictureBox.DrawToBitmap(bitmap, pictureBox.ClientRectangle);
-            myBitmap.Bitmap = bitmap;
             var graphics = Graphics.FromImage(bitmap);
-            Fill(graphics, point, ref myBitmap.Bitmap, mainColor);
+            Fill(graphics, point, ref bitmap, mainColor);
+            myBitmap.Bitmap = bitmap;
             ActionsWithShapes.ClearShapes(history, historyData);
             historyData.Bitmaps.Push(myBitmap.Bitmap);
             history.AddHistory(new CommandBitmap(myBitmap), true);

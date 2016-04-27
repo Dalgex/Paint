@@ -24,6 +24,8 @@ namespace Paint
         /// </summary>
         private bool CanRedo { get { return redo.Count > 0; } }
 
+        public bool WasHistoryAction { get; set; }
+
         /// <summary>
         /// Добавляет в историю команду и логический параметр, показывающий, завершилась команда или нет
         /// </summary>
@@ -47,6 +49,7 @@ namespace Paint
             if (CanUndo)
             {
                 undo.Pop();
+                WasHistoryAction = true;
 
                 while (undo.Count > 0 && undo.Peek() != null)
                 {
@@ -66,6 +69,7 @@ namespace Paint
             if (CanRedo)
             {
                 redo.Pop();
+                WasHistoryAction = true;
 
                 while (redo.Count > 0 && redo.Peek() != null)
                 {

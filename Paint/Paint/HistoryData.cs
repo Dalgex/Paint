@@ -14,12 +14,14 @@ namespace Paint
         public List<Shape> Shapes { get; set; }
         public Stack<System.Drawing.Bitmap> Bitmaps { get; set; }
         public Stack<PanelSize> PanelSizes { get; set; }
+        public Stack<MyBitmap> RegionBitmaps { get; set; }
 
         public HistoryData()
         {
             Shapes = new List<Shape>();
             Bitmaps = new Stack<System.Drawing.Bitmap>();
             PanelSizes = new Stack<PanelSize>();
+            RegionBitmaps = new Stack<MyBitmap>();
         }
     }
 }

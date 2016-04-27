@@ -45,7 +45,7 @@ namespace Paint
         /// <summary>
         /// Возвращает прямоугольную область выделения
         /// </summary>
-        public static Rectangle Region { get; private set; }
+        public static Rectangle Region { get; set; }
 
         /// <summary>
         /// Показывает, изменяется ли сейчас рамка (растягивается/сжимается)
@@ -72,6 +72,7 @@ namespace Paint
         }
 
         private static Pen pen;
+        private static System.Windows.Forms.PictureBox mainPictureBox;
         private static FrameRectangle frame = new FrameRectangle();
 
         static Selection()
@@ -80,6 +81,14 @@ namespace Paint
             pen = new Pen(Color.Black, 1);
             pen.DashPattern = dashValues;
             Region = new Rectangle(pen, new Point(0, 0), new Size(0, 0));
+        }
+
+        /// <summary>
+        /// Инициализирует поле pictureBox
+        /// </summary>
+        public static void InitializeField(System.Windows.Forms.PictureBox pictureBox)
+        {
+            mainPictureBox = pictureBox;
         }
 
         private static void DetermineRegionSize(Point startPoint, Point currentPoint)
@@ -98,6 +107,19 @@ namespace Paint
             DetermineRegionSize(startPoint, currentPoint);
             Region = new Rectangle(pen, TopX, TopY, Width, Height);
             Region.Draw(e);
+            DoesRegionExist = true;
+        }
+
+        /// <summary>
+        /// Задает параметры прямоугольной области
+        /// </summary>
+        public static void InitializeRegion(Point location, Size size)
+        {
+            Region = new Rectangle(pen, location.X, location.Y, size.Width, size.Height);
+            TopX = Region.TopX;
+            TopY = Region.TopY;
+            Width = size.Width;
+            Height = size.Height;
             DoesRegionExist = true;
         }
 
@@ -133,10 +155,10 @@ namespace Paint
         /// <summary>
         /// Рисует рамку для выделенного фрагмента
         /// </summary>
-        public static void DrawFrameForRegion(System.Windows.Forms.PictureBox pictureBox)
+        public static void DrawFrameForRegion()
         {
             WasSelectionBefore = true;
-            frame = new FrameRectangle(Region, pictureBox);
+            frame = new FrameRectangle(Region, mainPictureBox);
         }
     }
 }

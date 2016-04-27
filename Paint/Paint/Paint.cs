@@ -42,6 +42,7 @@ namespace Paint
             myBitmap = new MyBitmap(new Bitmap(mainPictureBox.Width, mainPictureBox.Height));
             panelResizer = new PanelResizer(panelForPictureBox, history, historyData, myBitmap, labelForPictureBoxSize);
             historyData.Bitmaps.Push(myBitmap.Bitmap);
+            historyData.RegionBitmaps.Push(new MyBitmap(new Bitmap(1, 1), new Point(1, 1)));
             tools = new DefinitionEnabledControl(buttonForBrush, buttonForSelection, panelResizer, myBitmap);
             
             fileMenuActions = new FileMenuActions(history, historyData, panelResizer, myBitmap);
@@ -49,9 +50,8 @@ namespace Paint
             clipboardCommandsManager = new ClipboardCommandsManager(history, historyData, panelResizer, myBitmap, 
                 buttonToPaste, itemToPaste, itemToPasteFrom);
             
-
             paintingInAction = new PaintingInAction(buttonForLine, buttonForBrush, buttonForEraser, buttonForPipette, buttonForColorFilling,
-                buttonForEllipse, buttonForRectangle, buttonForSelection, history, historyData, myBitmap, tools);
+                buttonForEllipse, buttonForRectangle, buttonForSelection, mainPictureBox, history, historyData, myBitmap, tools);
             keyboardShortcut = new KeyboardShortcut(itemToCreate, itemToOpen, itemToSave, buttonForUndo, buttonForRedo, buttonToPaste);
             InitializeColor();
         }
@@ -92,7 +92,7 @@ namespace Paint
         private void MainPictureBoxMouseDown(object sender, MouseEventArgs e)
         {
             paintingInAction.Update(history, historyData);
-            paintingInAction.DefineAction(e, ref mainColor, ref backgroundColor, mainPictureBox, pictureBoxForMainColor,
+            paintingInAction.DefineAction(e, ref mainColor, ref backgroundColor, pictureBoxForMainColor,
                 pictureBoxForBackgroundColor, toolWidth, withContour, withFilling);
         }
 
@@ -100,13 +100,13 @@ namespace Paint
         {
             paintingInAction.Update(history, historyData);
             MouseCursor.ShowCursorLocation(labelForCursorLocation, e);
-            paintingInAction.PerformAction(e, mainColor, backgroundColor, mainPictureBox, Cursor);
+            paintingInAction.PerformAction(e, mainColor, backgroundColor, Cursor);
         }
 
         private void MainPictureBoxMouseUp(object sender, MouseEventArgs e)
         {
             paintingInAction.Update(history, historyData);
-            paintingInAction.CompleteAction(e, mainColor, backgroundColor, toolWidth, withContour, withFilling, mainPictureBox);
+            paintingInAction.CompleteAction(e, mainColor, backgroundColor, toolWidth, withContour, withFilling);
         }
 
         private void MainPictureBoxPaint(object sender, PaintEventArgs e)
@@ -186,12 +186,14 @@ namespace Paint
         private void OnUndoClick(object sender, EventArgs e)
         {
             history.Undo(historyData);
+            history.WasHistoryAction = true;
             mainPictureBox.Invalidate();
         }
 
         private void OnRedoClick(object sender, EventArgs e)
         {
             history.Redo(historyData);
+            history.WasHistoryAction = true;
             mainPictureBox.Invalidate();
         }
 

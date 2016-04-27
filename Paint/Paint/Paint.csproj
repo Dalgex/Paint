@@ -45,7 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionsWithShapes.cs" />
+    <Compile Include="CommandRegionBitmap.cs" />
     <Compile Include="FrameRectangle.cs" />
+    <Compile Include="HistoryMemento.cs" />
     <Compile Include="ImageCapture.cs" />
     <Compile Include="MovingRectangle.cs" />
     <Compile Include="PaintingInAction.cs" />
