@@ -23,6 +23,7 @@ namespace Paint
             this.buttonForSelection = buttonForSelection;
             this.panelResizer = panelResizer;
             this.myBitmap = myBitmap;
+            Selection.DrawFrameEvent += SimulateButtonForSelectionClick;
         }
 
         /// <summary>
@@ -41,8 +42,7 @@ namespace Paint
             }
             else if (activeButton == buttonForSelection)
             {
-                ImageCapture.AddBitmapForRegionToMainBitmap(myBitmap, Selection.Region);
-                Selection.DeleteRegion();
+                Selection.AddRegionBitmapToMainBitmap(myBitmap);
                 panelResizer.FrameWidget.AddFrameWidget();
             }
 
@@ -55,6 +55,14 @@ namespace Paint
         public void DisableControl()
         {
             activeButton.Enabled = false;
+        }
+
+        /// <summary>
+        /// Имитирует нажатие кнопки для выделения области
+        /// </summary>
+        public void SimulateButtonForSelectionClick()
+        {
+            buttonForSelection.PerformClick();
         }
     }
 }

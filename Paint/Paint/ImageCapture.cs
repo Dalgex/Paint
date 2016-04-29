@@ -37,6 +37,14 @@ namespace Paint
         /// </summary>
         public static MyBitmap RegionBitmap { get; set; }
 
+        /// <summary>
+        /// Показывает, существует ли изображение выделенного фрагмента
+        /// </summary>
+        public static bool DoesRegionBitmapExist
+        {
+            get { return RegionBitmap.Bitmap.Width > 1 || RegionBitmap.Bitmap.Height > 1; }
+        }
+
         static ImageCapture()
         {
             RegionBitmap = new MyBitmap(new Bitmap(1, 1), new Point(1, 1));
@@ -58,13 +66,16 @@ namespace Paint
         /// Делает частью основного изображения выделенную область
         /// </summary>
         public static void AddBitmapForRegionToMainBitmap(MyBitmap myBitmap, Rectangle region)
-        {     
-            var bitmap = new Bitmap(myBitmap.Bitmap);
-            var g = Graphics.FromImage(bitmap);
-            g.DrawImage(RegionBitmap.Bitmap, region.TopX, region.TopY);
-            myBitmap.Bitmap = bitmap;
-            RegionBitmap = new MyBitmap(new Bitmap(1, 1), new Point(1, 1));
-            AddBitmap();
+        {
+            if (region.Width > 0 && region.Height > 0)
+            {
+                var bitmap = new Bitmap(myBitmap.Bitmap);
+                var g = Graphics.FromImage(bitmap);
+                g.DrawImage(RegionBitmap.Bitmap, region.TopX, region.TopY);
+                myBitmap.Bitmap = bitmap;
+                RegionBitmap = new MyBitmap(new Bitmap(1, 1), new Point(1, 1));
+                AddBitmap();
+            }
         }
 
         /// <summary>

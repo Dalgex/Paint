@@ -59,9 +59,9 @@ namespace Paint
                 pictureBox[i].BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
                 pictureBox[i].Size = new System.Drawing.Size(length, length);
                 pictureBox[i].TabStop = false;
-                pictureBox[i].MouseDown += new System.Windows.Forms.MouseEventHandler(this.CallEventFrameMouseDown);
+                pictureBox[i].MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseDown);
                 pictureBox[i].MouseMove += new System.Windows.Forms.MouseEventHandler(this.ChangeRegionSize);
-                pictureBox[i].MouseUp += new System.Windows.Forms.MouseEventHandler(this.CallEventFrameMouseUp);
+                pictureBox[i].MouseUp += new System.Windows.Forms.MouseEventHandler(this.MouseUp);
 
                 if (i == 0)
                 {
@@ -122,17 +122,17 @@ namespace Paint
             }
         }
 
-        private void CallEventFrameMouseDown(object sender, MouseEventArgs e)
+        private void MouseDown(object sender, MouseEventArgs e)
         {
             StartingRegionPosition = rect.Location;
         }
 
-        private void CallEventFrameMouseUp(object sender, MouseEventArgs e)
+        private void MouseUp(object sender, MouseEventArgs e)
         {
             WasChangeFinished = true;
             IsFrameChanged = false;
 
-            if (size != rect.Size)
+            if (size != rect.Size && rect.Width > 0 && rect.Height > 0)
             {
                 ImageCapture.ScaleImage(rect);
                 mainPictureBox.Refresh();

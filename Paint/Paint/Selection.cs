@@ -20,16 +20,6 @@ namespace Paint
         /// Возвращает координату по оси X левого верхнего угла области
         /// </summary>
         public static int TopX { get; private set; }
-
-        /// <summary>
-        /// Существует ли область
-        /// </summary>
-        public static bool DoesRegionExist { get; private set; }
-
-        /// <summary>
-        /// Показывает, было ли выделение раньше
-        /// </summary>
-        public static bool WasSelectionBefore { get; private set; }
         
         /// <summary>
         /// Возвращает координату по оси Y левого верхнего угла области
@@ -49,12 +39,20 @@ namespace Paint
         /// <summary>
         /// Возвращает прямоугольную область выделения
         /// </summary>
-        public static Rectangle Region { get; set; }
+        public static Rectangle Region { get; private set; }
 
         /// <summary>
-        /// Показывает, изменяется ли сейчас рамка (растягивается/сжимается)
+        /// Существует ли область
         /// </summary>
-        public static bool IsFrameChanged
+        public static bool DoesRegionExist
+        {
+            get { return Region.Width > 0 && Region.Height > 0; }
+        }
+
+        /// <summary>
+        /// Показывает, изменяется ли сейчас выделенный фрагмент (растягивается/сжимается)
+        /// </summary>
+        public static bool IsRegionChanged
         {
             get { return frame.IsFrameChanged; }
         }
@@ -70,10 +68,20 @@ namespace Paint
         /// <summary>
         /// Возвращает начальное положение области выделения
         /// </summary>
-        public static Point StartingPositionRegion
+        public static Point StartingRegionPosition
         {
             get { return frame.StartingRegionPosition; }
         }
+
+        /// <summary>
+        /// Представляет метод, который будет обрабатывать событие, не имеющее данных
+        /// </summary>
+        public delegate void EventHandler();
+
+        /// <summary>
+        /// Происходит после создания прямоугольной области
+        /// </summary>
+        public static event EventHandler DrawFrameEvent;
 
         static Selection()
         {
@@ -107,7 +115,6 @@ namespace Paint
             DetermineRegionSize(startPoint, currentPoint);
             Region = new Rectangle(pen, TopX, TopY, Width, Height);
             Region.Draw(e);
-            DoesRegionExist = true;
         }
 
         /// <summary>
@@ -120,7 +127,7 @@ namespace Paint
             TopY = Region.TopY;
             Width = size.Width;
             Height = size.Height;
-            DoesRegionExist = true;
+            DrawFrameEvent();
         }
 
         /// <summary>
@@ -139,8 +146,6 @@ namespace Paint
         public static void DeleteRegion()
         {
             Region = new Rectangle(pen, 0, 0, 0, 0);
-            DoesRegionExist = false;
-            WasSelectionBefore = false;
             frame.DeleteFrame();
         }
 
@@ -157,8 +162,16 @@ namespace Paint
         /// </summary>
         public static void DrawFrameForRegion()
         {
-            WasSelectionBefore = true;
             frame = new FrameRectangle(Region, mainPictureBox);
+        }
+
+        /// <summary>
+        /// Делает частью основного изображения выделенный фрагмент и удаляет его
+        /// </summary>
+        public static void AddRegionBitmapToMainBitmap(MyBitmap myBitmap)
+        {
+            ImageCapture.AddBitmapForRegionToMainBitmap(myBitmap, Region);
+            DeleteRegion();
         }
     }
 }

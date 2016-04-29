@@ -100,18 +100,13 @@ namespace Paint
                     {
                         if (!Selection.Region.Contains(e.Location))
                         {
-                            ImageCapture.AddBitmapForRegionToMainBitmap(myBitmap, Selection.Region);
-                            Selection.DeleteRegion();
+                            Selection.AddRegionBitmapToMainBitmap(myBitmap);
                             mainPictureBox.Invalidate();
                         }
                         else
                         {
                             MovingRectangle.SetDifferenceBetweenCoordinates(e);
                         }
-                    }
-                    else
-                    {
-
                     }
                 }
                 else
@@ -225,7 +220,7 @@ namespace Paint
                             return;
                         }
 
-                        if (!Selection.WasSelectionBefore)
+                        if (!ImageCapture.DoesRegionBitmapExist)
                         {
                             ImageCapture.GetImageFromSelectedRegion(myBitmap, Selection.Region, mainPictureBox);
                             ImageCapture.CleanRegion(myBitmap, Selection.Region, backgroundColor);
@@ -355,9 +350,9 @@ namespace Paint
 
                 Selection.DeleteFrame();
             }
-            else if (Selection.IsFrameChanged)
+            else if (Selection.IsRegionChanged)
             {
-                e.Graphics.DrawImage(ImageCapture.RegionBitmap.Bitmap, Selection.StartingPositionRegion);
+                e.Graphics.DrawImage(ImageCapture.RegionBitmap.Bitmap, Selection.StartingRegionPosition);
                 Selection.Region.Draw(e);
             }
             else if (Selection.WasChangeFinished)
