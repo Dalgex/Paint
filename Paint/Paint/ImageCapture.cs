@@ -53,13 +53,14 @@ namespace Paint
         /// <summary>
         /// Получает изображение из выделенной области
         /// </summary>
-        public static void GetImageFromSelectedRegion(MyBitmap myBitmap, Rectangle region, System.Windows.Forms.PictureBox pictureBox)
+        public static Image GetImageFromSelectedRegion(MyBitmap myBitmap, Rectangle region, System.Windows.Forms.PictureBox pictureBox)
         {
             var rect = new System.Drawing.Rectangle(region.Location, region.Size);
             RegionBitmap = new MyBitmap(new Bitmap(rect.Width, rect.Height), rect.Location);
             var g = Graphics.FromImage(RegionBitmap.Bitmap);
             myBitmap.ChangeBitmap(pictureBox);
             g.DrawImage(myBitmap.Bitmap, 0, 0, rect, GraphicsUnit.Pixel);
+            return RegionBitmap.Bitmap;
         }
 
         /// <summary>
@@ -97,7 +98,7 @@ namespace Paint
                 var g = Graphics.FromImage(bitmap);
                 g.DrawImage(RegionBitmap.Bitmap, region.TopX, region.TopY);
                 myBitmap.Bitmap = bitmap;
-                RegionBitmap = new MyBitmap(new Bitmap(1, 1), new Point(1, 1));
+                DeleteRegionBitmap();
                 RegionDeselected();
             }
         }
@@ -124,8 +125,16 @@ namespace Paint
             var g = Graphics.FromImage(bitmap);
             g.FillRectangle(new SolidBrush(color), rect);
             myBitmap.Bitmap = bitmap;
-            RegionBitmap = new MyBitmap(new Bitmap(1, 1), new Point(1, 1));
+            DeleteRegionBitmap();
             RegionDeselected();
+        }
+
+        /// <summary>
+        /// Удаляет изображение выделенной области
+        /// </summary>
+        public static void DeleteRegionBitmap()
+        {
+            RegionBitmap = new MyBitmap(new Bitmap(1, 1), new Point(1, 1));
         }
     }
 }

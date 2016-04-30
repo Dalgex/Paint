@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="ActionsWithShapes.cs" />
     <Compile Include="CommandRegionBitmap.cs" />
+    <Compile Include="CropToSelectionFunction.cs" />
     <Compile Include="FrameRectangle.cs" />
     <Compile Include="SelectionHistoryMemento.cs" />
     <Compile Include="ImageCapture.cs" />

@@ -27,6 +27,7 @@ namespace Paint
         private SelectionCommandsManager selectionCommandsManager;
         private PaintingInAction paintingInAction;
         private KeyboardShortcut keyboardShortcut;
+        private CropToSelectionFunction cropToSelectionFunction;
         private DefinitionEnabledControl tools;
 
         private int toolWidth = 10;
@@ -52,6 +53,7 @@ namespace Paint
                 buttonToPaste, itemToPaste, itemToPasteFrom);
             selectionCommandsManager = new SelectionCommandsManager(myBitmap, buttonForSelection, itemToSelectAll,
                 itemToFillSelection, itemToEraseSelection, itemToDeselect);
+            cropToSelectionFunction = new CropToSelectionFunction(buttonToCrop, myBitmap, panelResizer);
             
             paintingInAction = new PaintingInAction(buttonForLine, buttonForBrush, buttonForEraser, buttonForPipette, buttonForColorFilling,
                 buttonForEllipse, buttonForRectangle, buttonForSelection, mainPictureBox, history, historyData, myBitmap, tools);
@@ -219,6 +221,11 @@ namespace Paint
         private void OnSelectionClick(object sender, EventArgs e)
         {
             selectionCommandsManager.DefineSelectionCommandClick(sender, mainColor);
+        }
+
+        private void buttonToCropClick(object sender, EventArgs e)
+        {
+            cropToSelectionFunction.CropToSelection(history, historyData, mainPictureBox);
         }
 
         private void PaintKeyDown(object sender, KeyEventArgs e)
