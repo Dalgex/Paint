@@ -20,17 +20,17 @@ namespace Paint
         /// <summary>
         /// Происходит после выбора прямоугольной области
         /// </summary>
-        public static event EventHandler CreateRegionBitmap;
+        public static event EventHandler RegionBitmapCreated;
         
         /// <summary>
         /// Происходит при отмене выделения
         /// </summary>
-        public static event EventHandler AddBitmap;
+        public static event EventHandler RegionDeselected;
 
         /// <summary>
         /// Происходит при масштабировании области выделения
         /// </summary>
-        public static event EventHandler Scale;
+        public static event EventHandler RegionScaled;
 
         /// <summary>
         /// Предоставляет точечный рисунок выделенной области
@@ -63,6 +63,30 @@ namespace Paint
         }
 
         /// <summary>
+        /// Очищает выделенный фрагмент изображения (закрашивает его цветом фона)
+        /// </summary>
+        public static void CleanRegion(MyBitmap myBitmap, Rectangle region, Color backgroundColor)
+        {
+            var rect = new System.Drawing.Rectangle(region.Location, region.Size);
+            var bitmap = new Bitmap(myBitmap.Bitmap);
+            var g = Graphics.FromImage(bitmap);
+            g.FillRectangle(new SolidBrush(backgroundColor), rect);
+            myBitmap.Bitmap = bitmap;
+            RegionBitmapCreated();
+        }
+
+        /// <summary>
+        /// Получает изображение из выделенного фрагмента и заполняет это место на графическом окне цветом фона.
+        /// Это означает, что на данном месте нет изображения
+        /// </summary>
+        public static void GetImageFromSelectedRegion(MyBitmap myBitmap, Rectangle region, 
+            System.Windows.Forms.PictureBox pictureBox, Color backgroundColor)
+        {
+            ImageCapture.GetImageFromSelectedRegion(myBitmap, Selection.Region, pictureBox);
+            ImageCapture.CleanRegion(myBitmap, Selection.Region, backgroundColor);
+        }
+
+        /// <summary>
         /// Делает частью основного изображения выделенную область
         /// </summary>
         public static void AddBitmapForRegionToMainBitmap(MyBitmap myBitmap, Rectangle region)
@@ -74,7 +98,7 @@ namespace Paint
                 g.DrawImage(RegionBitmap.Bitmap, region.TopX, region.TopY);
                 myBitmap.Bitmap = bitmap;
                 RegionBitmap = new MyBitmap(new Bitmap(1, 1), new Point(1, 1));
-                AddBitmap();
+                RegionDeselected();
             }
         }
 
@@ -87,20 +111,21 @@ namespace Paint
             var g = Graphics.FromImage(bitmap);
             g.DrawImage(RegionBitmap.Bitmap, 0, 0, region.Width, region.Height);
             RegionBitmap = new MyBitmap(bitmap, region.Location);
-            Scale();
+            RegionScaled();
         }
 
         /// <summary>
-        /// Очищает выделенный фрагмент изображения (закрашивает его цветом фона)
+        /// Заполняет выделенный фрагмент изображения указанным цветом
         /// </summary>
-        public static void CleanRegion(MyBitmap myBitmap, Rectangle region, Color backgroundColor)
+        public static void FillRegionBitmap(MyBitmap myBitmap, Rectangle region, Color color)
         {
             var rect = new System.Drawing.Rectangle(region.Location, region.Size);
             var bitmap = new Bitmap(myBitmap.Bitmap);
             var g = Graphics.FromImage(bitmap);
-            g.FillRectangle(new SolidBrush(backgroundColor), rect);
+            g.FillRectangle(new SolidBrush(color), rect);
             myBitmap.Bitmap = bitmap;
-            CreateRegionBitmap();
+            RegionBitmap = new MyBitmap(new Bitmap(1, 1), new Point(1, 1));
+            RegionDeselected();
         }
     }
 }

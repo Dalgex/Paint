@@ -47,7 +47,7 @@
     <Compile Include="ActionsWithShapes.cs" />
     <Compile Include="CommandRegionBitmap.cs" />
     <Compile Include="FrameRectangle.cs" />
-    <Compile Include="HistoryMemento.cs" />
+    <Compile Include="SelectionHistoryMemento.cs" />
     <Compile Include="ImageCapture.cs" />
     <Compile Include="MovingRectangle.cs" />
     <Compile Include="PaintingInAction.cs" />
@@ -75,6 +75,7 @@
     <Compile Include="FrameWidget.cs" />
     <Compile Include="BitmapRotation.cs" />
     <Compile Include="Selection.cs" />
+    <Compile Include="SelectionCommandsManager.cs" />
     <Compile Include="Shape.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="Paint.cs">

@@ -6,17 +6,20 @@ using System.Threading.Tasks;
 
 namespace Paint
 {
-    public class HistoryMemento
+    /// <summary>
+    /// Добавляет в историю действия, связанные с областью выделения
+    /// </summary>
+    public class SelectionHistoryMemento
     {
         private History history;
         private HistoryData historyData;
         private MyBitmap myBitmap;
 
-        public HistoryMemento(History history, HistoryData historyData, MyBitmap myBitmap)
+        public SelectionHistoryMemento(History history, HistoryData historyData, MyBitmap myBitmap)
         {
-            ImageCapture.CreateRegionBitmap += AddRegionBitmapAfterSelection;
-            ImageCapture.AddBitmap += AddBitmapAfterDeselection;
-            ImageCapture.Scale += AddRegionBitmapAfterScaling;
+            ImageCapture.RegionBitmapCreated += AddBitmapsAfterSelectionOrDeselection;
+            ImageCapture.RegionDeselected += AddBitmapsAfterSelectionOrDeselection;
+            ImageCapture.RegionScaled += AddRegionBitmapAfterScaling;
             MovingRectangle.MouseUp += AddRegionBitmapAfterMoving;
             this.history = history;
             this.historyData = historyData;
@@ -32,16 +35,7 @@ namespace Paint
             this.historyData = historyData;
         }
 
-        private void AddRegionBitmapAfterSelection()
-        {
-            historyData.RegionBitmaps.Push(ImageCapture.RegionBitmap);
-            history.AddHistory(new CommandRegionBitmap(ImageCapture.RegionBitmap), false);
-            ActionsWithShapes.ClearShapes(history, historyData);
-            historyData.Bitmaps.Push(myBitmap.Bitmap);
-            history.AddHistory(new CommandBitmap(myBitmap), true);
-        }
-
-        private void AddBitmapAfterDeselection()
+        private void AddBitmapsAfterSelectionOrDeselection()
         {
             historyData.RegionBitmaps.Push(ImageCapture.RegionBitmap);
             history.AddHistory(new CommandRegionBitmap(ImageCapture.RegionBitmap), false);

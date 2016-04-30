@@ -43,14 +43,14 @@ namespace Paint
             rect = rectangle;
             size = rect.Size;
             mainPictureBox = pictureBox;
-            offsetRect = new Rectangle(rect.Pen, rect.Location, rect.Size);
-            offsetRect.Offset(-length / 2, -length / 2);
+            CreateOffsetRect();
             InitializeComponent();
             AddControls();
             doesFrameExist = true;
+            BringToFront();
         }
 
-        public void InitializeComponent()
+        private void InitializeComponent()
         {
             for (int i = 0; i < 8; i++)
             {
@@ -118,8 +118,14 @@ namespace Paint
         {
             for (int i = 0 ; i < 8; i++)
             {
-                mainPictureBox.Controls.Add(pictureBox[i]);
+                mainPictureBox.Parent.Controls.Add(pictureBox[i]);
             }
+        }
+
+        private void CreateOffsetRect()
+        {
+            offsetRect = new Rectangle(rect.Pen, rect.Location, rect.Size);
+            offsetRect.Offset((length + 1) / 2, (length + 1) / 2);
         }
 
         private void MouseDown(object sender, MouseEventArgs e)
@@ -209,12 +215,11 @@ namespace Paint
         }
 
         /// <summary>
-        /// Изменяет местоположение рамки вокруг виджета
+        /// Изменяет местоположение рамки вокруг прямоугольной области
         /// </summary>
-        public void ChangeFrameLocation()
+        private void ChangeFrameLocation()
         {
-            offsetRect = new Rectangle(rect.Pen, rect.Location, rect.Size);
-            offsetRect.Offset(-length / 2, -length / 2);
+            CreateOffsetRect();
             pictureBox[0].Location = new Point(offsetRect.TopX + offsetRect.Width, offsetRect.TopY);
             pictureBox[1].Location = new Point(offsetRect.TopX + offsetRect.Width, offsetRect.TopY + offsetRect.Height / 2);
             pictureBox[2].Location = new Point(offsetRect.TopX + offsetRect.Width, offsetRect.TopY + offsetRect.Height);
@@ -223,6 +228,17 @@ namespace Paint
             pictureBox[5].Location = new Point(offsetRect.TopX, offsetRect.TopY + offsetRect.Height / 2);
             pictureBox[6].Location = new Point(offsetRect.TopX, offsetRect.TopY);
             pictureBox[7].Location = new Point(offsetRect.TopX + offsetRect.Width / 2, offsetRect.TopY);
+        }
+
+        private void BringToFront()
+        {
+            if (doesFrameExist)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    pictureBox[i].BringToFront();
+                }
+            }
         }
 
         /// <summary>

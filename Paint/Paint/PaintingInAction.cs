@@ -30,7 +30,7 @@ namespace Paint
         
         private History history;
         private HistoryData historyData;
-        private HistoryMemento historyMemento;
+        private SelectionHistoryMemento selectionHistoryMemento;
         private MyBitmap myBitmap;
         private ShapeBuilder shapeBuilder;
         private DefinitionEnabledControl tools;
@@ -58,7 +58,7 @@ namespace Paint
             this.myBitmap = myBitmap;
             this.mainPictureBox = mainPictureBox;
             Selection.InitializeField(mainPictureBox);
-            historyMemento = new HistoryMemento(history, historyData, myBitmap);
+            selectionHistoryMemento = new SelectionHistoryMemento(history, historyData, myBitmap);
             this.tools = tools;
         }
 
@@ -69,7 +69,7 @@ namespace Paint
         {
             this.history = history;
             this.historyData = historyData;
-            historyMemento.Update(history, historyData);
+            selectionHistoryMemento.Update(history, historyData);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Paint
                     {
                         if (!Selection.Region.Contains(e.Location))
                         {
-                            Selection.AddRegionBitmapToMainBitmap(myBitmap);
+                            Selection.Deselect(myBitmap);
                             mainPictureBox.Invalidate();
                         }
                         else
@@ -222,8 +222,7 @@ namespace Paint
 
                         if (!ImageCapture.DoesRegionBitmapExist)
                         {
-                            ImageCapture.GetImageFromSelectedRegion(myBitmap, Selection.Region, mainPictureBox);
-                            ImageCapture.CleanRegion(myBitmap, Selection.Region, backgroundColor);
+                            ImageCapture.GetImageFromSelectedRegion(myBitmap, Selection.Region, mainPictureBox, backgroundColor);
                         }
 
                         Selection.DrawFrameForRegion();

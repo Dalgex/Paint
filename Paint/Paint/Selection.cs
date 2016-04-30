@@ -79,9 +79,14 @@ namespace Paint
         public delegate void EventHandler();
 
         /// <summary>
-        /// Происходит после создания прямоугольной области
+        /// Происходит после создания выделенной области
         /// </summary>
-        public static event EventHandler DrawFrameEvent;
+        public static event EventHandler RegionCreated;
+
+        /// <summary>
+        /// Происходит после удаления выделенного фрагмента
+        /// </summary>
+        public static event EventHandler RegionDeleted;
 
         static Selection()
         {
@@ -115,6 +120,7 @@ namespace Paint
             DetermineRegionSize(startPoint, currentPoint);
             Region = new Rectangle(pen, TopX, TopY, Width, Height);
             Region.Draw(e);
+            RegionCreated();
         }
 
         /// <summary>
@@ -127,7 +133,7 @@ namespace Paint
             TopY = Region.TopY;
             Width = size.Width;
             Height = size.Height;
-            DrawFrameEvent();
+            RegionCreated();
         }
 
         /// <summary>
@@ -147,6 +153,7 @@ namespace Paint
         {
             Region = new Rectangle(pen, 0, 0, 0, 0);
             frame.DeleteFrame();
+            RegionDeleted();
         }
 
         /// <summary>
@@ -166,12 +173,46 @@ namespace Paint
         }
 
         /// <summary>
-        /// Делает частью основного изображения выделенный фрагмент и удаляет его
+        /// Выбирает в качестве выделенной области сразу все изображение
         /// </summary>
-        public static void AddRegionBitmapToMainBitmap(MyBitmap myBitmap)
+        public static void SelectAll(MyBitmap myBitmap)
+        {
+            Deselect(myBitmap);
+            mainPictureBox.Refresh();
+            InitializeRegion(new Point(0, 0), mainPictureBox.ClientSize);
+            ImageCapture.GetImageFromSelectedRegion(myBitmap, Region, mainPictureBox);
+            ImageCapture.CleanRegion(myBitmap, Region, mainPictureBox.BackColor);
+            DrawFrameForRegion();
+        }
+
+        /// <summary>
+        /// Заполняет выделенную область цветом, который установлен как основной
+        /// </summary>
+        public static void FillSelection(MyBitmap myBitmap, Color color)
+        {
+            ImageCapture.FillRegionBitmap(myBitmap, Region, color);
+            DeleteRegion();
+            mainPictureBox.Invalidate();
+        }
+
+        /// <summary>
+        /// Удаляет изображение внутри выделенного фрагмента
+        /// </summary>
+        public static void EraseSelection(MyBitmap myBitmap)
+        {
+            ImageCapture.FillRegionBitmap(myBitmap, Region, mainPictureBox.BackColor);
+            DeleteRegion();
+            mainPictureBox.Invalidate();
+        }
+
+        /// <summary>
+        /// Делает частью основного изображения выделенный фрагмент и снимает выделение
+        /// </summary>
+        public static void Deselect(MyBitmap myBitmap)
         {
             ImageCapture.AddBitmapForRegionToMainBitmap(myBitmap, Region);
             DeleteRegion();
+            mainPictureBox.Invalidate();
         }
     }
 }

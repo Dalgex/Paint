@@ -23,7 +23,7 @@ namespace Paint
             this.buttonForSelection = buttonForSelection;
             this.panelResizer = panelResizer;
             this.myBitmap = myBitmap;
-            Selection.DrawFrameEvent += SimulateButtonForSelectionClick;
+            Selection.RegionCreated += SimulateButtonForSelectionClick;
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Paint
             }
             else if (activeButton == buttonForSelection)
             {
-                Selection.AddRegionBitmapToMainBitmap(myBitmap);
+                Selection.Deselect(myBitmap);
                 panelResizer.FrameWidget.AddFrameWidget();
             }
 

@@ -76,6 +76,13 @@
             this.labelForPictureBoxSize = new System.Windows.Forms.Label();
             this.labelForCursorLocation = new System.Windows.Forms.Label();
             this.panelForTools = new System.Windows.Forms.Panel();
+            this.panelForSelection = new System.Windows.Forms.TableLayoutPanel();
+            this.toolStrip5 = new System.Windows.Forms.ToolStrip();
+            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.itemToSelectAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemToFillSelection = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemToDeselect = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemToEraseSelection = new System.Windows.Forms.ToolStripMenuItem();
             this.panelForInserting = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.buttonToPasteFrom = new System.Windows.Forms.ToolStripSplitButton();
@@ -102,6 +109,8 @@
             this.panelForForm.SuspendLayout();
             this.panelForStatusBar.SuspendLayout();
             this.panelForTools.SuspendLayout();
+            this.panelForSelection.SuspendLayout();
+            this.toolStrip5.SuspendLayout();
             this.panelForInserting.SuspendLayout();
             this.toolStrip2.SuspendLayout();
             this.toolStrip4.SuspendLayout();
@@ -568,10 +577,11 @@
             // 
             // buttonForSelection
             // 
+            this.buttonForSelection.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonForSelection.Image = ((System.Drawing.Image)(resources.GetObject("buttonForSelection.Image")));
-            this.buttonForSelection.Location = new System.Drawing.Point(773, 25);
+            this.buttonForSelection.Location = new System.Drawing.Point(3, 3);
             this.buttonForSelection.Name = "buttonForSelection";
-            this.buttonForSelection.Size = new System.Drawing.Size(43, 40);
+            this.buttonForSelection.Size = new System.Drawing.Size(80, 38);
             this.buttonForSelection.TabIndex = 24;
             this.toolTip1.SetToolTip(this.buttonForSelection, "Выделение\r\nВыделение фрагмента изображения");
             this.buttonForSelection.UseVisualStyleBackColor = false;
@@ -635,7 +645,7 @@
             // 
             this.panelForTools.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.panelForTools.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelForTools.Controls.Add(this.buttonForSelection);
+            this.panelForTools.Controls.Add(this.panelForSelection);
             this.panelForTools.Controls.Add(this.panelForWidth);
             this.panelForTools.Controls.Add(this.panelForInserting);
             this.panelForTools.Controls.Add(this.toolStrip1);
@@ -655,6 +665,82 @@
             this.panelForTools.Name = "panelForTools";
             this.panelForTools.Size = new System.Drawing.Size(903, 105);
             this.panelForTools.TabIndex = 23;
+            // 
+            // panelForSelection
+            // 
+            this.panelForSelection.ColumnCount = 1;
+            this.panelForSelection.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.panelForSelection.Controls.Add(this.buttonForSelection, 0, 0);
+            this.panelForSelection.Controls.Add(this.toolStrip5, 0, 1);
+            this.panelForSelection.Location = new System.Drawing.Point(756, 10);
+            this.panelForSelection.Name = "panelForSelection";
+            this.panelForSelection.RowCount = 2;
+            this.panelForSelection.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.panelForSelection.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.panelForSelection.Size = new System.Drawing.Size(86, 74);
+            this.panelForSelection.TabIndex = 25;
+            // 
+            // toolStrip5
+            // 
+            this.toolStrip5.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.toolStrip5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSplitButton1});
+            this.toolStrip5.Location = new System.Drawing.Point(0, 44);
+            this.toolStrip5.Name = "toolStrip5";
+            this.toolStrip5.Size = new System.Drawing.Size(86, 30);
+            this.toolStrip5.TabIndex = 25;
+            this.toolStrip5.Text = "toolStrip5";
+            // 
+            // toolStripSplitButton1
+            // 
+            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripSplitButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.itemToSelectAll,
+            this.itemToFillSelection,
+            this.itemToEraseSelection,
+            this.itemToDeselect});
+            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
+            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(76, 27);
+            this.toolStripSplitButton1.Text = "Выделить";
+            // 
+            // itemToSelectAll
+            // 
+            this.itemToSelectAll.Image = ((System.Drawing.Image)(resources.GetObject("itemToSelectAll.Image")));
+            this.itemToSelectAll.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.itemToSelectAll.Name = "itemToSelectAll";
+            this.itemToSelectAll.Size = new System.Drawing.Size(204, 30);
+            this.itemToSelectAll.Text = "Выделить все";
+            this.itemToSelectAll.Click += new System.EventHandler(this.OnSelectionClick);
+            // 
+            // itemToFillSelection
+            // 
+            this.itemToFillSelection.Image = ((System.Drawing.Image)(resources.GetObject("itemToFillSelection.Image")));
+            this.itemToFillSelection.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.itemToFillSelection.Name = "itemToFillSelection";
+            this.itemToFillSelection.Size = new System.Drawing.Size(204, 30);
+            this.itemToFillSelection.Text = "Заполнить выделение";
+            this.itemToFillSelection.Click += new System.EventHandler(this.OnSelectionClick);
+            // 
+            // itemToDeselect
+            // 
+            this.itemToDeselect.Image = ((System.Drawing.Image)(resources.GetObject("itemToDeselect.Image")));
+            this.itemToDeselect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.itemToDeselect.Name = "itemToDeselect";
+            this.itemToDeselect.Size = new System.Drawing.Size(204, 30);
+            this.itemToDeselect.Text = "Отменить выделение";
+            this.itemToDeselect.Click += new System.EventHandler(this.OnSelectionClick);
+            // 
+            // itemToEraseSelection
+            // 
+            this.itemToEraseSelection.Image = ((System.Drawing.Image)(resources.GetObject("itemToEraseSelection.Image")));
+            this.itemToEraseSelection.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.itemToEraseSelection.Name = "itemToEraseSelection";
+            this.itemToEraseSelection.Size = new System.Drawing.Size(204, 30);
+            this.itemToEraseSelection.Text = "Очистить выделение";
+            this.itemToEraseSelection.Click += new System.EventHandler(this.OnSelectionClick);
             // 
             // panelForInserting
             // 
@@ -842,6 +928,10 @@
             this.panelForStatusBar.ResumeLayout(false);
             this.panelForTools.ResumeLayout(false);
             this.panelForTools.PerformLayout();
+            this.panelForSelection.ResumeLayout(false);
+            this.panelForSelection.PerformLayout();
+            this.toolStrip5.ResumeLayout(false);
+            this.toolStrip5.PerformLayout();
             this.panelForInserting.ResumeLayout(false);
             this.panelForInserting.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
@@ -918,6 +1008,13 @@
         private System.Windows.Forms.Label labelForMainColor;
         private System.Windows.Forms.Label labelForWidth;
         private System.Windows.Forms.Button buttonForSelection;
+        private System.Windows.Forms.TableLayoutPanel panelForSelection;
+        private System.Windows.Forms.ToolStrip toolStrip5;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
+        private System.Windows.Forms.ToolStripMenuItem itemToSelectAll;
+        private System.Windows.Forms.ToolStripMenuItem itemToEraseSelection;
+        private System.Windows.Forms.ToolStripMenuItem itemToDeselect;
+        private System.Windows.Forms.ToolStripMenuItem itemToFillSelection;
     }
 }
 

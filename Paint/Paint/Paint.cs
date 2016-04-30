@@ -24,6 +24,7 @@ namespace Paint
         private FileMenuActions fileMenuActions;
         private FileMenu fileMenu;
         private ClipboardCommandsManager clipboardCommandsManager;
+        private SelectionCommandsManager selectionCommandsManager;
         private PaintingInAction paintingInAction;
         private KeyboardShortcut keyboardShortcut;
         private DefinitionEnabledControl tools;
@@ -49,6 +50,8 @@ namespace Paint
             fileMenu = new FileMenu(fileMenuActions, itemToCreate, itemToOpen, itemToSave, itemToSaveAs);           
             clipboardCommandsManager = new ClipboardCommandsManager(history, historyData, panelResizer, myBitmap, 
                 buttonToPaste, itemToPaste, itemToPasteFrom);
+            selectionCommandsManager = new SelectionCommandsManager(myBitmap, buttonForSelection, itemToSelectAll,
+                itemToFillSelection, itemToEraseSelection, itemToDeselect);
             
             paintingInAction = new PaintingInAction(buttonForLine, buttonForBrush, buttonForEraser, buttonForPipette, buttonForColorFilling,
                 buttonForEllipse, buttonForRectangle, buttonForSelection, mainPictureBox, history, historyData, myBitmap, tools);
@@ -67,6 +70,11 @@ namespace Paint
             }
 
             foreach (Control control in panelForInserting.Controls)
+            {
+                control.BackColor = Color.FromArgb(255, 227, 237, 247);
+            }
+
+            foreach (Control control in panelForSelection.Controls)
             {
                 control.BackColor = Color.FromArgb(255, 227, 237, 247);
             }
@@ -206,6 +214,11 @@ namespace Paint
         {
             clipboardCommandsManager.DefineClipboardCommandClick(sender, history, historyData, mainPictureBox);
             mainPictureBox.Invalidate();
+        }
+
+        private void OnSelectionClick(object sender, EventArgs e)
+        {
+            selectionCommandsManager.DefineSelectionCommandClick(sender, mainColor);
         }
 
         private void PaintKeyDown(object sender, KeyEventArgs e)
