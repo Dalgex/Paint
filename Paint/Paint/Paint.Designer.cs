@@ -76,6 +76,8 @@
             this.labelForPictureBoxSize = new System.Windows.Forms.Label();
             this.labelForCursorLocation = new System.Windows.Forms.Label();
             this.panelForTools = new System.Windows.Forms.Panel();
+            this.buttonToCut = new System.Windows.Forms.Button();
+            this.buttonToCopy = new System.Windows.Forms.Button();
             this.buttonToCrop = new System.Windows.Forms.Button();
             this.panelForSelection = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip5 = new System.Windows.Forms.ToolStrip();
@@ -124,7 +126,7 @@
             this.buttonForBrush.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.buttonForBrush.Enabled = false;
             this.buttonForBrush.Image = ((System.Drawing.Image)(resources.GetObject("buttonForBrush.Image")));
-            this.buttonForBrush.Location = new System.Drawing.Point(234, 35);
+            this.buttonForBrush.Location = new System.Drawing.Point(534, 25);
             this.buttonForBrush.Name = "buttonForBrush";
             this.buttonForBrush.Size = new System.Drawing.Size(38, 38);
             this.buttonForBrush.TabIndex = 1;
@@ -156,7 +158,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.MinimumSize = new System.Drawing.Size(0, 32);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(903, 32);
+            this.menuStrip1.Size = new System.Drawing.Size(1070, 32);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -259,7 +261,7 @@
             // 
             this.buttonForEraser.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.buttonForEraser.Image = ((System.Drawing.Image)(resources.GetObject("buttonForEraser.Image")));
-            this.buttonForEraser.Location = new System.Drawing.Point(115, 30);
+            this.buttonForEraser.Location = new System.Drawing.Point(437, 29);
             this.buttonForEraser.Name = "buttonForEraser";
             this.buttonForEraser.Size = new System.Drawing.Size(28, 24);
             this.buttonForEraser.TabIndex = 6;
@@ -288,7 +290,7 @@
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buttonForRotating});
-            this.toolStrip1.Location = new System.Drawing.Point(103, 55);
+            this.toolStrip1.Location = new System.Drawing.Point(304, 43);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(115, 26);
             this.toolStrip1.TabIndex = 8;
@@ -364,9 +366,9 @@
             // 
             this.buttonForEllipse.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.buttonForEllipse.Image = ((System.Drawing.Image)(resources.GetObject("buttonForEllipse.Image")));
-            this.buttonForEllipse.Location = new System.Drawing.Point(339, 45);
+            this.buttonForEllipse.Location = new System.Drawing.Point(611, 29);
             this.buttonForEllipse.Name = "buttonForEllipse";
-            this.buttonForEllipse.Size = new System.Drawing.Size(25, 22);
+            this.buttonForEllipse.Size = new System.Drawing.Size(27, 24);
             this.buttonForEllipse.TabIndex = 11;
             this.toolTip1.SetToolTip(this.buttonForEllipse, "Овал");
             this.buttonForEllipse.UseVisualStyleBackColor = false;
@@ -376,9 +378,9 @@
             // 
             this.buttonForRectangle.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.buttonForRectangle.Image = ((System.Drawing.Image)(resources.GetObject("buttonForRectangle.Image")));
-            this.buttonForRectangle.Location = new System.Drawing.Point(312, 45);
+            this.buttonForRectangle.Location = new System.Drawing.Point(640, 29);
             this.buttonForRectangle.Name = "buttonForRectangle";
-            this.buttonForRectangle.Size = new System.Drawing.Size(25, 22);
+            this.buttonForRectangle.Size = new System.Drawing.Size(27, 24);
             this.buttonForRectangle.TabIndex = 12;
             this.toolTip1.SetToolTip(this.buttonForRectangle, "Прямоугольник");
             this.buttonForRectangle.UseVisualStyleBackColor = false;
@@ -388,9 +390,9 @@
             // 
             this.buttonForLine.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.buttonForLine.Image = ((System.Drawing.Image)(resources.GetObject("buttonForLine.Image")));
-            this.buttonForLine.Location = new System.Drawing.Point(285, 45);
+            this.buttonForLine.Location = new System.Drawing.Point(582, 29);
             this.buttonForLine.Name = "buttonForLine";
-            this.buttonForLine.Size = new System.Drawing.Size(25, 22);
+            this.buttonForLine.Size = new System.Drawing.Size(27, 24);
             this.buttonForLine.TabIndex = 13;
             this.toolTip1.SetToolTip(this.buttonForLine, "Линия");
             this.buttonForLine.UseVisualStyleBackColor = false;
@@ -400,7 +402,7 @@
             // 
             this.buttonForColorFilling.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.buttonForColorFilling.Image = ((System.Drawing.Image)(resources.GetObject("buttonForColorFilling.Image")));
-            this.buttonForColorFilling.Location = new System.Drawing.Point(145, 30);
+            this.buttonForColorFilling.Location = new System.Drawing.Point(467, 29);
             this.buttonForColorFilling.Margin = new System.Windows.Forms.Padding(0);
             this.buttonForColorFilling.Name = "buttonForColorFilling";
             this.buttonForColorFilling.Size = new System.Drawing.Size(28, 24);
@@ -413,7 +415,7 @@
             // 
             this.panelForBackgroundColor.Controls.Add(this.labelForBackgroundColor);
             this.panelForBackgroundColor.Controls.Add(this.pictureBoxForBackgroundColor);
-            this.panelForBackgroundColor.Location = new System.Drawing.Point(697, 25);
+            this.panelForBackgroundColor.Location = new System.Drawing.Point(1001, 25);
             this.panelForBackgroundColor.Name = "panelForBackgroundColor";
             this.panelForBackgroundColor.Padding = new System.Windows.Forms.Padding(5);
             this.panelForBackgroundColor.Size = new System.Drawing.Size(53, 57);
@@ -481,7 +483,7 @@
             // 
             this.panelForMainColor.Controls.Add(this.labelForMainColor);
             this.panelForMainColor.Controls.Add(this.pictureBoxForMainColor);
-            this.panelForMainColor.Location = new System.Drawing.Point(642, 25);
+            this.panelForMainColor.Location = new System.Drawing.Point(945, 25);
             this.panelForMainColor.Name = "panelForMainColor";
             this.panelForMainColor.Padding = new System.Windows.Forms.Padding(5);
             this.panelForMainColor.Size = new System.Drawing.Size(53, 57);
@@ -521,7 +523,7 @@
             // 
             this.buttonForPipette.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.buttonForPipette.Image = ((System.Drawing.Image)(resources.GetObject("buttonForPipette.Image")));
-            this.buttonForPipette.Location = new System.Drawing.Point(175, 30);
+            this.buttonForPipette.Location = new System.Drawing.Point(497, 29);
             this.buttonForPipette.Name = "buttonForPipette";
             this.buttonForPipette.Size = new System.Drawing.Size(28, 24);
             this.buttonForPipette.TabIndex = 21;
@@ -555,7 +557,7 @@
             // 
             this.panelForWidth.Controls.Add(this.numericUpDown);
             this.panelForWidth.Controls.Add(this.labelForWidth);
-            this.panelForWidth.Location = new System.Drawing.Point(497, 43);
+            this.panelForWidth.Location = new System.Drawing.Point(794, 39);
             this.panelForWidth.Name = "panelForWidth";
             this.panelForWidth.Padding = new System.Windows.Forms.Padding(2);
             this.panelForWidth.Size = new System.Drawing.Size(133, 24);
@@ -598,7 +600,7 @@
             this.panelForForm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelForForm.Location = new System.Drawing.Point(0, 32);
             this.panelForForm.Name = "panelForForm";
-            this.panelForForm.Size = new System.Drawing.Size(903, 261);
+            this.panelForForm.Size = new System.Drawing.Size(1070, 261);
             this.panelForForm.TabIndex = 15;
             // 
             // panelForStatusBar
@@ -616,7 +618,7 @@
             this.panelForStatusBar.Name = "panelForStatusBar";
             this.panelForStatusBar.RowCount = 1;
             this.panelForStatusBar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.panelForStatusBar.Size = new System.Drawing.Size(903, 26);
+            this.panelForStatusBar.Size = new System.Drawing.Size(1070, 26);
             this.panelForStatusBar.TabIndex = 24;
             // 
             // labelForPictureBoxSize
@@ -646,6 +648,8 @@
             // 
             this.panelForTools.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.panelForTools.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelForTools.Controls.Add(this.buttonToCut);
+            this.panelForTools.Controls.Add(this.buttonToCopy);
             this.panelForTools.Controls.Add(this.buttonToCrop);
             this.panelForTools.Controls.Add(this.panelForSelection);
             this.panelForTools.Controls.Add(this.panelForWidth);
@@ -665,8 +669,38 @@
             this.panelForTools.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelForTools.Location = new System.Drawing.Point(0, 0);
             this.panelForTools.Name = "panelForTools";
-            this.panelForTools.Size = new System.Drawing.Size(903, 105);
+            this.panelForTools.Size = new System.Drawing.Size(1070, 105);
             this.panelForTools.TabIndex = 23;
+            // 
+            // buttonToCut
+            // 
+            this.buttonToCut.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.buttonToCut.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonToCut.Image = ((System.Drawing.Image)(resources.GetObject("buttonToCut.Image")));
+            this.buttonToCut.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonToCut.Location = new System.Drawing.Point(98, 10);
+            this.buttonToCut.Name = "buttonToCut";
+            this.buttonToCut.Size = new System.Drawing.Size(88, 25);
+            this.buttonToCut.TabIndex = 28;
+            this.buttonToCut.Text = "Вырезать";
+            this.buttonToCut.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonToCut.UseVisualStyleBackColor = false;
+            this.buttonToCut.Click += new System.EventHandler(this.OnClipboardCommandClick);
+            // 
+            // buttonToCopy
+            // 
+            this.buttonToCopy.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.buttonToCopy.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonToCopy.Image = ((System.Drawing.Image)(resources.GetObject("buttonToCopy.Image")));
+            this.buttonToCopy.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonToCopy.Location = new System.Drawing.Point(98, 36);
+            this.buttonToCopy.Name = "buttonToCopy";
+            this.buttonToCopy.Size = new System.Drawing.Size(102, 25);
+            this.buttonToCopy.TabIndex = 27;
+            this.buttonToCopy.Text = "Копировать";
+            this.buttonToCopy.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonToCopy.UseVisualStyleBackColor = false;
+            this.buttonToCopy.Click += new System.EventHandler(this.OnClipboardCommandClick);
             // 
             // buttonToCrop
             // 
@@ -674,9 +708,9 @@
             this.buttonToCrop.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonToCrop.Image = ((System.Drawing.Image)(resources.GetObject("buttonToCrop.Image")));
             this.buttonToCrop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonToCrop.Location = new System.Drawing.Point(285, 8);
+            this.buttonToCrop.Location = new System.Drawing.Point(304, 10);
             this.buttonToCrop.Name = "buttonToCrop";
-            this.buttonToCrop.Size = new System.Drawing.Size(89, 27);
+            this.buttonToCrop.Size = new System.Drawing.Size(89, 25);
             this.buttonToCrop.TabIndex = 26;
             this.buttonToCrop.Text = "Обрезать";
             this.buttonToCrop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -689,7 +723,7 @@
             this.panelForSelection.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.panelForSelection.Controls.Add(this.buttonForSelection, 0, 0);
             this.panelForSelection.Controls.Add(this.toolStrip5, 0, 1);
-            this.panelForSelection.Location = new System.Drawing.Point(756, 10);
+            this.panelForSelection.Location = new System.Drawing.Point(211, 7);
             this.panelForSelection.Name = "panelForSelection";
             this.panelForSelection.RowCount = 2;
             this.panelForSelection.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
@@ -825,7 +859,7 @@
             this.toolStrip4.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buttonForShapeFilling});
-            this.toolStrip4.Location = new System.Drawing.Point(381, 55);
+            this.toolStrip4.Location = new System.Drawing.Point(678, 50);
             this.toolStrip4.Name = "toolStrip4";
             this.toolStrip4.Size = new System.Drawing.Size(100, 26);
             this.toolStrip4.TabIndex = 20;
@@ -868,7 +902,7 @@
             this.toolStrip3.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buttonForOutLine});
-            this.toolStrip3.Location = new System.Drawing.Point(381, 28);
+            this.toolStrip3.Location = new System.Drawing.Point(678, 21);
             this.toolStrip3.Name = "toolStrip3";
             this.toolStrip3.Size = new System.Drawing.Size(94, 26);
             this.toolStrip3.TabIndex = 19;
@@ -919,7 +953,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(903, 293);
+            this.ClientSize = new System.Drawing.Size(1070, 293);
             this.Controls.Add(this.buttonForRedo);
             this.Controls.Add(this.buttonForUndo);
             this.Controls.Add(this.panelForForm);
@@ -1033,6 +1067,8 @@
         private System.Windows.Forms.ToolStripMenuItem itemToDeselect;
         private System.Windows.Forms.ToolStripMenuItem itemToFillSelection;
         private System.Windows.Forms.Button buttonToCrop;
+        private System.Windows.Forms.Button buttonToCut;
+        private System.Windows.Forms.Button buttonToCopy;
     }
 }
 

@@ -78,6 +78,7 @@ namespace Paint
             myBitmap.Bitmap = bmp;
             historyData.Bitmaps.Push(myBitmap.Bitmap);
             history.AddHistory(new CommandBitmap(myBitmap), true);
+            pictureBox.Invalidate();
         }
 
         private void SetClientSize(ref Size size)
@@ -104,6 +105,24 @@ namespace Paint
                 historyData.PanelSizes.Push(new PanelSize(size));
                 history.AddHistory(new CommandPanelSize(size, panelResizer), false);
             }
+        }
+
+        /// <summary>
+        /// Помещает выделенный фрагмент изображения в буфер обмена, оставляя графическое окно без изменений
+        /// </summary>
+        public void CopyImage()
+        {
+            Clipboard.SetImage(ImageCapture.RegionBitmap.Bitmap);
+        }
+
+        /// <summary>
+        /// Помещает выделенный фрагмент изображения в буфер обмена и удаляет эту часть изображения из графического окна
+        /// </summary>
+        public void CutImage(PictureBox pictureBox)
+        {
+            CopyImage();
+            Selection.EraseSelection(myBitmap);
+            pictureBox.Invalidate();
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Paint
             fileMenuActions = new FileMenuActions(history, historyData, panelResizer, myBitmap);
             fileMenu = new FileMenu(fileMenuActions, itemToCreate, itemToOpen, itemToSave, itemToSaveAs);           
             clipboardCommandsManager = new ClipboardCommandsManager(history, historyData, panelResizer, myBitmap, 
-                buttonToPaste, itemToPaste, itemToPasteFrom);
+                buttonToCut, buttonToCopy, buttonToPaste, itemToPaste, itemToPasteFrom);
             selectionCommandsManager = new SelectionCommandsManager(myBitmap, buttonForSelection, itemToSelectAll,
                 itemToFillSelection, itemToEraseSelection, itemToDeselect);
             cropToSelectionFunction = new CropToSelectionFunction(buttonToCrop, myBitmap, panelResizer);
@@ -215,7 +215,6 @@ namespace Paint
         private void OnClipboardCommandClick(object sender, EventArgs e)
         {
             clipboardCommandsManager.DefineClipboardCommandClick(sender, history, historyData, mainPictureBox);
-            mainPictureBox.Invalidate();
         }
 
         private void OnSelectionClick(object sender, EventArgs e)

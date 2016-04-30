@@ -13,17 +13,36 @@ namespace Paint
     public class ClipboardCommandsManager
     {
         private ClipboardCommands clipboardCommands;
+        private Button buttonToCut;
+        private Button buttonToCopy;
         private Button buttonToPaste;
         private ToolStripMenuItem itemToPaste;
         private ToolStripMenuItem itemToPasteFrom;
 
         public ClipboardCommandsManager(History history, HistoryData historyData, PanelResizer panelResizer, MyBitmap myBitmap, 
-            Button buttonToPaste, ToolStripMenuItem itemToPaste, ToolStripMenuItem itemToPasteFrom)
+            Button buttonToCut, Button buttonToCopy, Button buttonToPaste, ToolStripMenuItem itemToPaste, ToolStripMenuItem itemToPasteFrom)
         {
             clipboardCommands = new ClipboardCommands(history, historyData, panelResizer, myBitmap);
+            this.buttonToCut = buttonToCut;
+            this.buttonToCopy = buttonToCopy;
             this.buttonToPaste = buttonToPaste;
             this.itemToPaste = itemToPaste;
             this.itemToPasteFrom = itemToPasteFrom;
+            Selection.RegionCreated += EnableButtons;
+            Selection.RegionDeleted += DisableButtons;
+            DisableButtons();
+        }
+        
+        private void EnableButtons()
+        {
+            buttonToCut.Enabled = true;
+            buttonToCopy.Enabled = true;
+        }
+
+        private void DisableButtons()
+        {
+            buttonToCut.Enabled = false;
+            buttonToCopy.Enabled = false;
         }
 
         /// <summary>
@@ -35,11 +54,24 @@ namespace Paint
 
             if (sender is Button)
             {
-                clipboardCommands.PasteImage(pictureBox);
+                var button = (Button)sender;
+
+                if (button == buttonToCut)
+                {
+                    clipboardCommands.CutImage(pictureBox);
+                }
+                else if (button == buttonToCopy)
+                {
+                    clipboardCommands.CopyImage();
+                }
+                else if (button == buttonToPaste)
+                {
+                    clipboardCommands.PasteImage(pictureBox);
+                }
             }
             else
             {
-                var toolStripMenuItem = (System.Windows.Forms.ToolStripMenuItem)sender;
+                var toolStripMenuItem = (ToolStripMenuItem)sender;
 
                 if (toolStripMenuItem == itemToPaste)
                 {
