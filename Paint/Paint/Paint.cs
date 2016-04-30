@@ -178,6 +178,7 @@ namespace Paint
             {
                 backgroundColor = colorDialog2.Color;
                 pictureBoxForBackgroundColor.BackColor = backgroundColor;
+                mainPictureBox.BackColor = backgroundColor;
             }
         }
 
@@ -196,14 +197,12 @@ namespace Paint
         private void OnUndoClick(object sender, EventArgs e)
         {
             history.Undo(historyData);
-            history.WasHistoryAction = true;
             mainPictureBox.Invalidate();
         }
 
         private void OnRedoClick(object sender, EventArgs e)
         {
             history.Redo(historyData);
-            history.WasHistoryAction = true;
             mainPictureBox.Invalidate();
         }
 

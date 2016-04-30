@@ -46,6 +46,10 @@ namespace Paint
                 var bitmap = new Bitmap(Clipboard.GetImage());
                 PasteImage(pictureBox, bitmap);
             }
+            else
+            {
+                MessageBox.Show("Буфер обмена не содержит изображение", "Paint", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
@@ -66,19 +70,24 @@ namespace Paint
 
         private void PasteImage(PictureBox pictureBox, Bitmap bitmap)
         {
+            Selection.Deselect(myBitmap);
             var size = new Size(bitmap.Width + distance, bitmap.Height + distance);
             SetClientSize(ref size);
             var bmp = new Bitmap(pictureBox.Width, pictureBox.Height);
             pictureBox.DrawToBitmap(bmp, pictureBox.ClientRectangle);
-
-            var graphics = Graphics.FromImage(bmp);
-            graphics.DrawImage(bitmap, 0, 0);
-
-            ActionsWithShapes.ClearShapes(history, historyData);
             myBitmap.Bitmap = bmp;
+            ImageCapture.RegionBitmap = new MyBitmap(bitmap);
+            historyData.RegionBitmaps.Push(ImageCapture.RegionBitmap);
+            history.AddHistory(new CommandRegionBitmap(ImageCapture.RegionBitmap), false);
+            Selection.InitializeRegion(historyData.RegionBitmaps.Peek().Location, ImageCapture.RegionBitmap.Bitmap.Size);
+            ActionsWithShapes.ClearShapes(history, historyData);
             historyData.Bitmaps.Push(myBitmap.Bitmap);
             history.AddHistory(new CommandBitmap(myBitmap), true);
-            pictureBox.Invalidate();
+            pictureBox.Refresh();
+            var g = pictureBox.CreateGraphics();
+            g.DrawImage(ImageCapture.RegionBitmap.Bitmap, 0, 0);
+            g.DrawRectangle(Selection.Pen, Selection.TopX, Selection.TopY, Selection.Width, Selection.Height);
+            Selection.DrawFrameForRegion();
         }
 
         private void SetClientSize(ref Size size)

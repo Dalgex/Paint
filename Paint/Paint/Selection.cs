@@ -12,9 +12,13 @@ namespace Paint
     /// </summary>
     public static class Selection
     {
-        private static Pen pen;
         private static System.Windows.Forms.PictureBox mainPictureBox;
         private static FrameRectangle frame = new FrameRectangle();
+
+        /// <summary>
+        /// Возвращает объект, используемый для рисования границы выделения
+        /// </summary>
+        public static Pen Pen { get; private set; }
 
         /// <summary>
         /// Возвращает координату по оси X левого верхнего угла области
@@ -91,9 +95,9 @@ namespace Paint
         static Selection()
         {
             float[] dashValues = { 4, 4 };
-            pen = new Pen(Color.Black, 1);
-            pen.DashPattern = dashValues;
-            Region = new Rectangle(pen, new Point(0, 0), new Size(0, 0));
+            Pen = new Pen(Color.Black, 1);
+            Pen.DashPattern = dashValues;
+            Region = new Rectangle(Pen, new Point(0, 0), new Size(0, 0));
         }
 
         /// <summary>
@@ -118,7 +122,7 @@ namespace Paint
         public static void DrawRegion(Point startPoint, Point currentPoint, System.Windows.Forms.PaintEventArgs e)
         {
             DetermineRegionSize(startPoint, currentPoint);
-            Region = new Rectangle(pen, TopX, TopY, Width, Height);
+            Region = new Rectangle(Pen, TopX, TopY, Width, Height);
             Region.Draw(e);
             RegionCreated();
         }
@@ -128,7 +132,7 @@ namespace Paint
         /// </summary>
         public static void InitializeRegion(Point location, Size size)
         {
-            Region = new Rectangle(pen, location.X, location.Y, size.Width, size.Height);
+            Region = new Rectangle(Pen, location.X, location.Y, size.Width, size.Height);
             TopX = Region.TopX;
             TopY = Region.TopY;
             Width = size.Width;
@@ -151,7 +155,7 @@ namespace Paint
         /// </summary>
         public static void DeleteRegion()
         {
-            Region = new Rectangle(pen, 0, 0, 0, 0);
+            Region = new Rectangle(Pen, 0, 0, 0, 0);
             frame.DeleteFrame();
             RegionDeleted();
         }
@@ -182,6 +186,8 @@ namespace Paint
             InitializeRegion(new Point(0, 0), mainPictureBox.ClientSize);
             ImageCapture.GetImageFromSelectedRegion(myBitmap, Region, mainPictureBox);
             ImageCapture.CleanRegion(myBitmap, Region, mainPictureBox.BackColor);
+            var g = mainPictureBox.CreateGraphics();
+            g.DrawRectangle(Selection.Pen, Selection.TopX, Selection.TopY, Selection.Width, Selection.Height);
             DrawFrameForRegion();
         }
 
