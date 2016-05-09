@@ -46,8 +46,14 @@
   <ItemGroup>
     <Compile Include="ActionsWithShapes.cs" />
     <Compile Include="CommandRegionBitmap.cs" />
+    <Compile Include="CommandText.cs" />
+    <Compile Include="CommandTextBox.cs" />
     <Compile Include="CropToSelectionFunction.cs" />
+    <Compile Include="ExtTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FrameRectangle.cs" />
+    <Compile Include="MyTextBox.cs" />
     <Compile Include="SelectionHistoryMemento.cs" />
     <Compile Include="ImageCapture.cs" />
     <Compile Include="MovingRectangle.cs" />
@@ -90,6 +96,8 @@
     <Compile Include="ShapeBuilder.cs" />
     <Compile Include="KeyboardShortcut.cs" />
     <Compile Include="DefinitionEnabledControl.cs" />
+    <Compile Include="TextSettings.cs" />
+    <Compile Include="TextTools.cs" />
     <EmbeddedResource Include="Paint.resx">
       <DependentUpon>Paint.cs</DependentUpon>
     </EmbeddedResource>

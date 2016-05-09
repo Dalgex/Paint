@@ -29,6 +29,7 @@ namespace Paint
         private KeyboardShortcut keyboardShortcut;
         private CropToSelectionFunction cropToSelectionFunction;
         private DefinitionEnabledControl tools;
+        private TextTools textTools;
 
         private int toolWidth = 10;
         private Color mainColor = Color.Black;
@@ -45,7 +46,9 @@ namespace Paint
             panelResizer = new PanelResizer(panelForPictureBox, history, historyData, myBitmap, labelForPictureBoxSize);
             historyData.Bitmaps.Push(myBitmap.Bitmap);
             historyData.RegionBitmaps.Push(new MyBitmap(new Bitmap(1, 1), new Point(1, 1)));
-            tools = new DefinitionEnabledControl(buttonForBrush, buttonForSelection, panelResizer, myBitmap);
+            tools = new DefinitionEnabledControl(buttonForBrush, buttonForSelection, buttonForText, panelResizer, myBitmap);
+            textTools = new TextTools(buttonForText, buttonForBold, buttonForItalic, buttonForUnderline, buttonForStrikeout,
+                comboBoxForFonts, comboBoxForSizes, myBitmap, history, historyData, mainPictureBox);
             
             fileMenuActions = new FileMenuActions(history, historyData, panelResizer, myBitmap);
             fileMenu = new FileMenu(fileMenuActions, itemToCreate, itemToOpen, itemToSave, itemToSaveAs);           
@@ -56,7 +59,7 @@ namespace Paint
             cropToSelectionFunction = new CropToSelectionFunction(buttonToCrop, myBitmap, panelResizer);
             
             paintingInAction = new PaintingInAction(buttonForLine, buttonForBrush, buttonForEraser, buttonForPipette, buttonForColorFilling,
-                buttonForEllipse, buttonForRectangle, buttonForSelection, mainPictureBox, history, historyData, myBitmap, tools);
+                buttonForEllipse, buttonForRectangle, buttonForSelection, buttonForText, mainPictureBox, history, historyData, myBitmap, tools, textTools);
             keyboardShortcut = new KeyboardShortcut(itemToCreate, itemToOpen, itemToSave, buttonForUndo, buttonForRedo, buttonToPaste);
             InitializeColor();
         }
@@ -127,6 +130,7 @@ namespace Paint
 
         private void RotateClick(object sender, EventArgs e)
         {
+            textTools.TryAddTextToHistory(mainPictureBox);
             var toolStripMenuItem = (ToolStripMenuItem)sender;
             string temp = toolStripMenuItem.Text;
             BitmapRotation.RotateBitmap(myBitmap, history, historyData, mainPictureBox, panelResizer, temp);
@@ -135,6 +139,7 @@ namespace Paint
 
         private void OnButtonClick(object sender, EventArgs e)
         {
+            textTools.TryAddTextToHistory(mainPictureBox);
             tools.EnableControl(sender);
             mainPictureBox.Invalidate();
         }
@@ -196,6 +201,7 @@ namespace Paint
 
         private void OnUndoClick(object sender, EventArgs e)
         {
+            textTools.TryAddTextToHistory();
             history.Undo(historyData);
             mainPictureBox.Invalidate();
         }
@@ -218,6 +224,7 @@ namespace Paint
 
         private void OnSelectionClick(object sender, EventArgs e)
         {
+            textTools.TryAddTextToHistory(mainPictureBox);
             selectionCommandsManager.DefineSelectionCommandClick(sender, mainColor);
         }
 
@@ -234,6 +241,16 @@ namespace Paint
         private void PaintFormClosing(object sender, FormClosingEventArgs e)
         {
             //fileMenuActions.OfferToSaveImage(mainPictureBox, e);
+        }
+
+        private void comboBoxSelectedIndexChanged(object sender, EventArgs e)
+        {
+            var text = comboBoxForFonts.SelectedItem;
+        }
+
+        private void comboBoxClick(object sender, EventArgs e)
+        {
+
         }
     }
 }

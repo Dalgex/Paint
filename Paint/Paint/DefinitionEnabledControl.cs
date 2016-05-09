@@ -14,13 +14,16 @@ namespace Paint
     {
         private Button activeButton;
         private Button buttonForSelection;
+        private Button buttonForText;
         private PanelResizer panelResizer;
         private MyBitmap myBitmap;
 
-        public DefinitionEnabledControl(Button activeButton, Button buttonForSelection, PanelResizer panelResizer, MyBitmap myBitmap)
+        public DefinitionEnabledControl(Button activeButton, Button buttonForSelection, Button buttonForText,
+            PanelResizer panelResizer, MyBitmap myBitmap)
         {
             this.activeButton = activeButton;
             this.buttonForSelection = buttonForSelection;
+            this.buttonForText = buttonForText;
             this.panelResizer = panelResizer;
             this.myBitmap = myBitmap;
             Selection.RegionCreated += SimulateButtonForSelectionClick;
@@ -36,13 +39,17 @@ namespace Paint
             control.Enabled = false;
             activeButton.Enabled = true;
 
-            if (control == buttonForSelection)
+            if (activeButton == buttonForSelection)
+            {
+                Selection.Deselect(myBitmap);
+            }
+
+            if (control == buttonForSelection || control == buttonForText)
             {
                 panelResizer.FrameWidget.RemoveFrameWidget();
             }
-            else if (activeButton == buttonForSelection)
+            else if (activeButton == buttonForSelection || activeButton == buttonForText)
             {
-                Selection.Deselect(myBitmap);
                 panelResizer.FrameWidget.AddFrameWidget();
             }
 

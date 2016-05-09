@@ -15,6 +15,7 @@ namespace Paint
         public Stack<System.Drawing.Bitmap> Bitmaps { get; set; }
         public Stack<PanelSize> PanelSizes { get; set; }
         public Stack<MyBitmap> RegionBitmaps { get; set; }
+        public Stack<TextSettings> TextSettings { get; set; }
 
         public HistoryData()
         {
@@ -22,6 +23,7 @@ namespace Paint
             Bitmaps = new Stack<System.Drawing.Bitmap>();
             PanelSizes = new Stack<PanelSize>();
             RegionBitmaps = new Stack<MyBitmap>();
+            TextSettings = new Stack<TextSettings>();
         }
     }
 }

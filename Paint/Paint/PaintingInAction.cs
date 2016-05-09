@@ -26,6 +26,7 @@ namespace Paint
         private Button buttonForEllipse;
         private Button buttonForRectangle;
         private Button buttonForSelection;
+        private Button buttonForText;
         private PictureBox mainPictureBox;
         
         private History history;
@@ -34,6 +35,7 @@ namespace Paint
         private MyBitmap myBitmap;
         private ShapeBuilder shapeBuilder;
         private DefinitionEnabledControl tools;
+        private TextTools textTools;
 
         private bool isLineDrawn;
         private bool isShapeDrawn;
@@ -42,8 +44,8 @@ namespace Paint
         private bool isSelectionDrawn;
 
         public PaintingInAction(Button buttonForLine, Button buttonForBrush, Button buttonForEraser, Button buttonForPipette,
-            Button buttonForColorFilling, Button buttonForEllipse, Button buttonForRectangle, Button buttonForSelection, PictureBox mainPictureBox,
-            History history, HistoryData historyData, MyBitmap myBitmap, DefinitionEnabledControl tools)
+            Button buttonForColorFilling, Button buttonForEllipse, Button buttonForRectangle, Button buttonForSelection, Button buttonForText,
+            PictureBox mainPictureBox, History history, HistoryData historyData, MyBitmap myBitmap, DefinitionEnabledControl tools, TextTools textTools)
         {
             this.buttonForLine = buttonForLine;
             this.buttonForBrush = buttonForBrush;
@@ -53,6 +55,7 @@ namespace Paint
             this.buttonForEllipse = buttonForEllipse;
             this.buttonForRectangle = buttonForRectangle;
             this.buttonForSelection = buttonForSelection;
+            this.buttonForText = buttonForText;
             this.history = history;
             this.historyData = historyData;
             this.myBitmap = myBitmap;
@@ -60,6 +63,7 @@ namespace Paint
             Selection.InitializeField(mainPictureBox);
             selectionHistoryMemento = new SelectionHistoryMemento(history, historyData, myBitmap);
             this.tools = tools;
+            this.textTools = textTools;
         }
 
         /// <summary>
@@ -70,6 +74,7 @@ namespace Paint
             this.history = history;
             this.historyData = historyData;
             selectionHistoryMemento.Update(history, historyData);
+            textTools.Update(history, historyData);
         }
 
         /// <summary>
@@ -107,6 +112,21 @@ namespace Paint
                         {
                             MovingRectangle.SetDifferenceBetweenCoordinates(e);
                         }
+                    }
+                }
+                else if (!buttonForText.Enabled)
+                {
+                    if (textTools.DoesTextBoxExist)
+                    {
+                        if (!textTools.MyTextBox.Contains(e.Location))
+                        {
+                            textTools.DeleteTextBox(mainPictureBox);
+                            textTools.CreateTextBox(e.Location, mainColor);
+                        }
+                    }
+                    else
+                    {
+                        textTools.CreateTextBox(e.Location, mainColor);
                     }
                 }
                 else
@@ -228,6 +248,10 @@ namespace Paint
                         Selection.DrawFrameForRegion();
                         MovingRectangle.CallEventMouseUp();
                     }
+                }
+                else if (!buttonForText.Enabled)
+                {
+
                 }
                 else
                 {
@@ -359,11 +383,16 @@ namespace Paint
                 e.Graphics.DrawImage(ImageCapture.RegionBitmap.Bitmap, Selection.Region.Location);
                 Selection.Region.Draw(e);
             }
-            else if (history.WasHistoryAction)
+            else if (history.WasHistoryAction && !buttonForSelection.Enabled)
             {
                 e.Graphics.DrawImage(ImageCapture.RegionBitmap.Bitmap, ImageCapture.RegionBitmap.Location);
                 Selection.Region.Draw(e);
                 history.WasHistoryAction = false;
+            }
+            else if (textTools.DoesTextDraw)
+            {
+                TextRenderer.DrawText(e.Graphics, textTools.MyTextBox.TextBox.Text, textTools.MyTextBox.TextBox.Font, 
+                    textTools.MyTextBox.TextBox.OffsetLocation, textTools.MyTextBox.TextBox.ForeColor, TextFormatFlags.NoPadding);
             }
         }
     }

@@ -76,6 +76,14 @@
             this.labelForPictureBoxSize = new System.Windows.Forms.Label();
             this.labelForCursorLocation = new System.Windows.Forms.Label();
             this.panelForTools = new System.Windows.Forms.Panel();
+            this.panelForTextTools = new System.Windows.Forms.Panel();
+            this.comboBoxForFonts = new System.Windows.Forms.ComboBox();
+            this.buttonForStrikeout = new System.Windows.Forms.Button();
+            this.comboBoxForSizes = new System.Windows.Forms.ComboBox();
+            this.buttonForUnderline = new System.Windows.Forms.Button();
+            this.buttonForBold = new System.Windows.Forms.Button();
+            this.buttonForItalic = new System.Windows.Forms.Button();
+            this.buttonForText = new System.Windows.Forms.Button();
             this.buttonToCut = new System.Windows.Forms.Button();
             this.buttonToCopy = new System.Windows.Forms.Button();
             this.buttonToCrop = new System.Windows.Forms.Button();
@@ -112,6 +120,7 @@
             this.panelForForm.SuspendLayout();
             this.panelForStatusBar.SuspendLayout();
             this.panelForTools.SuspendLayout();
+            this.panelForTextTools.SuspendLayout();
             this.panelForSelection.SuspendLayout();
             this.toolStrip5.SuspendLayout();
             this.panelForInserting.SuspendLayout();
@@ -648,6 +657,8 @@
             // 
             this.panelForTools.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.panelForTools.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelForTools.Controls.Add(this.panelForTextTools);
+            this.panelForTools.Controls.Add(this.buttonForText);
             this.panelForTools.Controls.Add(this.buttonToCut);
             this.panelForTools.Controls.Add(this.buttonToCopy);
             this.panelForTools.Controls.Add(this.buttonToCrop);
@@ -671,6 +682,93 @@
             this.panelForTools.Name = "panelForTools";
             this.panelForTools.Size = new System.Drawing.Size(1070, 105);
             this.panelForTools.TabIndex = 23;
+            // 
+            // panelForTextTools
+            // 
+            this.panelForTextTools.Controls.Add(this.comboBoxForFonts);
+            this.panelForTextTools.Controls.Add(this.buttonForStrikeout);
+            this.panelForTextTools.Controls.Add(this.comboBoxForSizes);
+            this.panelForTextTools.Controls.Add(this.buttonForUnderline);
+            this.panelForTextTools.Controls.Add(this.buttonForBold);
+            this.panelForTextTools.Controls.Add(this.buttonForItalic);
+            this.panelForTextTools.Location = new System.Drawing.Point(352, 70);
+            this.panelForTextTools.Name = "panelForTextTools";
+            this.panelForTextTools.Size = new System.Drawing.Size(370, 30);
+            this.panelForTextTools.TabIndex = 35;
+            // 
+            // comboBoxForFonts
+            // 
+            this.comboBoxForFonts.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBoxForFonts.FormattingEnabled = true;
+            this.comboBoxForFonts.Location = new System.Drawing.Point(13, 3);
+            this.comboBoxForFonts.Name = "comboBoxForFonts";
+            this.comboBoxForFonts.Size = new System.Drawing.Size(150, 23);
+            this.comboBoxForFonts.TabIndex = 30;
+            this.comboBoxForFonts.Text = "Times New Roman";
+            this.comboBoxForFonts.SelectedIndexChanged += new System.EventHandler(this.comboBoxSelectedIndexChanged);
+            this.comboBoxForFonts.Click += new System.EventHandler(this.comboBoxClick);
+            // 
+            // buttonForStrikeout
+            // 
+            this.buttonForStrikeout.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.buttonForStrikeout.Image = ((System.Drawing.Image)(resources.GetObject("buttonForStrikeout.Image")));
+            this.buttonForStrikeout.Location = new System.Drawing.Point(325, 4);
+            this.buttonForStrikeout.Name = "buttonForStrikeout";
+            this.buttonForStrikeout.Size = new System.Drawing.Size(27, 24);
+            this.buttonForStrikeout.TabIndex = 34;
+            this.buttonForStrikeout.UseVisualStyleBackColor = false;
+            // 
+            // comboBoxForSizes
+            // 
+            this.comboBoxForSizes.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBoxForSizes.Location = new System.Drawing.Point(179, 4);
+            this.comboBoxForSizes.Name = "comboBoxForSizes";
+            this.comboBoxForSizes.Size = new System.Drawing.Size(44, 23);
+            this.comboBoxForSizes.TabIndex = 0;
+            this.comboBoxForSizes.Text = "20";
+            this.comboBoxForSizes.SelectedIndexChanged += new System.EventHandler(this.comboBoxSelectedIndexChanged);
+            this.comboBoxForSizes.Click += new System.EventHandler(this.comboBoxClick);
+            // 
+            // buttonForUnderline
+            // 
+            this.buttonForUnderline.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.buttonForUnderline.Image = ((System.Drawing.Image)(resources.GetObject("buttonForUnderline.Image")));
+            this.buttonForUnderline.Location = new System.Drawing.Point(292, 4);
+            this.buttonForUnderline.Name = "buttonForUnderline";
+            this.buttonForUnderline.Size = new System.Drawing.Size(27, 24);
+            this.buttonForUnderline.TabIndex = 33;
+            this.buttonForUnderline.UseVisualStyleBackColor = false;
+            // 
+            // buttonForBold
+            // 
+            this.buttonForBold.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.buttonForBold.Image = ((System.Drawing.Image)(resources.GetObject("buttonForBold.Image")));
+            this.buttonForBold.Location = new System.Drawing.Point(229, 4);
+            this.buttonForBold.Name = "buttonForBold";
+            this.buttonForBold.Size = new System.Drawing.Size(26, 24);
+            this.buttonForBold.TabIndex = 31;
+            this.buttonForBold.UseVisualStyleBackColor = false;
+            // 
+            // buttonForItalic
+            // 
+            this.buttonForItalic.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.buttonForItalic.Image = ((System.Drawing.Image)(resources.GetObject("buttonForItalic.Image")));
+            this.buttonForItalic.Location = new System.Drawing.Point(259, 4);
+            this.buttonForItalic.Name = "buttonForItalic";
+            this.buttonForItalic.Size = new System.Drawing.Size(27, 24);
+            this.buttonForItalic.TabIndex = 32;
+            this.buttonForItalic.UseVisualStyleBackColor = false;
+            // 
+            // buttonForText
+            // 
+            this.buttonForText.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.buttonForText.Image = ((System.Drawing.Image)(resources.GetObject("buttonForText.Image")));
+            this.buttonForText.Location = new System.Drawing.Point(450, 2);
+            this.buttonForText.Name = "buttonForText";
+            this.buttonForText.Size = new System.Drawing.Size(27, 24);
+            this.buttonForText.TabIndex = 29;
+            this.buttonForText.UseVisualStyleBackColor = false;
+            this.buttonForText.Click += new System.EventHandler(this.OnButtonClick);
             // 
             // buttonToCut
             // 
@@ -979,6 +1077,7 @@
             this.panelForStatusBar.ResumeLayout(false);
             this.panelForTools.ResumeLayout(false);
             this.panelForTools.PerformLayout();
+            this.panelForTextTools.ResumeLayout(false);
             this.panelForSelection.ResumeLayout(false);
             this.panelForSelection.PerformLayout();
             this.toolStrip5.ResumeLayout(false);
@@ -1069,6 +1168,14 @@
         private System.Windows.Forms.Button buttonToCrop;
         private System.Windows.Forms.Button buttonToCut;
         private System.Windows.Forms.Button buttonToCopy;
+        private System.Windows.Forms.Button buttonForText;
+        private System.Windows.Forms.Button buttonForStrikeout;
+        private System.Windows.Forms.Button buttonForUnderline;
+        private System.Windows.Forms.Button buttonForItalic;
+        private System.Windows.Forms.Button buttonForBold;
+        private System.Windows.Forms.ComboBox comboBoxForSizes;
+        private System.Windows.Forms.ComboBox comboBoxForFonts;
+        private System.Windows.Forms.Panel panelForTextTools;
     }
 }
 
