@@ -99,7 +99,7 @@ namespace Paint
 
                 if (!buttonForSelection.Enabled)
                 {
-                    MovingRectangle.DetermineIsRectangleMoving(e);
+                    MovingRectangle.DetermineIsRectangleMoving(Selection.Region, e);
 
                     if (Selection.DoesRegionExist)
                     {

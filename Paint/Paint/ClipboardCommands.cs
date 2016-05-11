@@ -17,14 +17,16 @@ namespace Paint
         private HistoryData historyData;
         private PanelResizer panelResizer;
         private MyBitmap myBitmap;
+        private MyTextBox myTextBox;
         private int distance = DistanceBetweenBordersPictureBoxAndPanel.Value;
 
-        public ClipboardCommands(History history, HistoryData historyData, PanelResizer panelResizer, MyBitmap myBitmap)
+        public ClipboardCommands(History history, HistoryData historyData, PanelResizer panelResizer, MyBitmap myBitmap, MyTextBox myTextBox)
         {
             this.history = history;
             this.historyData = historyData;
             this.panelResizer = panelResizer;
             this.myBitmap = myBitmap;
+            this.myTextBox = myTextBox;
         }
 
         /// <summary>
@@ -39,12 +41,42 @@ namespace Paint
         /// <summary>
         /// Вставляет содержимое из буфера обмена
         /// </summary>
-        public void PasteImage(PictureBox pictureBox)
+        public void Paste(PictureBox pictureBox)
+        {
+            if (myTextBox.TextBox.Visible)
+            {
+                TryPasteText();
+            }
+            else
+            {
+                TryPasteImage(pictureBox);
+            }
+        }
+
+        private void TryPasteText()
+        {
+            if (Clipboard.ContainsText())
+            {
+                PasteText();
+            }
+            else
+            {
+                MessageBox.Show("Буфер обмена не содержит текст", "Paint", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void PasteText()
+        {
+            //myTextBox.TextBox.Paste();
+            myTextBox.TextBox.Text = myTextBox.TextBox.Text.Insert(myTextBox.TextBox.SelectionStart, 
+                (string)Clipboard.GetDataObject().GetData(DataFormats.Text));
+        }
+
+        private void TryPasteImage(PictureBox pictureBox)
         {
             if (Clipboard.ContainsImage())
             {
-                var bitmap = new Bitmap(Clipboard.GetImage());
-                PasteImage(pictureBox, bitmap);
+                PasteImage(pictureBox, new Bitmap(Clipboard.GetImage()));
             }
             else
             {
@@ -117,21 +149,54 @@ namespace Paint
         }
 
         /// <summary>
-        /// Помещает выделенный фрагмент изображения в буфер обмена, оставляя графическое окно без изменений
+        /// Помещает копию выделенных данных в буфер обмена. Исходные данные при этом не изменяются
         /// </summary>
-        public void CopyImage()
+        public void Copy()
+        {
+            if (ImageCapture.DoesRegionBitmapExist)
+            {
+                CopyImage();
+            }
+            else
+            {
+                CopyText();
+            }
+        }
+
+        private void CopyImage()
         {
             Clipboard.SetImage(ImageCapture.RegionBitmap.Bitmap);
         }
 
+        private void CopyText()
+        {
+            myTextBox.TextBox.Copy();
+        }
+
         /// <summary>
-        /// Помещает выделенный фрагмент изображения в буфер обмена и удаляет эту часть изображения из графического окна
+        /// Помещает копию выделенных данных в буфер обмена. Выделенные данные затем удаляются из приложения
         /// </summary>
-        public void CutImage(PictureBox pictureBox)
+        public void Cut()
+        {
+            if (ImageCapture.DoesRegionBitmapExist)
+            {
+                CutImage();
+            }
+            else
+            {
+                CutText();
+            }
+        }
+
+        private void CutImage()
         {
             CopyImage();
             Selection.EraseSelection(myBitmap);
-            pictureBox.Invalidate();
+        }
+
+        private void CutText()
+        {
+            myTextBox.TextBox.Cut();
         }
     }
 }

@@ -18,19 +18,34 @@ namespace Paint
         private Button buttonToPaste;
         private ToolStripMenuItem itemToPaste;
         private ToolStripMenuItem itemToPasteFrom;
+        private MyTextBox myTextBox;
 
         public ClipboardCommandsManager(History history, HistoryData historyData, PanelResizer panelResizer, MyBitmap myBitmap, 
-            Button buttonToCut, Button buttonToCopy, Button buttonToPaste, ToolStripMenuItem itemToPaste, ToolStripMenuItem itemToPasteFrom)
+            Button buttonToCut, Button buttonToCopy, Button buttonToPaste, ToolStripMenuItem itemToPaste, ToolStripMenuItem itemToPasteFrom, MyTextBox myTextBox)
         {
-            clipboardCommands = new ClipboardCommands(history, historyData, panelResizer, myBitmap);
+            clipboardCommands = new ClipboardCommands(history, historyData, panelResizer, myBitmap, myTextBox);
             this.buttonToCut = buttonToCut;
             this.buttonToCopy = buttonToCopy;
             this.buttonToPaste = buttonToPaste;
             this.itemToPaste = itemToPaste;
             this.itemToPasteFrom = itemToPasteFrom;
+            this.myTextBox = myTextBox;
+            myTextBox.TextBox.SelectionChanged += new EventHandler(CheckSelectedText);
             Selection.RegionCreated += EnableButtons;
             Selection.RegionDeleted += DisableButtons;
             DisableButtons();
+        }
+
+        private void CheckSelectedText(object sender, EventArgs e)
+        {
+            if (myTextBox.TextBox.SelectedText != "")
+            {
+                EnableButtons();
+            }
+            else
+            {
+                DisableButtons();
+            }
         }
         
         private void EnableButtons()
@@ -58,15 +73,15 @@ namespace Paint
 
                 if (button == buttonToCut)
                 {
-                    clipboardCommands.CutImage(pictureBox);
+                    clipboardCommands.Cut();
                 }
                 else if (button == buttonToCopy)
                 {
-                    clipboardCommands.CopyImage();
+                    clipboardCommands.Copy();
                 }
                 else if (button == buttonToPaste)
                 {
-                    clipboardCommands.PasteImage(pictureBox);
+                    clipboardCommands.Paste(pictureBox);
                 }
             }
             else
@@ -75,7 +90,7 @@ namespace Paint
 
                 if (toolStripMenuItem == itemToPaste)
                 {
-                    clipboardCommands.PasteImage(pictureBox);
+                    clipboardCommands.Paste(pictureBox);
                 }
                 else if (toolStripMenuItem == itemToPasteFrom)
                 {

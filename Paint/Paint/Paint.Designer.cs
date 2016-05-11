@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Paint));
             this.buttonForBrush = new System.Windows.Forms.Button();
             this.mainPictureBox = new System.Windows.Forms.PictureBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.buttonForFileMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.itemToCreate = new System.Windows.Forms.ToolStripMenuItem();
             this.itemToOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,9 +58,9 @@
             this.buttonForRectangle = new System.Windows.Forms.Button();
             this.buttonForLine = new System.Windows.Forms.Button();
             this.buttonForColorFilling = new System.Windows.Forms.Button();
-            this.panelForBackgroundColor = new System.Windows.Forms.Panel();
+            this.panelForBackColor = new System.Windows.Forms.Panel();
             this.labelForBackgroundColor = new System.Windows.Forms.Label();
-            this.pictureBoxForBackgroundColor = new System.Windows.Forms.PictureBox();
+            this.pictureBoxForBackColor = new System.Windows.Forms.PictureBox();
             this.numericUpDown = new System.Windows.Forms.NumericUpDown();
             this.panelForMainColor = new System.Windows.Forms.Panel();
             this.labelForMainColor = new System.Windows.Forms.Label();
@@ -77,6 +77,7 @@
             this.labelForCursorLocation = new System.Windows.Forms.Label();
             this.panelForTools = new System.Windows.Forms.Panel();
             this.panelForTextTools = new System.Windows.Forms.Panel();
+            this.buttonForFinish = new System.Windows.Forms.Button();
             this.comboBoxForFonts = new System.Windows.Forms.ComboBox();
             this.buttonForStrikeout = new System.Windows.Forms.Button();
             this.comboBoxForSizes = new System.Windows.Forms.ComboBox();
@@ -109,10 +110,10 @@
             this.itemSolidColorContour = new System.Windows.Forms.ToolStripMenuItem();
             this.panelForPictureBox = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
-            this.menuStrip1.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.panelForBackgroundColor.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxForBackgroundColor)).BeginInit();
+            this.panelForBackColor.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxForBackColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).BeginInit();
             this.panelForMainColor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxForMainColor)).BeginInit();
@@ -159,17 +160,17 @@
             this.mainPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainPictureBoxMouseMove);
             this.mainPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainPictureBoxMouseUp);
             // 
-            // menuStrip1
+            // menuStrip
             // 
-            this.menuStrip1.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStrip.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buttonForFileMenu});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.MinimumSize = new System.Drawing.Size(0, 32);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1070, 32);
-            this.menuStrip1.TabIndex = 4;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.MinimumSize = new System.Drawing.Size(0, 32);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(1070, 32);
+            this.menuStrip.TabIndex = 4;
+            this.menuStrip.Text = "menuStrip1";
             // 
             // buttonForFileMenu
             // 
@@ -420,18 +421,18 @@
             this.buttonForColorFilling.UseVisualStyleBackColor = false;
             this.buttonForColorFilling.Click += new System.EventHandler(this.OnButtonClick);
             // 
-            // panelForBackgroundColor
+            // panelForBackColor
             // 
-            this.panelForBackgroundColor.Controls.Add(this.labelForBackgroundColor);
-            this.panelForBackgroundColor.Controls.Add(this.pictureBoxForBackgroundColor);
-            this.panelForBackgroundColor.Location = new System.Drawing.Point(1001, 25);
-            this.panelForBackgroundColor.Name = "panelForBackgroundColor";
-            this.panelForBackgroundColor.Padding = new System.Windows.Forms.Padding(5);
-            this.panelForBackgroundColor.Size = new System.Drawing.Size(53, 57);
-            this.panelForBackgroundColor.TabIndex = 18;
-            this.toolTip1.SetToolTip(this.panelForBackgroundColor, "Цвет 2 (цвет фона)\r\nЩелкните здесь и выберите цвет на\r\nцветовой палитре. Этот цве" +
+            this.panelForBackColor.Controls.Add(this.labelForBackgroundColor);
+            this.panelForBackColor.Controls.Add(this.pictureBoxForBackColor);
+            this.panelForBackColor.Location = new System.Drawing.Point(1001, 25);
+            this.panelForBackColor.Name = "panelForBackColor";
+            this.panelForBackColor.Padding = new System.Windows.Forms.Padding(5);
+            this.panelForBackColor.Size = new System.Drawing.Size(53, 57);
+            this.panelForBackColor.TabIndex = 18;
+            this.toolTip1.SetToolTip(this.panelForBackColor, "Цвет 2 (цвет фона)\r\nЩелкните здесь и выберите цвет на\r\nцветовой палитре. Этот цве" +
         "т используется\r\nдля ластика, а также для заливки фигур");
-            this.panelForBackgroundColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PanelForBackgroundColorMouseClick);
+            this.panelForBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PanelForBackgroundColorMouseClick);
             // 
             // labelForBackgroundColor
             // 
@@ -447,18 +448,18 @@
         "т используется\r\nдля ластика, а также для заливки фигур");
             this.labelForBackgroundColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PanelForBackgroundColorMouseClick);
             // 
-            // pictureBoxForBackgroundColor
+            // pictureBoxForBackColor
             // 
-            this.pictureBoxForBackgroundColor.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.pictureBoxForBackgroundColor.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pictureBoxForBackgroundColor.Location = new System.Drawing.Point(5, 5);
-            this.pictureBoxForBackgroundColor.Name = "pictureBoxForBackgroundColor";
-            this.pictureBoxForBackgroundColor.Size = new System.Drawing.Size(43, 24);
-            this.pictureBoxForBackgroundColor.TabIndex = 0;
-            this.pictureBoxForBackgroundColor.TabStop = false;
-            this.toolTip1.SetToolTip(this.pictureBoxForBackgroundColor, "Цвет 2 (цвет фона)\r\nЩелкните здесь и выберите цвет на\r\nцветовой палитре. Этот цве" +
+            this.pictureBoxForBackColor.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.pictureBoxForBackColor.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pictureBoxForBackColor.Location = new System.Drawing.Point(5, 5);
+            this.pictureBoxForBackColor.Name = "pictureBoxForBackColor";
+            this.pictureBoxForBackColor.Size = new System.Drawing.Size(43, 24);
+            this.pictureBoxForBackColor.TabIndex = 0;
+            this.pictureBoxForBackColor.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBoxForBackColor, "Цвет 2 (цвет фона)\r\nЩелкните здесь и выберите цвет на\r\nцветовой палитре. Этот цве" +
         "т используется\r\nдля ластика, а также для заливки фигур");
-            this.pictureBoxForBackgroundColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PanelForBackgroundColorMouseClick);
+            this.pictureBoxForBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PanelForBackgroundColorMouseClick);
             // 
             // numericUpDown
             // 
@@ -666,7 +667,7 @@
             this.panelForTools.Controls.Add(this.panelForWidth);
             this.panelForTools.Controls.Add(this.panelForInserting);
             this.panelForTools.Controls.Add(this.toolStrip1);
-            this.panelForTools.Controls.Add(this.panelForBackgroundColor);
+            this.panelForTools.Controls.Add(this.panelForBackColor);
             this.panelForTools.Controls.Add(this.toolStrip4);
             this.panelForTools.Controls.Add(this.buttonForColorFilling);
             this.panelForTools.Controls.Add(this.panelForMainColor);
@@ -685,6 +686,7 @@
             // 
             // panelForTextTools
             // 
+            this.panelForTextTools.Controls.Add(this.buttonForFinish);
             this.panelForTextTools.Controls.Add(this.comboBoxForFonts);
             this.panelForTextTools.Controls.Add(this.buttonForStrikeout);
             this.panelForTextTools.Controls.Add(this.comboBoxForSizes);
@@ -693,8 +695,24 @@
             this.panelForTextTools.Controls.Add(this.buttonForItalic);
             this.panelForTextTools.Location = new System.Drawing.Point(352, 70);
             this.panelForTextTools.Name = "panelForTextTools";
-            this.panelForTextTools.Size = new System.Drawing.Size(370, 30);
+            this.panelForTextTools.Size = new System.Drawing.Size(452, 30);
             this.panelForTextTools.TabIndex = 35;
+            // 
+            // buttonForFinish
+            // 
+            this.buttonForFinish.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.buttonForFinish.Enabled = false;
+            this.buttonForFinish.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonForFinish.Image = ((System.Drawing.Image)(resources.GetObject("buttonForFinish.Image")));
+            this.buttonForFinish.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonForFinish.Location = new System.Drawing.Point(358, 4);
+            this.buttonForFinish.Name = "buttonForFinish";
+            this.buttonForFinish.Size = new System.Drawing.Size(68, 24);
+            this.buttonForFinish.TabIndex = 35;
+            this.buttonForFinish.Text = "Готово";
+            this.buttonForFinish.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonForFinish.UseVisualStyleBackColor = false;
+            this.buttonForFinish.Click += new System.EventHandler(this.OnTextToolClick);
             // 
             // comboBoxForFonts
             // 
@@ -705,18 +723,19 @@
             this.comboBoxForFonts.Size = new System.Drawing.Size(150, 23);
             this.comboBoxForFonts.TabIndex = 30;
             this.comboBoxForFonts.Text = "Times New Roman";
-            this.comboBoxForFonts.SelectedIndexChanged += new System.EventHandler(this.comboBoxSelectedIndexChanged);
-            this.comboBoxForFonts.Click += new System.EventHandler(this.comboBoxClick);
+            this.comboBoxForFonts.SelectedIndexChanged += new System.EventHandler(this.OnTextToolClick);
             // 
             // buttonForStrikeout
             // 
             this.buttonForStrikeout.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.buttonForStrikeout.Image = ((System.Drawing.Image)(resources.GetObject("buttonForStrikeout.Image")));
+            this.buttonForStrikeout.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonForStrikeout.Location = new System.Drawing.Point(325, 4);
             this.buttonForStrikeout.Name = "buttonForStrikeout";
             this.buttonForStrikeout.Size = new System.Drawing.Size(27, 24);
             this.buttonForStrikeout.TabIndex = 34;
+            this.buttonForStrikeout.Text = "S";
             this.buttonForStrikeout.UseVisualStyleBackColor = false;
+            this.buttonForStrikeout.Click += new System.EventHandler(this.OnTextToolClick);
             // 
             // comboBoxForSizes
             // 
@@ -726,38 +745,43 @@
             this.comboBoxForSizes.Size = new System.Drawing.Size(44, 23);
             this.comboBoxForSizes.TabIndex = 0;
             this.comboBoxForSizes.Text = "20";
-            this.comboBoxForSizes.SelectedIndexChanged += new System.EventHandler(this.comboBoxSelectedIndexChanged);
-            this.comboBoxForSizes.Click += new System.EventHandler(this.comboBoxClick);
+            this.comboBoxForSizes.SelectedIndexChanged += new System.EventHandler(this.OnTextToolClick);
             // 
             // buttonForUnderline
             // 
             this.buttonForUnderline.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.buttonForUnderline.Image = ((System.Drawing.Image)(resources.GetObject("buttonForUnderline.Image")));
+            this.buttonForUnderline.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonForUnderline.Location = new System.Drawing.Point(292, 4);
             this.buttonForUnderline.Name = "buttonForUnderline";
             this.buttonForUnderline.Size = new System.Drawing.Size(27, 24);
             this.buttonForUnderline.TabIndex = 33;
+            this.buttonForUnderline.Text = "Ч";
             this.buttonForUnderline.UseVisualStyleBackColor = false;
+            this.buttonForUnderline.Click += new System.EventHandler(this.OnTextToolClick);
             // 
             // buttonForBold
             // 
             this.buttonForBold.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.buttonForBold.Image = ((System.Drawing.Image)(resources.GetObject("buttonForBold.Image")));
+            this.buttonForBold.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonForBold.Location = new System.Drawing.Point(229, 4);
             this.buttonForBold.Name = "buttonForBold";
             this.buttonForBold.Size = new System.Drawing.Size(26, 24);
             this.buttonForBold.TabIndex = 31;
+            this.buttonForBold.Text = "Ж";
             this.buttonForBold.UseVisualStyleBackColor = false;
+            this.buttonForBold.Click += new System.EventHandler(this.OnTextToolClick);
             // 
             // buttonForItalic
             // 
             this.buttonForItalic.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.buttonForItalic.Image = ((System.Drawing.Image)(resources.GetObject("buttonForItalic.Image")));
+            this.buttonForItalic.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonForItalic.Location = new System.Drawing.Point(259, 4);
             this.buttonForItalic.Name = "buttonForItalic";
             this.buttonForItalic.Size = new System.Drawing.Size(27, 24);
             this.buttonForItalic.TabIndex = 32;
+            this.buttonForItalic.Text = "К";
             this.buttonForItalic.UseVisualStyleBackColor = false;
+            this.buttonForItalic.Click += new System.EventHandler(this.OnTextToolClick);
             // 
             // buttonForText
             // 
@@ -1055,20 +1079,20 @@
             this.Controls.Add(this.buttonForRedo);
             this.Controls.Add(this.buttonForUndo);
             this.Controls.Add(this.panelForForm);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.menuStrip);
             this.KeyPreview = true;
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.menuStrip;
             this.Name = "Paint";
             this.Text = "Paint";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PaintFormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PaintKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).EndInit();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.panelForBackgroundColor.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxForBackgroundColor)).EndInit();
+            this.panelForBackColor.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxForBackColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).EndInit();
             this.panelForMainColor.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxForMainColor)).EndInit();
@@ -1100,7 +1124,7 @@
 
         private System.Windows.Forms.Button buttonForBrush;
         private System.Windows.Forms.PictureBox mainPictureBox;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem buttonForFileMenu;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.ColorDialog colorDialog2;
@@ -1122,9 +1146,9 @@
         private System.Windows.Forms.NumericUpDown numericUpDown;
         private System.Windows.Forms.PictureBox pictureBoxForMainColor;
         private System.Windows.Forms.Panel panelForMainColor;
-        private System.Windows.Forms.Panel panelForBackgroundColor;
+        private System.Windows.Forms.Panel panelForBackColor;
         private System.Windows.Forms.Label labelForBackgroundColor;
-        private System.Windows.Forms.PictureBox pictureBoxForBackgroundColor;
+        private System.Windows.Forms.PictureBox pictureBoxForBackColor;
         private System.Windows.Forms.ToolStrip toolStrip3;
         private System.Windows.Forms.ToolStripSplitButton buttonForOutLine;
         private System.Windows.Forms.ToolStripMenuItem itemWithoutContour;
@@ -1176,6 +1200,7 @@
         private System.Windows.Forms.ComboBox comboBoxForSizes;
         private System.Windows.Forms.ComboBox comboBoxForFonts;
         private System.Windows.Forms.Panel panelForTextTools;
+        private System.Windows.Forms.Button buttonForFinish;
     }
 }
 

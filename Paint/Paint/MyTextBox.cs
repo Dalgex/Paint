@@ -15,7 +15,7 @@ namespace Paint
         /// <summary>
         /// Возвращает элемент управления TextBox
         /// </summary>
-        public ExtTextBox TextBox { get; private set; }
+        public ExtRichTextBox TextBox { get; private set; }
 
         /// <summary>
         /// Возвращает текст, который отображается в самом начале на TextBox
@@ -24,7 +24,7 @@ namespace Paint
 
         public MyTextBox(System.Windows.Forms.PictureBox pictureBox)
         {
-            TextBox = new ExtTextBox();
+            TextBox = new ExtRichTextBox();
             pictureBox.Controls.Add(TextBox);
             TextBox.Visible = false;
             TextBox.VisibleChanged += new EventHandler(InitializeStartText);

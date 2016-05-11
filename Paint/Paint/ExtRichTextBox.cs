@@ -11,9 +11,9 @@ namespace Paint
     /// <summary>
     /// Предоставляет элемент управления TextBox, расширяя пару методов класса TextBox
     /// </summary>
-    public class ExtTextBox : TextBox
+    public class ExtRichTextBox : RichTextBox
     {
-        public ExtTextBox()
+        public ExtRichTextBox()
             : base()
         {
             Multiline = true;
@@ -33,9 +33,14 @@ namespace Paint
             }
         }
 
+        public new void Paste()
+        {
+            base.Paste();
+        }
+
         private new void TextChanged(object sender, EventArgs e)
         {
-            var textBox = sender as TextBox;
+            var textBox = sender as RichTextBox;
 
             if (Text == "")
             {
@@ -45,10 +50,19 @@ namespace Paint
             }
             else
             {
-                var textSize = TextRenderer.MeasureText(textBox.Text, textBox.Font);
-                var wordSize = TextRenderer.MeasureText("a", textBox.Font);
-                textBox.Height = textSize.Height + wordSize.Height / 2;
-                textBox.Width = textSize.Width + wordSize.Width / 2;
+                var textSize = TextRenderer.MeasureText(Text, Font);
+                var wordSize = TextRenderer.MeasureText("a", Font);
+                Height = textSize.Height + wordSize.Height;
+                Width = textSize.Width + wordSize.Width;
+            }
+
+            if (Clipboard.ContainsText() && Text.Length > Clipboard.GetText().Length)
+            {
+                if (Text.Substring(0, Clipboard.GetText().Length) == Clipboard.GetText())
+                {
+                    Text = Text.Remove(0, Clipboard.GetText().Length);
+                    SelectionStart = Text.Length;
+                }
             }
         }
     }

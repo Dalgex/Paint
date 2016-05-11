@@ -18,6 +18,7 @@ namespace Paint
         private Button buttonForItalic;
         private Button buttonForUnderline;
         private Button buttonForStrikeout;
+        private Button buttonForFinish;
         private ComboBox comboBoxForFonts;
         private ComboBox comboBoxForSizes;
         private Panel panelForTextTools;
@@ -44,7 +45,7 @@ namespace Paint
         }
 
         public TextTools(Button buttonForText, Button buttonForBold, Button buttonForItalic, Button buttonForUnderline,
-            Button buttonForStrikeout, ComboBox comboBoxForFonts, ComboBox comboBoxForSizes, MyBitmap myBitmap, 
+            Button buttonForStrikeout, Button buttonForFinish, ComboBox comboBoxForFonts, ComboBox comboBoxForSizes, MyBitmap myBitmap, 
             History history, HistoryData historyData, PictureBox pictureBox)
         {
             this.buttonForText = buttonForText;
@@ -52,6 +53,7 @@ namespace Paint
             this.buttonForItalic = buttonForItalic;
             this.buttonForUnderline = buttonForUnderline;
             this.buttonForStrikeout = buttonForStrikeout;
+            this.buttonForFinish = buttonForFinish;
             this.comboBoxForFonts = comboBoxForFonts;
             this.comboBoxForSizes = comboBoxForSizes;
             panelForTextTools = (Panel)comboBoxForFonts.Parent;
@@ -62,7 +64,9 @@ namespace Paint
             MyTextBox = new MyTextBox(pictureBox);
             startText = string.Empty;
             MyTextBox.TextBox.VisibleChanged += new EventHandler(SimulateButtonForTextClick);
+            MyTextBox.TextBox.VisibleChanged += new EventHandler(ChangeButtonForFinishEnabled);
             buttonForText.EnabledChanged += new EventHandler(CheckButtonEnabled);
+            ControlsColor.MainColorChanged += ChangeTextColor;
             InitializeComboBoxForFonts();
             InitializeComboBoxForSizes();
             DisactivateTextPanel();
@@ -96,7 +100,6 @@ namespace Paint
         private void SetVisible(bool value)
         {
             panelForTextTools.Visible = value;
-
         }
 
         private void SimulateButtonForTextClick(object sender, EventArgs e)
@@ -133,7 +136,7 @@ namespace Paint
         /// </summary>
         public void CreateTextBox(Point location, Color color)
         {
-            textSettings = new TextSettings(string.Empty, new Font(comboBoxForFonts.Text, Int32.Parse(comboBoxForSizes.Text)), 
+            textSettings = new TextSettings(string.Empty, new Font(comboBoxForFonts.Text, int.Parse(comboBoxForSizes.Text), MyTextBox.TextBox.Font.Style), 
                 color, location);
             MyTextBox.CreateTextBox(textSettings);
             startText = textSettings.Text;
@@ -220,6 +223,109 @@ namespace Paint
         {
             this.history = history;
             this.historyData = historyData;
+        }
+
+        public void OnTextToolClick(object sender, PictureBox pictureBox)
+        {
+            if (sender is Button)
+            {
+                var button = (Button)sender;
+
+                if (button == buttonForFinish)
+                {
+                    FinishText(pictureBox);
+                }
+                else
+                {
+                    ChangeFontStyle(button);
+                }
+            }
+            else if (sender is ComboBox)
+            {
+                ChangeFont();
+            }
+        }
+
+        private void FinishText(PictureBox pictureBox)
+        {
+            TryAddTextToHistory(pictureBox);
+        }
+
+        private void ChangeButtonForFinishEnabled(object sender, EventArgs e)
+        {
+            if (MyTextBox.TextBox.Visible)
+            {
+                buttonForFinish.Enabled = true;
+            }
+            else
+            {
+                buttonForFinish.Enabled = false;
+            }
+        }
+
+        private void ChangeFontStyle(Button button)
+        {
+            var font = MyTextBox.TextBox.Font;
+
+            if (button == buttonForBold)
+            {
+                font = new Font(MyTextBox.TextBox.Font, MyTextBox.TextBox.Font.Style ^ FontStyle.Bold);
+            }
+            else if (button == buttonForItalic)
+            {
+                font = new Font(MyTextBox.TextBox.Font, MyTextBox.TextBox.Font.Style ^ FontStyle.Italic);
+            }
+            else if (button == buttonForUnderline)
+            {
+                font = new Font(MyTextBox.TextBox.Font, MyTextBox.TextBox.Font.Style ^ FontStyle.Underline);
+            }
+            else if (button == buttonForStrikeout)
+            {
+                font = new Font(MyTextBox.TextBox.Font, MyTextBox.TextBox.Font.Style ^ FontStyle.Strikeout);
+            }
+
+            MyTextBox.TextBox.Font = font;
+            ChangeTextBoxSize();
+
+            ControlsColor.ChangeButtonBackColor(button);
+        }
+
+        private void ChangeFont()
+        {
+            try
+            {
+                MyTextBox.TextBox.Font = new Font(comboBoxForFonts.Text, int.Parse(comboBoxForSizes.Text), MyTextBox.TextBox.Font.Style);
+            }
+            catch (ArgumentException)
+            {
+                MessageBox.Show("Невозможно в данный момент применить этот шрифт", "Paint", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                comboBoxForFonts.Text = "Times New Roman";
+                MyTextBox.TextBox.Font = new Font(comboBoxForFonts.Text, int.Parse(comboBoxForSizes.Text), MyTextBox.TextBox.Font.Style);
+            }
+
+            ChangeTextBoxSize();
+        }
+        
+        private void ChangeTextBoxSize()
+        { 
+            if (MyTextBox.TextBox.Text == "")
+            {
+                var size = TextRenderer.MeasureText("a", MyTextBox.TextBox.Font);
+                MyTextBox.TextBox.Height = size.Height * 2;
+                MyTextBox.TextBox.Width = size.Width * 2;
+            }
+            else
+            {
+                var textSize = TextRenderer.MeasureText(MyTextBox.TextBox.Text, MyTextBox.TextBox.Font);
+                var wordSize = TextRenderer.MeasureText("a", MyTextBox.TextBox.Font);
+                MyTextBox.TextBox.Height = textSize.Height + wordSize.Height;
+                MyTextBox.TextBox.Width = textSize.Width + wordSize.Width;
+            }
+        }
+
+        private void ChangeTextColor()
+        {
+            MyTextBox.TextBox.ForeColor = ControlsColor.MainColor;
         }
     }
 }

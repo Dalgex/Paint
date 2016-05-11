@@ -48,8 +48,9 @@
     <Compile Include="CommandRegionBitmap.cs" />
     <Compile Include="CommandText.cs" />
     <Compile Include="CommandTextBox.cs" />
+    <Compile Include="ControlsColor.cs" />
     <Compile Include="CropToSelectionFunction.cs" />
-    <Compile Include="ExtTextBox.cs">
+    <Compile Include="ExtRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="FrameRectangle.cs" />

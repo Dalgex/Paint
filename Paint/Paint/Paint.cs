@@ -46,45 +46,23 @@ namespace Paint
             panelResizer = new PanelResizer(panelForPictureBox, history, historyData, myBitmap, labelForPictureBoxSize);
             historyData.Bitmaps.Push(myBitmap.Bitmap);
             historyData.RegionBitmaps.Push(new MyBitmap(new Bitmap(1, 1), new Point(1, 1)));
+
+            ControlsColor.SetPassiveColor(menuStrip, panelForTools, panelForInserting, panelForSelection, panelForTextTools, panelForForm);
             tools = new DefinitionEnabledControl(buttonForBrush, buttonForSelection, buttonForText, panelResizer, myBitmap);
             textTools = new TextTools(buttonForText, buttonForBold, buttonForItalic, buttonForUnderline, buttonForStrikeout,
-                comboBoxForFonts, comboBoxForSizes, myBitmap, history, historyData, mainPictureBox);
+                buttonForFinish, comboBoxForFonts, comboBoxForSizes, myBitmap, history, historyData, mainPictureBox);
             
             fileMenuActions = new FileMenuActions(history, historyData, panelResizer, myBitmap);
             fileMenu = new FileMenu(fileMenuActions, itemToCreate, itemToOpen, itemToSave, itemToSaveAs);           
             clipboardCommandsManager = new ClipboardCommandsManager(history, historyData, panelResizer, myBitmap, 
-                buttonToCut, buttonToCopy, buttonToPaste, itemToPaste, itemToPasteFrom);
+                buttonToCut, buttonToCopy, buttonToPaste, itemToPaste, itemToPasteFrom, textTools.MyTextBox);
             selectionCommandsManager = new SelectionCommandsManager(myBitmap, buttonForSelection, itemToSelectAll,
                 itemToFillSelection, itemToEraseSelection, itemToDeselect);
             cropToSelectionFunction = new CropToSelectionFunction(buttonToCrop, myBitmap, panelResizer);
-            
+
             paintingInAction = new PaintingInAction(buttonForLine, buttonForBrush, buttonForEraser, buttonForPipette, buttonForColorFilling,
                 buttonForEllipse, buttonForRectangle, buttonForSelection, buttonForText, mainPictureBox, history, historyData, myBitmap, tools, textTools);
             keyboardShortcut = new KeyboardShortcut(itemToCreate, itemToOpen, itemToSave, buttonForUndo, buttonForRedo, buttonToPaste);
-            InitializeColor();
-        }
-
-        private void InitializeColor()
-        {
-            menuStrip1.BackColor = Color.FromArgb(255, 212, 222, 235);
-            panelForTools.BackColor = Color.FromArgb(255, 227, 237, 247);
-
-            foreach (Control control in panelForTools.Controls)
-            {
-                control.BackColor = Color.FromArgb(255, 227, 237, 247);
-            }
-
-            foreach (Control control in panelForInserting.Controls)
-            {
-                control.BackColor = Color.FromArgb(255, 227, 237, 247);
-            }
-
-            foreach (Control control in panelForSelection.Controls)
-            {
-                control.BackColor = Color.FromArgb(255, 227, 237, 247);
-            }
-
-            panelForForm.BackColor = Color.FromArgb(255, 205, 215, 230);
         }
 
         private void OnFileMenuClick(object sender, EventArgs e)
@@ -106,7 +84,7 @@ namespace Paint
         {
             paintingInAction.Update(history, historyData);
             paintingInAction.DefineAction(e, ref mainColor, ref backgroundColor, pictureBoxForMainColor,
-                pictureBoxForBackgroundColor, toolWidth, withContour, withFilling);
+                pictureBoxForBackColor, toolWidth, withContour, withFilling);
         }
 
         private void MainPictureBoxMouseMove(object sender, MouseEventArgs e)
@@ -166,25 +144,12 @@ namespace Paint
 
         private void PanelForMainColorMouseClick(object sender, MouseEventArgs e)
         {
-            DialogResult colorDialog = colorDialog1.ShowDialog();
-
-            if (colorDialog == DialogResult.OK)
-            {
-                mainColor = colorDialog1.Color;
-                pictureBoxForMainColor.BackColor = mainColor;
-            }
+            ControlsColor.SetMainColor(pictureBoxForMainColor, ref mainColor);
         }
 
         private void PanelForBackgroundColorMouseClick(object sender, MouseEventArgs e)
         {
-            DialogResult colorDialog = colorDialog2.ShowDialog();
-
-            if (colorDialog == DialogResult.OK)
-            {
-                backgroundColor = colorDialog2.Color;
-                pictureBoxForBackgroundColor.BackColor = backgroundColor;
-                mainPictureBox.BackColor = backgroundColor;
-            }
+            ControlsColor.SetBackgroundColor(mainPictureBox, pictureBoxForBackColor, ref backgroundColor);
         }
 
         private void OnItemForOutLineClick(object sender, EventArgs e)
@@ -233,6 +198,11 @@ namespace Paint
             cropToSelectionFunction.CropToSelection(history, historyData, mainPictureBox);
         }
 
+        private void OnTextToolClick(object sender, EventArgs e)
+        {
+            textTools.OnTextToolClick(sender, mainPictureBox);
+        }
+
         private void PaintKeyDown(object sender, KeyEventArgs e)
         {
             keyboardShortcut.SimulateKeypress(e);
@@ -241,16 +211,6 @@ namespace Paint
         private void PaintFormClosing(object sender, FormClosingEventArgs e)
         {
             //fileMenuActions.OfferToSaveImage(mainPictureBox, e);
-        }
-
-        private void comboBoxSelectedIndexChanged(object sender, EventArgs e)
-        {
-            var text = comboBoxForFonts.SelectedItem;
-        }
-
-        private void comboBoxClick(object sender, EventArgs e)
-        {
-
         }
     }
 }
