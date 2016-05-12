@@ -211,7 +211,7 @@ namespace Paint
         /// <summary>
         /// Предлагает сохранить изображение
         /// </summary>
-        public void OfferToSaveImage(PictureBox pictureBox, FormClosingEventArgs e)
+        private void OfferToSaveImage(PictureBox pictureBox, FormClosingEventArgs e)
         {
             var wasCancel = false;
             OfferToSaveImage(pictureBox, ref wasCancel);
@@ -268,7 +268,17 @@ namespace Paint
         {
             var bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
             pictureBox.DrawToBitmap(bitmap, pictureBox.ClientRectangle);
-            bitmap.Save(saveFileDialog.FileName);
+
+            try
+            {
+                bitmap.Save(saveFileDialog.FileName);
+            }
+            catch (System.Runtime.InteropServices.ExternalException)
+            {
+                myBitmap.Bitmap.Dispose();
+                bitmap.Save(saveFileDialog.FileName);
+                myBitmap.Bitmap = bitmap;
+            }
         }
 
         private void SetFileNames(OpenFileDialog openFileDialog)

@@ -46,9 +46,9 @@ namespace Paint
         /// <summary>
         /// Определяет, перемещается ли прямоугольник
         /// </summary>
-        public static void DetermineIsRectangleMoving(MouseEventArgs e)
+        public static void DetermineIsRectangleMoving(Rectangle rect, MouseEventArgs e)
         {
-            rectangle = Selection.Region;
+            rectangle = rect;
             IsRectangleMoving = rectangle.Contains(e.Location);
         }
 

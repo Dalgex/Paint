@@ -50,7 +50,7 @@ namespace Paint
             ControlsColor.SetPassiveColor(menuStrip, panelForTools, panelForInserting, panelForSelection, panelForTextTools, panelForForm);
             tools = new DefinitionEnabledControl(buttonForBrush, buttonForSelection, buttonForText, panelResizer, myBitmap);
             textTools = new TextTools(buttonForText, buttonForBold, buttonForItalic, buttonForUnderline, buttonForStrikeout,
-                buttonForFinish, comboBoxForFonts, comboBoxForSizes, myBitmap, history, historyData, mainPictureBox);
+                buttonToFinish, comboBoxForFonts, comboBoxForSizes, myBitmap, history, historyData, mainPictureBox);
             
             fileMenuActions = new FileMenuActions(history, historyData, panelResizer, myBitmap);
             fileMenu = new FileMenu(fileMenuActions, itemToCreate, itemToOpen, itemToSave, itemToSaveAs);           
@@ -62,7 +62,9 @@ namespace Paint
 
             paintingInAction = new PaintingInAction(buttonForLine, buttonForBrush, buttonForEraser, buttonForPipette, buttonForColorFilling,
                 buttonForEllipse, buttonForRectangle, buttonForSelection, buttonForText, mainPictureBox, history, historyData, myBitmap, tools, textTools);
-            keyboardShortcut = new KeyboardShortcut(itemToCreate, itemToOpen, itemToSave, buttonForUndo, buttonForRedo, buttonToPaste);
+            keyboardShortcut = new KeyboardShortcut(itemToCreate, itemToOpen, itemToSave, itemToSaveAs, buttonForUndo, buttonForRedo,
+                buttonToCrop, buttonToCut, buttonToCopy, buttonToPaste, buttonForBold, buttonForItalic, buttonForUnderline, buttonToFinish,
+                itemToSelectAll, itemToEraseSelection, itemToDeselect);
         }
 
         private void OnFileMenuClick(object sender, EventArgs e)

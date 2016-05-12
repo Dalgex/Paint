@@ -77,7 +77,7 @@
             this.labelForCursorLocation = new System.Windows.Forms.Label();
             this.panelForTools = new System.Windows.Forms.Panel();
             this.panelForTextTools = new System.Windows.Forms.Panel();
-            this.buttonForFinish = new System.Windows.Forms.Button();
+            this.buttonToFinish = new System.Windows.Forms.Button();
             this.comboBoxForFonts = new System.Windows.Forms.ComboBox();
             this.buttonForStrikeout = new System.Windows.Forms.Button();
             this.comboBoxForSizes = new System.Windows.Forms.ComboBox();
@@ -136,7 +136,7 @@
             this.buttonForBrush.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.buttonForBrush.Enabled = false;
             this.buttonForBrush.Image = ((System.Drawing.Image)(resources.GetObject("buttonForBrush.Image")));
-            this.buttonForBrush.Location = new System.Drawing.Point(534, 25);
+            this.buttonForBrush.Location = new System.Drawing.Point(514, 25);
             this.buttonForBrush.Name = "buttonForBrush";
             this.buttonForBrush.Size = new System.Drawing.Size(38, 38);
             this.buttonForBrush.TabIndex = 1;
@@ -193,7 +193,7 @@
             this.itemToCreate.Name = "itemToCreate";
             this.itemToCreate.Size = new System.Drawing.Size(171, 44);
             this.itemToCreate.Text = "Создать";
-            this.itemToCreate.ToolTipText = "Создать (CTRL + N)\r\nСоздать новое изображение";
+            this.itemToCreate.ToolTipText = "Создать (CTRL+N)\r\nСоздать новое изображение";
             this.itemToCreate.Click += new System.EventHandler(this.OnFileMenuClick);
             // 
             // itemToOpen
@@ -203,7 +203,7 @@
             this.itemToOpen.Name = "itemToOpen";
             this.itemToOpen.Size = new System.Drawing.Size(171, 44);
             this.itemToOpen.Text = "Открыть";
-            this.itemToOpen.ToolTipText = "Открыть (CTRL + O)\r\nОткрыть существующее изображение";
+            this.itemToOpen.ToolTipText = "Открыть (CTRL+O)\r\nОткрыть существующее изображение";
             this.itemToOpen.Click += new System.EventHandler(this.OnFileMenuClick);
             // 
             // itemToSave
@@ -213,7 +213,7 @@
             this.itemToSave.Name = "itemToSave";
             this.itemToSave.Size = new System.Drawing.Size(171, 44);
             this.itemToSave.Text = "Сохранить";
-            this.itemToSave.ToolTipText = "Сохранить (CTRL + S)\r\nСохранить текущее изображение";
+            this.itemToSave.ToolTipText = "Сохранить (CTRL+S)\r\nСохранить текущее изображение";
             this.itemToSave.Click += new System.EventHandler(this.OnFileMenuClick);
             // 
             // itemToSaveAs
@@ -228,7 +228,7 @@
             this.itemToSaveAs.Name = "itemToSaveAs";
             this.itemToSaveAs.Size = new System.Drawing.Size(171, 44);
             this.itemToSaveAs.Text = "Сохранить как";
-            this.itemToSaveAs.ToolTipText = "Сохранить как\r\nСохранить текущее изображение в новом файле";
+            this.itemToSaveAs.ToolTipText = "Сохранить как (CTRL+SHIFT+S)\r\nСохранить текущее изображение в новом файле";
             this.itemToSaveAs.Click += new System.EventHandler(this.OnFileMenuClick);
             // 
             // itemImageFormatPNG
@@ -271,7 +271,7 @@
             // 
             this.buttonForEraser.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.buttonForEraser.Image = ((System.Drawing.Image)(resources.GetObject("buttonForEraser.Image")));
-            this.buttonForEraser.Location = new System.Drawing.Point(437, 29);
+            this.buttonForEraser.Location = new System.Drawing.Point(436, 50);
             this.buttonForEraser.Name = "buttonForEraser";
             this.buttonForEraser.Size = new System.Drawing.Size(28, 24);
             this.buttonForEraser.TabIndex = 6;
@@ -290,7 +290,7 @@
             this.buttonToPaste.Name = "buttonToPaste";
             this.buttonToPaste.Size = new System.Drawing.Size(81, 38);
             this.buttonToPaste.TabIndex = 7;
-            this.toolTip1.SetToolTip(this.buttonToPaste, "Вставить (CTRL + V)\r\nВставка содержимого из буфера обмена");
+            this.toolTip1.SetToolTip(this.buttonToPaste, "Вставить (CTRL+V)\r\nВставка содержимого из буфера обмена");
             this.buttonToPaste.UseVisualStyleBackColor = false;
             this.buttonToPaste.Click += new System.EventHandler(this.OnClipboardCommandClick);
             // 
@@ -412,7 +412,7 @@
             // 
             this.buttonForColorFilling.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.buttonForColorFilling.Image = ((System.Drawing.Image)(resources.GetObject("buttonForColorFilling.Image")));
-            this.buttonForColorFilling.Location = new System.Drawing.Point(467, 29);
+            this.buttonForColorFilling.Location = new System.Drawing.Point(436, 23);
             this.buttonForColorFilling.Margin = new System.Windows.Forms.Padding(0);
             this.buttonForColorFilling.Name = "buttonForColorFilling";
             this.buttonForColorFilling.Size = new System.Drawing.Size(28, 24);
@@ -533,7 +533,7 @@
             // 
             this.buttonForPipette.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.buttonForPipette.Image = ((System.Drawing.Image)(resources.GetObject("buttonForPipette.Image")));
-            this.buttonForPipette.Location = new System.Drawing.Point(497, 29);
+            this.buttonForPipette.Location = new System.Drawing.Point(467, 50);
             this.buttonForPipette.Name = "buttonForPipette";
             this.buttonForPipette.Size = new System.Drawing.Size(28, 24);
             this.buttonForPipette.TabIndex = 21;
@@ -548,7 +548,7 @@
             this.buttonForUndo.Name = "buttonForUndo";
             this.buttonForUndo.Size = new System.Drawing.Size(29, 26);
             this.buttonForUndo.TabIndex = 23;
-            this.toolTip1.SetToolTip(this.buttonForUndo, "Отменить (CTRL + Z)\r\nОтмена последнего действия");
+            this.toolTip1.SetToolTip(this.buttonForUndo, "Отменить (CTRL+Z)\r\nОтмена последнего действия");
             this.buttonForUndo.UseVisualStyleBackColor = true;
             this.buttonForUndo.Click += new System.EventHandler(this.OnUndoClick);
             // 
@@ -559,7 +559,7 @@
             this.buttonForRedo.Name = "buttonForRedo";
             this.buttonForRedo.Size = new System.Drawing.Size(29, 26);
             this.buttonForRedo.TabIndex = 23;
-            this.toolTip1.SetToolTip(this.buttonForRedo, "Вернуть (CTRL + Y)\r\nПовтор последнего действия");
+            this.toolTip1.SetToolTip(this.buttonForRedo, "Вернуть (CTRL+Y)\r\nПовтор последнего действия");
             this.buttonForRedo.UseVisualStyleBackColor = true;
             this.buttonForRedo.Click += new System.EventHandler(this.OnRedoClick);
             // 
@@ -686,33 +686,34 @@
             // 
             // panelForTextTools
             // 
-            this.panelForTextTools.Controls.Add(this.buttonForFinish);
+            this.panelForTextTools.Controls.Add(this.buttonToFinish);
             this.panelForTextTools.Controls.Add(this.comboBoxForFonts);
             this.panelForTextTools.Controls.Add(this.buttonForStrikeout);
             this.panelForTextTools.Controls.Add(this.comboBoxForSizes);
             this.panelForTextTools.Controls.Add(this.buttonForUnderline);
             this.panelForTextTools.Controls.Add(this.buttonForBold);
             this.panelForTextTools.Controls.Add(this.buttonForItalic);
-            this.panelForTextTools.Location = new System.Drawing.Point(352, 70);
+            this.panelForTextTools.Location = new System.Drawing.Point(501, 70);
             this.panelForTextTools.Name = "panelForTextTools";
             this.panelForTextTools.Size = new System.Drawing.Size(452, 30);
             this.panelForTextTools.TabIndex = 35;
             // 
-            // buttonForFinish
+            // buttonToFinish
             // 
-            this.buttonForFinish.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.buttonForFinish.Enabled = false;
-            this.buttonForFinish.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonForFinish.Image = ((System.Drawing.Image)(resources.GetObject("buttonForFinish.Image")));
-            this.buttonForFinish.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonForFinish.Location = new System.Drawing.Point(358, 4);
-            this.buttonForFinish.Name = "buttonForFinish";
-            this.buttonForFinish.Size = new System.Drawing.Size(68, 24);
-            this.buttonForFinish.TabIndex = 35;
-            this.buttonForFinish.Text = "Готово";
-            this.buttonForFinish.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonForFinish.UseVisualStyleBackColor = false;
-            this.buttonForFinish.Click += new System.EventHandler(this.OnTextToolClick);
+            this.buttonToFinish.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.buttonToFinish.Enabled = false;
+            this.buttonToFinish.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonToFinish.Image = ((System.Drawing.Image)(resources.GetObject("buttonToFinish.Image")));
+            this.buttonToFinish.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonToFinish.Location = new System.Drawing.Point(358, 4);
+            this.buttonToFinish.Name = "buttonToFinish";
+            this.buttonToFinish.Size = new System.Drawing.Size(68, 24);
+            this.buttonToFinish.TabIndex = 35;
+            this.buttonToFinish.Text = "Готово";
+            this.buttonToFinish.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.buttonToFinish, "Готова (Esc)\r\nФиксирует изменения инструмента");
+            this.buttonToFinish.UseVisualStyleBackColor = false;
+            this.buttonToFinish.Click += new System.EventHandler(this.OnTextToolClick);
             // 
             // comboBoxForFonts
             // 
@@ -723,6 +724,7 @@
             this.comboBoxForFonts.Size = new System.Drawing.Size(150, 23);
             this.comboBoxForFonts.TabIndex = 30;
             this.comboBoxForFonts.Text = "Times New Roman";
+            this.toolTip1.SetToolTip(this.comboBoxForFonts, "Семейство шрифтов\r\nИзменить семейство шрифтов");
             this.comboBoxForFonts.SelectedIndexChanged += new System.EventHandler(this.OnTextToolClick);
             // 
             // buttonForStrikeout
@@ -734,6 +736,7 @@
             this.buttonForStrikeout.Size = new System.Drawing.Size(27, 24);
             this.buttonForStrikeout.TabIndex = 34;
             this.buttonForStrikeout.Text = "S";
+            this.toolTip1.SetToolTip(this.buttonForStrikeout, "Зачеркивание\r\nЗачеркнуть текст");
             this.buttonForStrikeout.UseVisualStyleBackColor = false;
             this.buttonForStrikeout.Click += new System.EventHandler(this.OnTextToolClick);
             // 
@@ -745,6 +748,7 @@
             this.comboBoxForSizes.Size = new System.Drawing.Size(44, 23);
             this.comboBoxForSizes.TabIndex = 0;
             this.comboBoxForSizes.Text = "20";
+            this.toolTip1.SetToolTip(this.comboBoxForSizes, "Размер шрифта\r\nИзменить размер шрифта");
             this.comboBoxForSizes.SelectedIndexChanged += new System.EventHandler(this.OnTextToolClick);
             // 
             // buttonForUnderline
@@ -756,6 +760,7 @@
             this.buttonForUnderline.Size = new System.Drawing.Size(27, 24);
             this.buttonForUnderline.TabIndex = 33;
             this.buttonForUnderline.Text = "Ч";
+            this.toolTip1.SetToolTip(this.buttonForUnderline, "Подчеркивание (CTRL+U)\r\nПодчеркнуть текст");
             this.buttonForUnderline.UseVisualStyleBackColor = false;
             this.buttonForUnderline.Click += new System.EventHandler(this.OnTextToolClick);
             // 
@@ -768,6 +773,7 @@
             this.buttonForBold.Size = new System.Drawing.Size(26, 24);
             this.buttonForBold.TabIndex = 31;
             this.buttonForBold.Text = "Ж";
+            this.toolTip1.SetToolTip(this.buttonForBold, "Полужирный (CTRL+B)\r\nВыбрать полужирный шрифт");
             this.buttonForBold.UseVisualStyleBackColor = false;
             this.buttonForBold.Click += new System.EventHandler(this.OnTextToolClick);
             // 
@@ -780,6 +786,7 @@
             this.buttonForItalic.Size = new System.Drawing.Size(27, 24);
             this.buttonForItalic.TabIndex = 32;
             this.buttonForItalic.Text = "К";
+            this.toolTip1.SetToolTip(this.buttonForItalic, "Курсив (CTRL+I)\r\nВыбрать курсив");
             this.buttonForItalic.UseVisualStyleBackColor = false;
             this.buttonForItalic.Click += new System.EventHandler(this.OnTextToolClick);
             // 
@@ -787,10 +794,11 @@
             // 
             this.buttonForText.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.buttonForText.Image = ((System.Drawing.Image)(resources.GetObject("buttonForText.Image")));
-            this.buttonForText.Location = new System.Drawing.Point(450, 2);
+            this.buttonForText.Location = new System.Drawing.Point(467, 23);
             this.buttonForText.Name = "buttonForText";
-            this.buttonForText.Size = new System.Drawing.Size(27, 24);
+            this.buttonForText.Size = new System.Drawing.Size(28, 24);
             this.buttonForText.TabIndex = 29;
+            this.toolTip1.SetToolTip(this.buttonForText, "Текст\r\nВставка текста в изображение");
             this.buttonForText.UseVisualStyleBackColor = false;
             this.buttonForText.Click += new System.EventHandler(this.OnButtonClick);
             // 
@@ -806,6 +814,8 @@
             this.buttonToCut.TabIndex = 28;
             this.buttonToCut.Text = "Вырезать";
             this.buttonToCut.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.buttonToCut, "Вырезать (CTRL+X)\r\nВырезание выделенного фрагмента и помещение его в буфер обмена" +
+        "");
             this.buttonToCut.UseVisualStyleBackColor = false;
             this.buttonToCut.Click += new System.EventHandler(this.OnClipboardCommandClick);
             // 
@@ -821,6 +831,8 @@
             this.buttonToCopy.TabIndex = 27;
             this.buttonToCopy.Text = "Копировать";
             this.buttonToCopy.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.buttonToCopy, "Копировать (CTRL+C)\r\nКопирование выделенного фрагмента и помещение его в буфер об" +
+        "мена");
             this.buttonToCopy.UseVisualStyleBackColor = false;
             this.buttonToCopy.Click += new System.EventHandler(this.OnClipboardCommandClick);
             // 
@@ -836,6 +848,8 @@
             this.buttonToCrop.TabIndex = 26;
             this.buttonToCrop.Text = "Обрезать";
             this.buttonToCrop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.buttonToCrop, "Обрезать (CTRL+SHIFT+X)\r\nОбрезка изображения с сохранением\r\nобласти внутри текуще" +
+        "го выделения");
             this.buttonToCrop.UseVisualStyleBackColor = false;
             this.buttonToCrop.Click += new System.EventHandler(this.buttonToCropClick);
             // 
@@ -886,6 +900,7 @@
             this.itemToSelectAll.Name = "itemToSelectAll";
             this.itemToSelectAll.Size = new System.Drawing.Size(204, 30);
             this.itemToSelectAll.Text = "Выделить все";
+            this.itemToSelectAll.ToolTipText = "Выделение всего изображение (CTRL+A)";
             this.itemToSelectAll.Click += new System.EventHandler(this.OnSelectionClick);
             // 
             // itemToFillSelection
@@ -895,6 +910,7 @@
             this.itemToFillSelection.Name = "itemToFillSelection";
             this.itemToFillSelection.Size = new System.Drawing.Size(204, 30);
             this.itemToFillSelection.Text = "Заполнить выделение";
+            this.itemToFillSelection.ToolTipText = "Заполнение выделенной области основным цветом";
             this.itemToFillSelection.Click += new System.EventHandler(this.OnSelectionClick);
             // 
             // itemToEraseSelection
@@ -904,6 +920,7 @@
             this.itemToEraseSelection.Name = "itemToEraseSelection";
             this.itemToEraseSelection.Size = new System.Drawing.Size(204, 30);
             this.itemToEraseSelection.Text = "Очистить выделение";
+            this.itemToEraseSelection.ToolTipText = "Удаление изображения внутри выделенной области (Del)";
             this.itemToEraseSelection.Click += new System.EventHandler(this.OnSelectionClick);
             // 
             // itemToDeselect
@@ -913,6 +930,7 @@
             this.itemToDeselect.Name = "itemToDeselect";
             this.itemToDeselect.Size = new System.Drawing.Size(204, 30);
             this.itemToDeselect.Text = "Отменить выделение";
+            this.itemToDeselect.ToolTipText = "Снимает выделение (CTRL+D)";
             this.itemToDeselect.Click += new System.EventHandler(this.OnSelectionClick);
             // 
             // panelForInserting
@@ -952,17 +970,17 @@
             this.buttonToPasteFrom.Name = "buttonToPasteFrom";
             this.buttonToPasteFrom.Size = new System.Drawing.Size(71, 29);
             this.buttonToPasteFrom.Text = "Вставить";
-            this.buttonToPasteFrom.ToolTipText = "Вставить (CTRL + V)\r\nЩелкните здесь, чтобы получить доступ к\r\nдополнительным пара" +
-    "метрам, например, \r\nфункциям вставки содержимого из\r\nбуфера обмена или файла";
+            this.buttonToPasteFrom.ToolTipText = "Вставить (CTRL+V)\r\nЩелкните здесь, чтобы получить доступ к\r\nдополнительным параме" +
+    "трам, например, \r\nфункциям вставки содержимого из\r\nбуфера обмена или файла";
             // 
             // itemToPaste
             // 
             this.itemToPaste.Image = ((System.Drawing.Image)(resources.GetObject("itemToPaste.Image")));
             this.itemToPaste.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.itemToPaste.Name = "itemToPaste";
-            this.itemToPaste.Size = new System.Drawing.Size(145, 30);
+            this.itemToPaste.Size = new System.Drawing.Size(160, 30);
             this.itemToPaste.Text = "Вставить";
-            this.itemToPaste.ToolTipText = "Вставить (CTRL + V)\r\nВставка содержимого из буфера обмена";
+            this.itemToPaste.ToolTipText = "Вставить (CTRL+V)\r\nВставка содержимого из буфера обмена";
             this.itemToPaste.Click += new System.EventHandler(this.OnClipboardCommandClick);
             // 
             // itemToPasteFrom
@@ -970,7 +988,7 @@
             this.itemToPasteFrom.Image = ((System.Drawing.Image)(resources.GetObject("itemToPasteFrom.Image")));
             this.itemToPasteFrom.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.itemToPasteFrom.Name = "itemToPasteFrom";
-            this.itemToPasteFrom.Size = new System.Drawing.Size(145, 30);
+            this.itemToPasteFrom.Size = new System.Drawing.Size(160, 30);
             this.itemToPasteFrom.Text = "Вставить из";
             this.itemToPasteFrom.ToolTipText = "Открытие диалогового окна \"Вставить из\"\r\nи выбор файла для вставки";
             this.itemToPasteFrom.Click += new System.EventHandler(this.OnClipboardCommandClick);
@@ -1200,7 +1218,7 @@
         private System.Windows.Forms.ComboBox comboBoxForSizes;
         private System.Windows.Forms.ComboBox comboBoxForFonts;
         private System.Windows.Forms.Panel panelForTextTools;
-        private System.Windows.Forms.Button buttonForFinish;
+        private System.Windows.Forms.Button buttonToFinish;
     }
 }
 

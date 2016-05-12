@@ -33,15 +33,8 @@ namespace Paint
             }
         }
 
-        public new void Paste()
-        {
-            base.Paste();
-        }
-
         private new void TextChanged(object sender, EventArgs e)
         {
-            var textBox = sender as RichTextBox;
-
             if (Text == "")
             {
                 var size = TextRenderer.MeasureText("a", Font);
@@ -59,8 +52,9 @@ namespace Paint
             if (Clipboard.ContainsText() && Text.Length > Clipboard.GetText().Length)
             {
                 if (Text.Substring(0, Clipboard.GetText().Length) == Clipboard.GetText())
-                {
+                { 
                     Text = Text.Remove(0, Clipboard.GetText().Length);
+                    Font = new Font(Font, Font.Style);
                     SelectionStart = Text.Length;
                 }
             }

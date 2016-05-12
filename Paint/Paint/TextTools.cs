@@ -18,7 +18,7 @@ namespace Paint
         private Button buttonForItalic;
         private Button buttonForUnderline;
         private Button buttonForStrikeout;
-        private Button buttonForFinish;
+        private Button buttonToFinish;
         private ComboBox comboBoxForFonts;
         private ComboBox comboBoxForSizes;
         private Panel panelForTextTools;
@@ -45,7 +45,7 @@ namespace Paint
         }
 
         public TextTools(Button buttonForText, Button buttonForBold, Button buttonForItalic, Button buttonForUnderline,
-            Button buttonForStrikeout, Button buttonForFinish, ComboBox comboBoxForFonts, ComboBox comboBoxForSizes, MyBitmap myBitmap, 
+            Button buttonForStrikeout, Button buttonToFinish, ComboBox comboBoxForFonts, ComboBox comboBoxForSizes, MyBitmap myBitmap, 
             History history, HistoryData historyData, PictureBox pictureBox)
         {
             this.buttonForText = buttonForText;
@@ -53,7 +53,7 @@ namespace Paint
             this.buttonForItalic = buttonForItalic;
             this.buttonForUnderline = buttonForUnderline;
             this.buttonForStrikeout = buttonForStrikeout;
-            this.buttonForFinish = buttonForFinish;
+            this.buttonToFinish = buttonToFinish;
             this.comboBoxForFonts = comboBoxForFonts;
             this.comboBoxForSizes = comboBoxForSizes;
             panelForTextTools = (Panel)comboBoxForFonts.Parent;
@@ -231,7 +231,7 @@ namespace Paint
             {
                 var button = (Button)sender;
 
-                if (button == buttonForFinish)
+                if (button == buttonToFinish)
                 {
                     FinishText(pictureBox);
                 }
@@ -255,11 +255,11 @@ namespace Paint
         {
             if (MyTextBox.TextBox.Visible)
             {
-                buttonForFinish.Enabled = true;
+                buttonToFinish.Enabled = true;
             }
             else
             {
-                buttonForFinish.Enabled = false;
+                buttonToFinish.Enabled = false;
             }
         }
 

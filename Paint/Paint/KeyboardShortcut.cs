@@ -15,20 +15,45 @@ namespace Paint
         private ToolStripMenuItem itemToCreate;
         private ToolStripMenuItem itemToOpen;
         private ToolStripMenuItem itemToSave;
+        private ToolStripMenuItem itemToSaveAs;
 
         private Button buttonForUndo;
         private Button buttonForRedo;
+        private Button buttonToCut;
+        private Button buttonToCopy;
         private Button buttonToPaste;
+        private Button buttonToCrop;
+        private Button buttonForBold;
+        private Button buttonForItalic;
+        private Button buttonForUnderline;
+        private Button buttonToFinish;
+
+        private ToolStripMenuItem itemToSelectAll;
+        private ToolStripMenuItem itemToEraseSelection;
+        private ToolStripMenuItem itemToDeselect;
 
         public KeyboardShortcut(ToolStripMenuItem itemToCreate, ToolStripMenuItem itemToOpen, ToolStripMenuItem itemToSave,
-            Button buttonForUndo, Button buttonForRedo, Button buttonToPaste)
+            ToolStripMenuItem itemToSaveAs, Button buttonForUndo, Button buttonForRedo, Button buttonToCrop, Button buttonToCut,
+            Button buttonToCopy, Button buttonToPaste, Button buttonForBold, Button buttonForItalic, Button buttonForUnderline,
+            Button buttonToFinish, ToolStripMenuItem itemToSelectAll, ToolStripMenuItem itemToEraseSelection, ToolStripMenuItem itemToDeselect)
         {
             this.itemToCreate = itemToCreate;
             this.itemToOpen = itemToOpen;
             this.itemToSave = itemToSave;
+            this.itemToSaveAs = itemToSaveAs;
             this.buttonForUndo = buttonForUndo;
             this.buttonForRedo = buttonForRedo;
+            this.buttonToCrop = buttonToCrop;
+            this.buttonToCut = buttonToCut;
+            this.buttonToCopy = buttonToCopy;
             this.buttonToPaste = buttonToPaste;
+            this.buttonForBold = buttonForBold;
+            this.buttonForItalic = buttonForItalic;
+            this.buttonForUnderline = buttonForUnderline;
+            this.buttonToFinish = buttonToFinish;
+            this.itemToSelectAll = itemToSelectAll;
+            this.itemToEraseSelection = itemToEraseSelection;
+            this.itemToDeselect = itemToDeselect;
         }
 
         /// <summary>
@@ -56,9 +81,53 @@ namespace Paint
             {
                 itemToSave.PerformClick();
             }
+            else if (e.Control && e.Shift && e.KeyCode == Keys.S)
+            {
+                itemToSaveAs.PerformClick();
+            }
+            else if (e.Control && e.Shift && e.KeyCode == Keys.X)
+            {
+                buttonToCrop.PerformClick();
+            }
+            else if (e.Control && e.KeyCode == Keys.X)
+            {
+                buttonToCut.PerformClick();
+            }
+            else if (e.Control && e.KeyCode == Keys.C)
+            {
+                buttonToCopy.PerformClick();
+            }
             else if (e.Control && e.KeyCode == Keys.V)
             {
                 buttonToPaste.PerformClick();
+            }
+            else if (e.Control && e.KeyCode == Keys.B)
+            {
+                buttonForBold.PerformClick();
+            }
+            else if (e.Control && e.KeyCode == Keys.I)
+            {
+                buttonForItalic.PerformClick();
+            }
+            else if (e.Control && e.KeyCode == Keys.U)
+            {
+                buttonForUnderline.PerformClick();
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                buttonToFinish.PerformClick();
+            }
+            else if (e.Control && e.KeyCode == Keys.A)
+            {
+                itemToSelectAll.PerformClick();
+            }
+            else if (e.KeyCode == Keys.Delete)
+            {
+                itemToEraseSelection.PerformClick();
+            }
+            else if (e.Control && e.KeyCode == Keys.D)
+            {
+                itemToDeselect.PerformClick();
             }
         }
     }

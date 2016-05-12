@@ -67,7 +67,6 @@ namespace Paint
 
         private void PasteText()
         {
-            //myTextBox.TextBox.Paste();
             myTextBox.TextBox.Text = myTextBox.TextBox.Text.Insert(myTextBox.TextBox.SelectionStart, 
                 (string)Clipboard.GetDataObject().GetData(DataFormats.Text));
         }
