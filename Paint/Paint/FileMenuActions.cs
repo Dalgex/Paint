@@ -20,6 +20,9 @@ namespace Paint
         private MyBitmap myBitmap;
         private string existFileName = string.Empty;
         private string fullExistFileName;
+        private int historyDataBitmapsCount;
+        private int historyDataPanelSizesCount;
+        private int historyDataShapesCount;
 
         public FileMenuActions(History history, HistoryData historyData, PanelResizer panelResizer, MyBitmap myBitmap)
         {
@@ -126,6 +129,7 @@ namespace Paint
                 saveFileDialog.Filter = "PNG|*.png|JPEG|*.jpg;*.jpeg;*.jpe;*.jfif|BMP|*.bmp|GIF|*.gif";
                 saveFileDialog.FileName = fullExistFileName;
                 SaveBitmapImage(pictureBox, saveFileDialog);
+                WriteHistoryElementsCount();
                 return existFileName;
             }
             else
@@ -150,6 +154,7 @@ namespace Paint
                 var openFileDialog = new OpenFileDialog();
                 openFileDialog.FileName = saveFileDialog.FileName;
                 SetFileNames(openFileDialog);
+                WriteHistoryElementsCount();
                 return existFileName;
             }
 
@@ -202,16 +207,24 @@ namespace Paint
                 var openFileDialog = new OpenFileDialog();
                 openFileDialog.FileName = saveFileDialog.FileName;
                 SetFileNames(openFileDialog);
+                WriteHistoryElementsCount();
                 return existFileName;
             }
 
             return string.Empty;
         }
 
+        private void WriteHistoryElementsCount()
+        {
+            historyDataBitmapsCount = historyData.Bitmaps.Count;
+            historyDataPanelSizesCount = historyData.PanelSizes.Count;
+            historyDataShapesCount = historyData.Shapes.Count;
+        }
+
         /// <summary>
         /// Предлагает сохранить изображение
         /// </summary>
-        private void OfferToSaveImage(PictureBox pictureBox, FormClosingEventArgs e)
+        public void OfferToSaveImage(PictureBox pictureBox, FormClosingEventArgs e)
         {
             var wasCancel = false;
             OfferToSaveImage(pictureBox, ref wasCancel);
@@ -224,17 +237,22 @@ namespace Paint
 
         private void OfferToSaveImage(PictureBox pictureBox, ref bool wasCancel)
         {
-            switch (MessageBox.Show("Сохранить изменения в файл?", "Paint", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+            if ((historyData.Bitmaps.Count > 1 || historyData.PanelSizes.Count > 1 || historyData.Shapes.Count > 0) && 
+                (historyData.Bitmaps.Count != historyDataBitmapsCount || historyData.PanelSizes.Count != historyDataPanelSizesCount 
+                || historyData.Shapes.Count != historyDataShapesCount))
             {
-                case DialogResult.Yes:
+                switch (MessageBox.Show("Сохранить изменения в файл?", "Paint", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
                 {
-                    SaveBitmapImage(pictureBox, ref wasCancel);
-                    break;
-                }
-                case DialogResult.Cancel:
-                {
-                    wasCancel = true;
-                    break;
+                    case DialogResult.Yes:
+                    {
+                        SaveBitmapImage(pictureBox, ref wasCancel);
+                        break;
+                    }
+                    case DialogResult.Cancel:
+                    {
+                        wasCancel = true;
+                        break;
+                    }
                 }
             }
         }

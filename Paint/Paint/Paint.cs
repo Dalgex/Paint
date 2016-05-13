@@ -217,7 +217,7 @@ namespace Paint
 
         private void PaintFormClosing(object sender, FormClosingEventArgs e)
         {
-            //fileMenuActions.OfferToSaveImage(mainPictureBox, e);
+            fileMenuActions.OfferToSaveImage(mainPictureBox, e);
         }
     }
 }
