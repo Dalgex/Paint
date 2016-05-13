@@ -35,15 +35,11 @@ namespace Paint
         /// Устанавливает соответствующие пассивные цвета для всех элементов управления
         /// </summary>
         public static void SetPassiveColor(MenuStrip menuStrip, Panel panelForTools, Panel panelForInserting,
-            Panel panelForSelection, Panel panelForTextTools, Panel panelForForm)
+            Panel panelForSelection, Panel panelForTextTools, Panel panelForClipboardTools, Panel panelForImageTools,
+            Panel panelForWorkTools, Panel panelForShapeTools, Panel panelForForm)
         {
             menuStrip.BackColor = Color.FromArgb(255, 212, 222, 235);
             panelForTools.BackColor = passiveColor;
-
-            foreach (Control control in panelForTools.Controls)
-            {
-                control.BackColor = passiveColor;
-            }
 
             foreach (Control control in panelForInserting.Controls)
             {
@@ -61,6 +57,26 @@ namespace Paint
                 {
                     control.BackColor = passiveColor;
                 }
+            }
+
+            foreach (Control control in panelForClipboardTools.Controls)
+            {
+                control.BackColor = passiveColor;
+            }
+
+            foreach (Control control in panelForImageTools.Controls)
+            {
+                control.BackColor = passiveColor;
+            }
+
+            foreach (Control control in panelForWorkTools.Controls)
+            {
+                control.BackColor = passiveColor;
+            }
+
+            foreach (Control control in panelForShapeTools.Controls)
+            {
+                control.BackColor = passiveColor;
             }
 
             panelForForm.BackColor = Color.FromArgb(255, 205, 215, 230);

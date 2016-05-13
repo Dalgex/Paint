@@ -55,6 +55,7 @@
     </Compile>
     <Compile Include="FrameRectangle.cs" />
     <Compile Include="MyTextBox.cs" />
+    <Compile Include="PanelsLocation.cs" />
     <Compile Include="SelectionHistoryMemento.cs" />
     <Compile Include="ImageCapture.cs" />
     <Compile Include="MovingRectangle.cs" />

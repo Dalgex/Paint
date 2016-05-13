@@ -40,6 +40,10 @@ namespace Paint
         public Paint()
         {
             InitializeComponent();
+            panelForPictureBox.Size = new Size(1350, 530);
+            var panelsLocation = new PanelsLocation(buttonForText, panelForClipboardTools, panelForImageTools, panelForWorkTools,
+                panelForShapeTools, panelForPenWidth, panelForColors, panelForTextTools);
+            panelsLocation.SetStartPanelsLocation();
 
             historyData.PanelSizes.Push(new PanelSize(panelForPictureBox.Size));
             myBitmap = new MyBitmap(new Bitmap(mainPictureBox.Width, mainPictureBox.Height));
@@ -47,7 +51,8 @@ namespace Paint
             historyData.Bitmaps.Push(myBitmap.Bitmap);
             historyData.RegionBitmaps.Push(new MyBitmap(new Bitmap(1, 1), new Point(1, 1)));
 
-            ControlsColor.SetPassiveColor(menuStrip, panelForTools, panelForInserting, panelForSelection, panelForTextTools, panelForForm);
+            ControlsColor.SetPassiveColor(menuStrip, panelForControls, panelForInserting, panelForSelection, panelForTextTools,
+                panelForClipboardTools, panelForImageTools, panelForWorkTools, panelForShapeTools, panelForForm);
             tools = new DefinitionEnabledControl(buttonForBrush, buttonForSelection, buttonForText, panelResizer, myBitmap);
             textTools = new TextTools(buttonForText, buttonForBold, buttonForItalic, buttonForUnderline, buttonForStrikeout,
                 buttonToFinish, comboBoxForFonts, comboBoxForSizes, myBitmap, history, historyData, mainPictureBox);
